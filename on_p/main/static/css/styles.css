@@ -1,0 +1,7 @@
+ .all_forms{
+        /*background-color: darksalmon;*/
+        display: flex;
+        flex-direction: column;
+        width:30%;
+        /*margin-left: 40%;*/
+    }
