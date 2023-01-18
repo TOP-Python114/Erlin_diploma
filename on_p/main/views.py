@@ -64,6 +64,7 @@ def tournament(request):
             ff=form_tour.cleaned_data
             print(ff)
             new_tournament=TournamentPreRegistrationModel(
+                date=ff['tour'],
                 sportsmen=ff['sportsmen'],
                 weight_category=ff['weight_category'],
 

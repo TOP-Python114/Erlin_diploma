@@ -9,25 +9,23 @@ class TrainerForm(forms.Form):
     students = forms.ModelMultipleChoiceField(
         queryset=Armwrestler.objects.all(),
 
-        #widget=forms.SelectMultiple,
+        # widget=forms.SelectMultiple,
     )
+
+
 class TournamentPreRegistrationForm(forms.Form):
-    dates=forms.ModelChoiceField(
-        queryset=Tournaments.objects.all()
+    dates = forms.ModelChoiceField(
+        queryset=Tournaments.objects.all(),
     )
-    # dates = forms.ChoiceField(
-    # choices=((tour,str(tour.title)) for tour in Tournaments.objects.all()),
-    #
-    #     ),
 
-
-    sportsmen=forms.ModelChoiceField(
+    sportsmen = forms.ModelChoiceField(
         queryset=Armwrestler.objects.all(),
     )
     weight_category = forms.ChoiceField(
-        choices=[(x,x) for x in ('60','65','70','75','80','85','90','100','110','+110')],
+        choices=[(x, x) for x in ('60', '65', '70', '75', '80', '85', '90', '100', '110', '+110')],
 
     )
+
 
 from django import forms
 

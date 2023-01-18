@@ -67,9 +67,7 @@ class TournamentPreRegistrationModel(models.Model):
     Класс предварительной регистрации спортсмена (по факту спортик может не влезть в категорию)
     """
     #date=models.ManyToManyField('Tournaments')
-    tour=models.ForeignKey(Tournaments, on_delete=models.CASCADE,default=None)
     sportsmen = models.ForeignKey(Armwrestler, on_delete=models.CASCADE)
+    tour=models.ForeignKey(Tournaments, on_delete=models.CASCADE,default=None)
     weight_category = models.CharField(max_length=4)
     #weight = models.PositiveIntegerField(default=111, validators=[MinValueValidator(10), MaxValueValidator(300)])
-
-
