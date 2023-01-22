@@ -5,9 +5,8 @@ from .models import Armwrestler, Trainer
 urlpatterns = [
     path('', index, name='main'),
     path('tr_register', tr_register, name='tr_reg'),
-    path('trainers',list_of_trainers, name='sps'),
-    path('tournament',tournament, name='trmt'),
-
+    path('trainers', list_of_trainers, name='sps'),
+    path('tournament', tournament, name='trmt'),
 ]
 
 for trainer in Trainer.objects.all():

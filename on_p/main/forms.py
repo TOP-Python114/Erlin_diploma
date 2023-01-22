@@ -14,10 +14,9 @@ class TrainerForm(forms.Form):
 
 
 class TournamentPreRegistrationForm(forms.Form):
-    dates = forms.ModelChoiceField(
+    tournament = forms.ModelChoiceField(
         queryset=Tournaments.objects.all(),
     )
-
     sportsmen = forms.ModelChoiceField(
         queryset=Armwrestler.objects.all(),
     )

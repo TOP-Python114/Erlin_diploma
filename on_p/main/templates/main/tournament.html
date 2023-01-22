@@ -1,35 +1,41 @@
 {% extends 'main/base.html' %}
 
+
 {% block title %}
     Титульник
 {% endblock %}
+
+
 {% block style_index %}
     class="nav-link link-dark"
 {% endblock %}
+
 
 {% block style_reg %}
     class="nav-link link-dark"
 {% endblock %}
 
+
 {% block style_trainers %}
     class="nav-link link-dark"
 {% endblock %}
+
+
 {% block style_tournament %}
     class="nav-link active"
 {% endblock %}
 
+
 {% block body %}
-<form action="" method="post">
-    {% csrf_token %}
-    <div class="all_forms border border-success p-4">
-        <h3>Предварительная регистрация на соревнование спортсмена</h3>
-        {{ form_tournament.dates }}
-        {{ form_tournament.sportsmen }}
-        {{ form_tournament.weight_category }}
-        <br>
-        <input class="btn btn-primary" type="submit" value="Submit">
-    </div>
-
-</form>
-
+    <form action="" method="post">
+        {% csrf_token %}
+        <div class="all_forms border border-success p-4">
+            <h3>Предварительная регистрация на соревнование спортсмена</h3>
+            {{ form_tournament.tournament }}
+            {{ form_tournament.sportsmen }}
+            {{ form_tournament.weight_category }}
+            <br>
+            <input class="btn btn-primary" type="submit" value="Submit">
+        </div>
+    </form>
 {% endblock %}

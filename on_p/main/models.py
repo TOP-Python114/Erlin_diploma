@@ -55,19 +55,28 @@ class ArmStyles(models.Model):
     def __str__(self):
         return self.style
 
+
 class Tournaments(models.Model):
     """список соревнований"""
-    title=models.CharField(max_length=100)
-    date=models.DateField()
+    title = models.CharField(max_length=100)
+    date = models.DateField()
+
+    def __str__(self):
+        return f"{self.title}"
 
 
-    #competitors=models.ForeignKey(TournamentPreRegistrationModel,on_delete=models.CASCADE)
+    # competitors=models.ForeignKey(TournamentPreRegistrationModel,on_delete=models.CASCADE)
+
+
 class TournamentPreRegistrationModel(models.Model):
     """
     Класс предварительной регистрации спортсмена (по факту спортик может не влезть в категорию)
     """
-    #date=models.ManyToManyField('Tournaments')
+    # date = models.ManyToManyField('Tournaments')
     sportsmen = models.ForeignKey(Armwrestler, on_delete=models.CASCADE)
-    tour=models.ForeignKey(Tournaments, on_delete=models.CASCADE,default=None)
+    tournament = models.ForeignKey(Tournaments, on_delete=models.CASCADE, default=None)
     weight_category = models.CharField(max_length=4)
-    #weight = models.PositiveIntegerField(default=111, validators=[MinValueValidator(10), MaxValueValidator(300)])
+    # weight = models.PositiveIntegerField(
+    #     default=111,
+    #     validators=[MinValueValidator(10), MaxValueValidator(300)]
+    # )

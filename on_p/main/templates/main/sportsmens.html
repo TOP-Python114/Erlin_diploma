@@ -1,30 +1,34 @@
 {% extends 'main/base.html' %}
+
+
 {% block title %}
     {{ trainer.first_name }}
 {% endblock %}
+
+
 {% block style_home %}
    class="nav-link link-dark"
 {% endblock %}
+
 
 {% block style_trainers %}
     class="nav-link link-dark"
 {% endblock %}
 
+
 {% block body %}
     <p> Спортсмены тренера: <h3>{{ trainer }}</h3></p>
-    {% for sp in trainer.armwrestler_set.all %}
+    {% for sp in trainer.students.all %}
         <div class="alert alert-warning mt-2">
             <p>Спортсмен: {{ sp.last_name }}
                 {{ sp.first_name }}
                 {{ sp.patronymic }} </p>
             <p>Разряд/звание: {{ sp.sport_category }}
-            <p>Дата рождения: {{ sp.age }}
+            <p>Дата рождения: {{ sp.age|date:"d.m.Y" }}
             <p>Пол: {{ sp.sex }}</p>
-            <p>Команда:{{ sp.team }}
+            <p>Команда: {{ sp.team }}
             <p>Весовая категория: {{ sp.weight_category }}
         </div>
         <br>
     {% endfor %}
 {% endblock %}
-</body>
-</html>
