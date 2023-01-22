@@ -1,122 +1,130 @@
-from pprint import pprint
-from random import shuffle
-
-from datetime import datetime
-
-
-class Sportsmen:
-    def __init__(self, name, category):
-        self.name = name
-        self.category = category
-        self.wins = 0
-        self.loses = 0
-
-    def __str__(self):
-        return f"{self.name} {self.category}"
-
+a = [f'sportsmen{i}' for i in range(35)]
+print(a)
 
 class Competition:
-    def __init__(self, competitors: list['Sportsmen'] = None, date=datetime.now()):
-        if competitors is None:
-            competitors = [[]]
-        self.current_tour = 1
-        self.current_group = 'a'
-        self.current_pair = 0
-        self.competitors = competitors
-        self.date: datetime = date
-        self.shuffle_()
-        self.group_a: list[list[Sportsmen]] = [list() for x in range(40)]
-        self.group_a[0] = competitors
-        self.group_b: list[list[Sportsmen]] = [list() for x in range(40)]
-        self.results: list['Sportsmen'] = []
-        """если количество участников нечетное то последний в списке попадает в следующий тур сразу """
-        if not len(competitors) % 2:
-            self.group_a[1] += [self.competitors.pop()]
+    def __init__(self, sp_s: list):
+        self.sportsmens = self.pairy_list(sp_s)
+        self.group_a = [list() for _ in range(len(self.sportsmens)+2)]
+        self.group_b = [list() for _ in range(len(self.sportsmens)+2)]
+        # self.state=["a",0,0]   #группа, тур, пара
+        self.group = "a"
+        self.tour = 0
+        self.pair = 0
+        self.results = []
+        self.final=[]
+        self.game_over=False
+    @staticmethod
+    def is_good(lis):
+        """метод говорящий что в группе сформированы пары и нет мудлона в свободном круге"""
+        return len(lis[-1]) == 2
 
-    def __str__(self):
-        return ", ".join(str(x) for x in self.competitors)
-
-    """Все таки для защиты от дурака откажусь от редактирования после инициализации"""
-
-    # def __add_sportsmen(self, sportsmen):
-    #     self.competitors += sportsmen
-    #
-    # def __del_sportsmen(self, sportsmen_id):
-    #     """Id спортсмена это его номер в списке"""
-    #     self.competitors.pop(sportsmen_id)
-    def shuffle_(self):
-        '''жеребьевка'''
-        shuffle(self.competitors)
+    @staticmethod
+    def pairy_list(lis):
+        "метод разбивающий список на список пар"
+        return [[lis[i], lis[i + 1]] if i + 1 != len(lis) else [lis[i]] for i in range(0, len(lis), 2)]
 
     def fight(self, winner):
+        if self.game_over:
+            return
+        print(self.final)
+        print("сверху финал")
+        if len(self.final)==2:
+            if winner==1:
+                print(f"Победитель {self.final[0][0]}")
+                self.game_over=True
+                return
+        "Частный случай первого раунда"
+        #########################################################################################
 
-        """текущий боец 1, группы а"""
-        current_a_f1 = self.group_a[self.current_tour - 1][self.current_pair]
-        """текущий боец 2, группы а"""
-        current_a_f2 = self.group_a[self.current_tour - 1][self.current_pair + 1]
-        if self.current_group == "a":
-            "идем по сетке а"
+        if self.tour == 0:
+            if not self.is_good(self.sportsmens):  # Если есть  в свободном круге
+                self.group_a[0] += self.sportsmens.pop()  # Добавляем его в первый раунд группы а
             if winner == 1:
-                self.group_a[self.current_tour] += [current_a_f1]
-                self.group_b[self.current_tour] += [current_a_f2]
-                current_a_f1.wins += 1
-                current_a_f2.loses += 1
-            elif winner == 2:
-                self.group_a[self.current_tour] += [current_a_f2]
-                # print(current_a_f2)
-                self.group_b[self.current_tour] += [current_a_f1]
-                current_a_f2.wins += 1
-                current_a_f1.loses += 1
-            self.current_pair += 2
+                self.group_a[0] += [self.sportsmens[self.pair][0]]
+                self.group_b[0] += [self.sportsmens[self.pair][1]]
+            # Добавить потом победителя второго
+            self.pair += 1
+            if self.pair >= len(self.sportsmens):
+                self.tour += 1
+                self.pair = 0
+                self.group_a[0] = self.pairy_list(self.group_a[0])
+                self.group_b[0] = self.pairy_list(self.group_b[0])
 
-            if self.current_pair > len(self.group_a[self.current_tour-1]):
-                self.current_pair = 0
-                if self.current_tour != 0:
-                    self.current_group = 'b'
+        ##########################################################################################
+        elif self.tour > 0:
+            if self.group == "a":
+                if len(self.group_a[self.tour - 1][self.pair]) == 1:
+                    self.group_a[self.tour] += self.group_a[self.tour - 1]
+                    self.pair = 0
+                    self.group = 'b'
+                    #self.tour+=1
+                    if not self.final:
+                        self.final+=self.group_a[self.tour - 1]
+                    return
+                if not self.is_good(self.group_a[self.tour - 1]):
+                    self.group_a[self.tour] += self.group_a[self.tour - 1].pop()
+                if winner == 1:
+                    self.group_a[self.tour] += [self.group_a[self.tour - 1][self.pair][0]]
+                    self.group_b[self.tour] += [self.group_a[self.tour - 1][self.pair][1]]
+                self.pair += 1
+                if len(self.group_a[self.tour - 1]) <= self.pair:
+                    self.pair = 0
+                    self.group = 'b'
+                    self.group_a[self.tour] = self.pairy_list(self.group_a[self.tour])
 
-        elif self.current_group == 'b':
-            "идем по сетке б"
-            if winner == 1:
-                self.group_b[self.current_tour] += [current_a_f1]
-                current_a_f1.wins += 1
-                self.results += [current_a_f2]
-                self.group_b[self.current_tour].remove(current_a_f2)
-
-            elif winner == 2:
-                self.group_b[self.current_tour] += [current_a_f1]
-                current_a_f2.wins += 1
-                self.results += [current_a_f1]
-                self.group_b[self.current_tour].remove(current_a_f2)
-
-            if self.current_pair > len(self.group_a[self.current_tour-1]):
-                self.current_pair = 0
-                self.current_group = 'a'
-                self.current_tour += 1
+            if self.group == "b":
 
 
-sp_s = [Sportsmen('витя' + str(i), 50 + i * 5) for i in range(12)]
+                if winner==1:
+                    #если побеждает первый, то он добавляется в следующий тур группы Б
+                    self.group_b[self.tour]+=  [self.group_b[self.tour-1][self.pair][0]]
+                    #соответсвенно пара предыдущего шага переходит к следующей
+                    self.pair+=1
+                #если пара превышает длину предыдущего тура то
+                if self.pair== len(self.group_b[self.tour-1]):
+                    if len(self.group_b[self.tour])==1:
+                        self.final+=[self.group_b[self.tour]]
+                        print("Гаме овер")
+                        return
 
-sorev = Competition(sp_s)
+                    self.group_b[self.tour]=self.pairy_list(self.group_b[self.tour])
+                    self.pair=0
+                    self.tour+=1
+                    self.group='a'
 
 
-def check():
-    print(sorev.current_group + " сетка")
-    print(str(sorev.current_tour) + " Тур")
-    print(sorev.current_pair)
 
-print(len(sorev.group_a[0]))
-sorev.fight(1)
-check()
-sorev.fight(1)
-check()
-sorev.fight(1)
-check()
-sorev.fight(1)
-check()
-sorev.fight(1)
-check()
+comp = Competition(a)
+comp2 = Competition(a)
+print(comp.sportsmens)
+for i in range(360):
+    comp.fight(1)
+print("---------------------------------------------")
 
-for i in sorev.group_a:
-    for j in i:
-        print(str(j), end=", ")
-    print()
+
+
+print("")
+print("Начало соревн5ований:")
+print("Группа А")
+for coui, i in enumerate(comp.group_a):
+    print("раунд №" + str(coui + 1) + " ", end="")
+    print(i)
+print("")
+print("Группа Б:")
+for coui, i in enumerate(comp.group_b):
+    print("раунд №" + str(coui + 1) + " ", end="")
+    print(i)
+
+print(comp.final)
+#
+# print("____________")
+# print("Начало соревн5ований:")
+# print("Группа А")
+# for coui, i in enumerate(comp2.group_a):
+#     print("раунд №" + str(coui + 1) + " ", end="")
+#     print(i)
+# print("")
+# print("Группа Б:")
+# for coui, i in enumerate(comp2.group_b):
+#     print("раунд №" + str(coui + 1) + " ", end="")
+#     print(i)
