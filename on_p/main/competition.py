@@ -15,7 +15,7 @@ class Competition:
         self.game_over=False
     @staticmethod
     def is_good(lis):
-        """метод говорящий что в группе сформированы пары и нет мудлона в свободном круге"""
+        """метод говорящий что в группе сформированы пары и нет сп-на в свободном круге"""
         return len(lis[-1]) == 2
 
     @staticmethod
