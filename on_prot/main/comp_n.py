@@ -13,7 +13,7 @@ class Sportsmen:
         return self.name
 
 
-a = [Sportsmen("sportsmen" + str(i),weight=randrange(120, 150), age=randrange(16, 58), ) for i in range(3)]
+a = [Sportsmen("sportsmen" + str(i),weight=randrange(120, 150), age=randrange(16, 58), ) for i in range(7)]
 
 erlin=Sportsmen('Ерлин Юрий Сергеевич',35,120.5,"Самостоятельно")
 
@@ -296,9 +296,13 @@ class Competition:
 
     def fight_one(self):
         self.fight(1)
+        return "Победил спортсмен 1"
 
     def fight_two(self):
         self.fight(2)
+
+
+
 if __name__=="__main__":
 
     comp = Competition(a)
@@ -311,7 +315,7 @@ if __name__=="__main__":
 
         try:
             if len(comp.final) < 2:
-                print(f"в группе {comp.group}в туре №{comp.tour} борятся {comp.sportsmen1} и {comp.sportsmen2}")
+                print(f"в группе {comp.group}, в туре №{comp.tour} борятся {comp.sportsmen1} и {comp.sportsmen2}")
             else:
                 print(f"Финал {comp.sportsmen1} и {comp.sportsmen2}")
         except:

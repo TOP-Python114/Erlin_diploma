@@ -1,5 +1,6 @@
 from pprint import pprint
 
+from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from .models import Armwrestler, Competition
 from main.comp_n import Competition, Sportsmen
@@ -12,7 +13,7 @@ def hello(request):
 
 
 def competition(request):
-
+    game_start=False
     def list_of_categories(li=Armwrestler.objects.all()):
         """проходит по всем объектам борцов и выдает списком все использующиеся категории"""
         categories = set()
@@ -43,16 +44,19 @@ def competition(request):
     for cat,sps in dict_category_sportsmens.items():
         dict_category_competition[cat]=Competition(sps,"left",cat,"кубок британии")
 
-
-
-    #print(dict_category_sportsmens)
-
-
-
-
-
+    if request.method == 'POST':
+        if "winnerisone" in request.POST:
+            print(dict_category_competition["120"].sportsmen1)
+            print(dict_category_competition["120"].sportsmen2)
+            dict_category_competition["120"].fight(1)
+            print(dict_category_competition["120"].sportsmen1)
+            print(dict_category_competition["120"].sportsmen2)
+        elif "winneristwo" in request.POST:
+            print("Победил второй")
+            dict_category_competition["120"].fight(2)
 
 
     return render(request, 'competit.html', {
-        "arms": list_of_categories()
+        "object": dict_category_competition["120"]
+
     })
