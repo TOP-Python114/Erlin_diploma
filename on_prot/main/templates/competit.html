@@ -5,17 +5,41 @@
     <title>Title</title>
 </head>
 <body>
-COMPETITTION
+<h1>Выбери победителя</h1>
 <a href="{% url 'hello' %}"></a>
 
 <form action="" method="post">
     {% csrf_token %}
-    <input class="button" type="submit" value="Winner1" name="winnerisone">
-     <input class="button" type="submit" value="Winner2" name="winneristwo">
+    <input class="button" type="submit" value="{{ sportsmen1 }}" name="winnerisone">
+    <input class="button" type="submit" value="{{ sportsmen2 }}" name="winneristwo">
     </div>
 </form>
-{{ object.group }}
+<h3>Список участников соревнований</h3>
+{{ sps }}
+<hr>
 
 
+tour
+<hr>
+<h4>Сетка А</h4>
+{% for tour in resa %}
+    {{ tour }}
+    <br>
+{% endfor %}
+<br>
+<h4>Сетка B</h4>
+{% for tour in resb %}
+    {{ tour }}
+    <br>
+{% endfor %}
+{#{{ object.results}}#}
+<br>
+<p>Результаты соревнований: </p>
+{% for i,j in result.items %}
+    {{ i }} Место :{{ j }}
+    <br>
+
+
+{% endfor %}
 </body>
 </html>

@@ -3,7 +3,7 @@ from random import randrange
 
 
 class Sportsmen:
-    def __init__(self, name:str,weight: float, age: int = 18, trainer='самостоятельно'):
+    def __init__(self, name: str, weight: float, age: int = 18, trainer='самостоятельно'):
         self.name = name
         self.age = age
         self.weight = weight
@@ -13,20 +13,22 @@ class Sportsmen:
         return self.name
 
 
-a = [Sportsmen("sportsmen" + str(i),weight=randrange(120, 150), age=randrange(16, 58), ) for i in range(7)]
+a = [Sportsmen("sportsmen" + str(i), weight=randrange(120, 150), age=randrange(16, 58), ) for i in range(5)]
 
-erlin=Sportsmen('Ерлин Юрий Сергеевич',35,120.5,"Самостоятельно")
+erlin = Sportsmen('Ерлин Юрий Сергеевич', 35, 120.5, "Самостоятельно")
+
 
 class Competition:
-    def __init__(self,sp_s: list, hand:str='left',category="65",title='notitle',date=datetime.datetime.now() ):
-        self.hand=hand
-        self.category=category
-        self.begin=False
+    def __init__(self, sp_s: list, hand: str = 'left', category="65", title='notitle', date=datetime.datetime.now()):
+        self.hand = hand
+        self.category = category
+        self.begin = False
         self.not_paired_sps = sp_s
         self.sportsmens = self.pairy_list(self.not_paired_sps)
         self.group_a = [list() for _ in range(len(sp_s) + 20)]
         self.group_b = [list() for _ in range(len(sp_s) + 20)]
         self.group = "a"
+        self.chitaem = 0
         self.tour = 0
         self.pair = 0
         self.results = []
@@ -36,14 +38,15 @@ class Competition:
         self.checker = False
         self.two_losers_in_final = False
 
-    def add_sportsmen(self,new_sportsmen:Sportsmen):
+    def add_sportsmen(self, new_sportsmen: Sportsmen):
         if self.begin:
             return
-        self.not_paired_sps+=[new_sportsmen]
+        self.not_paired_sps += [new_sportsmen]
         print(self.not_paired_sps)
+
     def print_group_a(self):
         print("Группа А:")
-        print("Тур: 0 " + " ".join(a.name for a in comp.not_paired_sps))
+        print("Тур: 0 " + " ".join(a.name for a in self.not_paired_sps))
         for cou, tour in enumerate(self.group_a):
             print(f"Тур: {cou + 1}", end=' ')
             for pairs in range(len(tour)):
@@ -51,9 +54,53 @@ class Competition:
                     print(sportsmen, end=", ")
             print(" ")
         print(" ")
+
+    def return_group_a(self):
+        res = "Тур: 0 " + " ".join(a.name for a in self.not_paired_sps) + "\n"
+        for cou, tour in enumerate(self.group_a):
+            if not tour:
+                continue
+            res += f"Тур: {cou + 1} "
+            for pairs in range(len(tour)):
+                if isinstance(tour[0], list):
+                    for sportsmen in tour[pairs]:
+                        res += str(sportsmen) + ", "
+                else:
+                    res += str(tour[0])
+                    try:
+                        res += ','
+                        res += str(tour[1])
+                    except:
+                        pass
+                    return res
+            res += "\n"
+        return res
+
+    def return_group_b(self):
+        # res = "Тур: 0 " + " ".join(a.name for a in self.not_paired_sps) + "\n"
+        res = ""
+        for cou, tour in enumerate(self.group_b):
+            if not tour:
+                continue
+            res += f"Тур: {cou + 1} "
+            for pairs in range(len(tour)):
+                if isinstance(tour[0], list):
+                    for sportsmen in tour[pairs]:
+                        res += str(sportsmen) + ", "
+                else:
+                    res += str(tour[0])
+                    try:
+                        res += ', '
+                        res += str(tour[1])
+                    except:
+                        continue
+                    return res
+            res += "\n"
+        return res
+
     def print_group_b(self):
         print("Группа Б:")
-        #print("Тур: 0 " + " ".join(a.name for a in comp.not_paired_sps))
+        # print("Тур: 0 " + " ".join(a.name for a in comp.not_paired_sps))
         for cou, tour in enumerate(self.group_b):
             print(f"Тур: {cou + 1}", end=' ')
             for pairs in range(len(tour)):
@@ -61,10 +108,12 @@ class Competition:
                     print(sportsmen, end=", ")
             print(" ")
         print(" ")
+
     def print_group_final(self):
-        for num,final in enumerate(self.group_final):
-            print("финал №"+str(num+1)+" "+str(final[0][0]),str(final[1][0]))
+        for num, final in enumerate(self.group_final):
+            print("финал №" + str(num + 1) + " " + str(final[0][0]), str(final[1][0]))
         print(" ")
+
     def print_results(self):
         for place, sportsmen in enumerate(self.results):
             print(
@@ -82,11 +131,20 @@ class Competition:
 
     @property
     def sportsmen1(self):
+
+        if self.game_over:
+            return "Показать результаты"
         """высчитывает имя первого спортсмена"""
         if len(self.not_paired_sps) == 1:
             return self.not_paired_sps[0]
         if len(self.final) == 2:
             return self.final[0][0]
+        # обработка свободного круга
+
+        if self.tour > 0 and len(self.group_a[self.tour - 1][self.pair]) == 1:
+            self.fight(1)
+            # return self.group_b[self.tour][self.pair][0]
+
         if self.tour == 0:
             return self.sportsmens[self.pair][0]
         if self.tour > 0:
@@ -99,10 +157,16 @@ class Competition:
     @property
     def sportsmen2(self):
         """высчитывает имя второго спортсмена"""
+        if self.game_over:
+            return ""
         if len(self.not_paired_sps) == 1:
             return None
         if len(self.final) == 2:
             return self.final[1][0]
+        # обработка свободного круга
+        # if self.tour > 0 and len(self.group_a[self.tour - 1][self.pair]) == 1:
+        #     return self.group_b[self.tour][self.pair][1]
+
         if self.tour == 0:
             return self.sportsmens[self.pair][1]
         if self.tour > 0:
@@ -123,8 +187,6 @@ class Competition:
         """Поединок
             winner== 1- победил спортсмен 1
         """
-
-
 
         if self.game_over:
             return
@@ -296,34 +358,28 @@ class Competition:
 
     def fight_one(self):
         self.fight(1)
+        self.chitaem += 1
         return "Победил спортсмен 1"
 
     def fight_two(self):
         self.fight(2)
+        self.chitaem += 1
 
 
-
-if __name__=="__main__":
+if __name__ == "__main__":
 
     comp = Competition(a)
-
 
     print("Тур: 0 " + " ".join(a.name for a in comp.not_paired_sps))
     while not comp.game_over:
 
         print(" ")
 
-        try:
-            if len(comp.final) < 2:
-                print(f"в группе {comp.group}, в туре №{comp.tour} борятся {comp.sportsmen1} и {comp.sportsmen2}")
-            else:
-                print(f"Финал {comp.sportsmen1} и {comp.sportsmen2}")
-        except:
-            #print(comp.sportsmen1.name + "проходит в следующий тур без борьбы")
-            comp.fight(1)
-            continue
-        # print(f"'№{comp.tour+1} группа '{comp.group}' '{comp.spoprsms[0]}' борется с '{comp.spoprsms[1]}' пара №{comp.pair+1}")
-        # fighters=comp.spoprsms
+        if len(comp.final) < 2:
+            print(f"в группе {comp.group}, в туре №{comp.tour} борятся {comp.sportsmen1} и {comp.sportsmen2}")
+        else:
+            print(f"Финал {comp.sportsmen1} и {comp.sportsmen2}")
+
         result = int(input("1 или 2: "))
         if result not in (1, 2):
             print('Ошибка введите 1 если победил первый спортсмен или 2 если второй')
@@ -331,8 +387,6 @@ if __name__=="__main__":
 
         comp.fight(result)
         # print(f"победитель {[fighters[result-1]]}")
-
-
 
     # for i in range(360):
     #     comp.fight(1)
@@ -342,22 +396,12 @@ if __name__=="__main__":
     print("Начало соревн5ований:")
     print("Количество участников: " + str(len(comp.not_paired_sps)))
 
-    comp.print_group_a()
-    comp.print_group_b()
+    print(comp.return_group_a())
+    print(comp.return_group_b())
     comp.print_group_final()
-
 
     print("Результаты соревнований: ")
     comp.print_results()
-
-
-
-
-
-
-
-
-
 
     # print("раунд №0", end=" ")
     # print(comp.sportsmens)

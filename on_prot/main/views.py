@@ -11,8 +11,12 @@ from main.comp_n import Competition, Sportsmen
 def hello(request):
     return render(request, 'index.html')
 
+# def select_category_parcer(category):
+#     if
 
-def competition(request):
+
+
+def competition_creating():
     game_start=False
     def list_of_categories(li=Armwrestler.objects.all()):
         """проходит по всем объектам борцов и выдает списком все использующиеся категории"""
@@ -44,19 +48,45 @@ def competition(request):
     for cat,sps in dict_category_sportsmens.items():
         dict_category_competition[cat]=Competition(sps,"left",cat,"кубок британии")
 
+    return dict_category_competition
+
+a=competition_creating()
+
+
+def competition(request):
+    result = list(map(str, a["120"].results)) if len(a["120"].results) == len(a["120"].not_paired_sps) else []
     if request.method == 'POST':
+        if a["120"].game_over:
+            print("Игра все!!!!!!!!!!!!!!!!!!!!!!!")
+            return  render(request, 'competit.html', {"result":{i+1:j for i,j in enumerate(result)} })
         if "winnerisone" in request.POST:
-            print(dict_category_competition["120"].sportsmen1)
-            print(dict_category_competition["120"].sportsmen2)
-            dict_category_competition["120"].fight(1)
-            print(dict_category_competition["120"].sportsmen1)
-            print(dict_category_competition["120"].sportsmen2)
+            a["120"].fight(1)
+
         elif "winneristwo" in request.POST:
             print("Победил второй")
-            dict_category_competition["120"].fight(2)
+            a["120"].fight(2)
 
+    res_gr_a = a["120"].return_group_a().split('\n')
+    res_gr_b = a["120"].return_group_b().split('\n')
+
+
+    try:
+        sp1=a["120"].sportsmen1
+        sp2=a["120"].sportsmen2
+    except:
+        sp1 = a["120"].sportsmen1
+        sp2 = a["120"].sportsmen1
 
     return render(request, 'competit.html', {
-        "object": dict_category_competition["120"]
+
+        "sps": list(map(str,a["120"].not_paired_sps)),
+
+        # "gr_a":a["120"].group_a[a["120"].tour],
+        "resa":res_gr_a,
+        "resb": res_gr_b,
+        "tour":a["120"].tour,
+        "result": {i+1:j for i,j in enumerate(result)},
+        "sportsmen1": sp1,
+        "sportsmen2": sp2
 
     })
