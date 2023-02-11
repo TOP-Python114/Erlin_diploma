@@ -4,7 +4,8 @@ from .views import hello, competition
 #from .models import Competition.C
 urlpatterns = [
     path('',hello, name="hello"),
-    path('competition',competition, name="comp"),
+    path('competition',competition, name="comp",kwargs={'category': '110'}),
+
     #path('', admin.site.urls),
 ]
 

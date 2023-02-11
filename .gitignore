@@ -1,5 +1,6 @@
 .idea
 dipvenv
+.on_venv
 
 __pycache__
 *.py[com]
