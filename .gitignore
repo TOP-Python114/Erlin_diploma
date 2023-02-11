@@ -1,0 +1,7 @@
+.idea
+dipvenv
+
+__pycache__
+*.py[com]
+
+*ref*
