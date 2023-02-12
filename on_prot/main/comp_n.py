@@ -3,12 +3,14 @@ from random import randrange
 
 
 class Sportsmen:
-    def __init__(self, name: str, weight: float, age: int = 18,sex='m', grade:str='б/р', trainer='самостоятельно'):
+    def __init__(self, name: str, weight: float, age: int = 18, team: str = 'Новосибирск', sex='m', grade: str = 'б/р',
+                 trainer='самостоятельно'):
         self.name = name
         self.age = age
+        self.team = team
         self.weight = weight
-        self.sex=sex
-        self.grade=grade
+        self.sex = sex
+        self.grade = grade
         self.trainer = trainer
 
     def __str__(self):

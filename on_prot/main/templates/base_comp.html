@@ -26,7 +26,12 @@
             </form>
         </div>
         <h3>Список участников соревнований</h3>
-        {{ sps_l }}
+        {% for arml in sps_l %}
+            {{ arml.name }}
+            {{ arml.weight }}
+             <br>
+        {% endfor %}
+
         <hr>
         <h4>Сетка А</h4>
         {% for tour in resa_l %}
@@ -67,7 +72,11 @@
 
         </form>
         <h3>Список участников соревнований</h3>
-        {{ sps_r }}
+       {% for arml in sps_r %}
+            {{ arml.name }}
+            {{ arml.weight }}
+           <br>
+        {% endfor %}
         <hr>
         <h4>Сетка А</h4>
         {% for tour in resa_r %}

@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.urls import path
-from .views import hello, competition
-from .models import Competition
+from .views import hello , competition
+# from .models import Competition
 
 urlpatterns = [
     path('', hello, name="hello"),
@@ -25,7 +25,7 @@ urlpatterns = [
     path('110m/', competition, name="110m", kwargs={'category': '110m'}),
     path('plus110m/', competition, name="+110m", kwargs={'category': '+110m'}),
 
-    # path('110m/', competition_r, name="110m", kwargs={'category_r': '110rm'}),
+  #  path('110m/', competition_r, name="110m", kwargs={'category_r': '110rm'}),
 
     # path('', admin.site.urls),
 ]

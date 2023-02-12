@@ -8,6 +8,7 @@ class Armwrestler(models.Model):
     name = models.CharField(max_length=100)
     age = models.PositiveIntegerField(validators=[MinValueValidator(18), MaxValueValidator(67)])
     weight_category = models.CharField(max_length=4, default='60')
+    team=models.CharField(max_length=54, default='Новосибирск')
     sex = models.CharField(max_length=2,default='m')
     grade=models.CharField(max_length=4, default='б/р')
     def __str__(self):

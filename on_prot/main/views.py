@@ -1,5 +1,4 @@
-from pprint import pprint
-
+# from pprint import pprint
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from .competition_former import competition_creating
@@ -7,16 +6,14 @@ from .competition_former import competition_creating
 CATEGORY_NORMALIZER={
     '60w':"Женщины 60кг",
     '110m':"Мужчины 110кг"
-
+     #доделать!!!
 }
 # Create your views here.
 
 def hello(request):
     return render(request, 'index.html')
 
-
-
-
+#временно
 a = competition_creating("Чемпионат новосибирской области по АРМРЕСТЛИНГУ, ")
 
 
@@ -67,8 +64,10 @@ def competition(request, category):
     return render(request, 'competit.html', {
         'no_visible': "flex",
         'alert':None,
-        "sps_l": list(map(str, a[category+"l"].not_paired_sps)),
-        "sps_r": list(map(str, a[category+"r"].not_paired_sps)),
+        #"sps_l": list(map(str, a[category+"l"].not_paired_sps)),
+        #"sps_r": list(map(str, a[category+"r"].not_paired_sps)),
+        "sps_l":a[category+"l"].not_paired_sps,
+        "sps_r": a[category + "r"].not_paired_sps,
         "title": a["title"],
         "current_category":CATEGORY_NORMALIZER[category],
         # "gr_a":a[category].group_a[a[category].tour],
