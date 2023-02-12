@@ -33,16 +33,27 @@ def select_category_parcer(category, sex):
 
 
 def competition_creating(name_of_competition: str):
+    """
+    надо вынести в отдельный модуль, !!!
+    создание дикта в котором
+    ключ - код турнирной сетки "110lm" например это категория 110, рука левая мужчины
+    значение экземаляр соревнования
+    """
     def list_of_categories(li=Armwrestler.objects.all()):
         """проходит по всем объектам борцов и выдает списком все использующиеся категории"""
-        categories = set()
-
+        w_categories = set()
+        m_categories = set()
         for i in li:
-            if select_category_parcer(i.weight_category, 'm') not in categories:
-                categories.add(select_category_parcer(i.weight_category, 'm'))
+            if select_category_parcer(i.weight_category, 'm') not in m_categories:
+                m_categories.add(select_category_parcer(i.weight_category, 'm') + "ml")
+                m_categories.add(select_category_parcer(i.weight_category, 'm') + "mr")
 
-        print(categories)
-        return sorted(categories)
+            if select_category_parcer(i.weight_category, 'w') not in w_categories:
+                w_categories.add(select_category_parcer(i.weight_category, 'w') + "wl")
+                w_categories.add(select_category_parcer(i.weight_category, 'w') + "wr")
+
+        print(f" мужские{m_categories} женские {w_categories}")
+        return sorted(m_categories), sorted(w_categories)
 
     dict_category_sportsmens = {}
     # словарь в котором ключ - категория, а значение список спортсменов
@@ -53,62 +64,104 @@ def competition_creating(name_of_competition: str):
 
     def configure_list_of_sportsmen():
         """делает дикт категория, список объектов спортсмен данного мероприятия"""
-        for category in list_of_categories():
+        #часть формирующая мужскую часть соревнования
+        for m_category in list_of_categories()[0]:
             for armwres in Armwrestler.objects.all():
-                if select_category_parcer(armwres.weight_category,'m') == category:
-                    if category not in dict_category_sportsmens:
-
-                        dict_category_sportsmens[category] = [
-                            Sportsmen(armwres.name, armwres.weight_category, armwres.age)]
-
+                if select_category_parcer(armwres.weight_category, 'm') == m_category[:-2] and armwres.sex=="m":
+                    if m_category not in dict_category_sportsmens:
+                        dict_category_sportsmens[m_category] = [
+                            Sportsmen(armwres.name, armwres.weight_category, armwres.age, armwres.sex, armwres.grade)]
                     else:
-                        dict_category_sportsmens[category] += [
-                            Sportsmen(armwres.name, armwres.weight_category, armwres.age)]
+                        dict_category_sportsmens[m_category] += [
+                            Sportsmen(armwres.name, armwres.weight_category, armwres.age, armwres.sex, armwres.grade)]
+        # часть формирующая женскую часть соревнования
+        for w_category in list_of_categories()[1]:
+            for armwres in Armwrestler.objects.all():
+                if select_category_parcer(armwres.weight_category, 'w') == w_category[:-2] and armwres.sex=="w":
+                    if w_category not in dict_category_sportsmens:
+                        dict_category_sportsmens[w_category] = [
+                            Sportsmen(armwres.name, armwres.weight_category, armwres.age, armwres.sex, armwres.grade)]
+                    else:
+                        dict_category_sportsmens[w_category] += [
+                            Sportsmen(armwres.name, armwres.weight_category, armwres.age, armwres.sex, armwres.grade)]
+
+
+
+        print(dict_category_sportsmens)
         return dict_category_sportsmens
 
     configure_list_of_sportsmen()
     for cat, sps in dict_category_sportsmens.items():
         dict_category_competition[cat] = Competition(sps, "left", cat, name_of_competition)
     pprint(dict_category_competition)
+    dict_category_competition["title"]=name_of_competition
     return dict_category_competition
 
 
-a = competition_creating("Кубок залупьей радости")
+a = competition_creating("Чемпионат новосибирской области")
 
 
 def competition(request, category):
-    result = list(map(str, a[category].results)) if len(a[category].results) == len(a[category].not_paired_sps) else []
+
+    if category not in [x[:-1] for x in a]:
+        return render(request, 'competit.html', {
+            'sps_l':"Категория не представлена",
+            'no_visible': None,
+            'alert': 'block',
+        })
+
+    result_l = list(map(str, a[category+"l"].results)) if len(a[category+"l"].results) == len(
+       a[category+"l"].not_paired_sps) else []
+    result_r = list(map(str, a[category+'r'].results)) if len(a[category+"r"].results) == len(
+        a[category+"r"].not_paired_sps) else []
+
     if request.method == 'POST':
-        if a[category].game_over:
-            print("Игра все!!!!!!!!!!!!!!!!!!!!!!!")
-            return render(request, 'competit.html', {"result": {i + 1: j for i, j in enumerate(result)}})
-        if "winnerisone" in request.POST:
-            a[category].fight(1)
-
-        elif "winneristwo" in request.POST:
+        # if a[category].game_over:
+        #     print("Игра все!!!!!!!!!!!!!!!!!!!!!!!")
+        #     return render(request, 'competit.html', {"result": {i + 1: j for i, j in enumerate(result)}})
+        if "winnerisonel" in request.POST:
+            print(request.POST)
+            a[category+"l"].fight(1)
+        elif "winneristwol" in request.POST:
             print("Победил второй")
-            a[category].fight(2)
+            a[category+"l"].fight(2)
+        if "winnerisoner" in request.POST:
+            print(request.POST)
+            a[category+"r"].fight(1)
+        elif "winneristwor" in request.POST:
+            print("Победил второй")
+            a[category+"r"].fight(2)
 
-    res_gr_a = a[category].return_group_a().split('\n')
-    res_gr_b = a[category].return_group_b().split('\n')
+    res_gr_a_l = a[category+"l"].return_group_a().split('\n')
+    res_gr_b_l = a[category+"l"].return_group_b().split('\n')
+    sp1_l = a[category+"l"].sportsmen1
+    sp2_l = a[category+"l"].sportsmen2
 
-    try:
-        sp1 = a[category].sportsmen1
-        sp2 = a[category].sportsmen2
-    except:
-        sp1 = a[category].sportsmen1
-        sp2 = a[category].sportsmen1
+    res_gr_a_r = a[category+"r"].return_group_a().split('\n')
+    res_gr_b_r = a[category+"r"].return_group_b().split('\n')
+    sp1_r = a[category+"r"].sportsmen1
+    sp2_r = a[category+"r"].sportsmen2
+
 
     return render(request, 'competit.html', {
-
-        "sps": list(map(str, a[category].not_paired_sps)),
-
+        'no_visible': "flex",
+        'alert':None,
+        "sps_l": list(map(str, a[category+"l"].not_paired_sps)),
+        "sps_r": list(map(str, a[category+"r"].not_paired_sps)),
+        "title": a["title"],
         # "gr_a":a[category].group_a[a[category].tour],
-        "resa": res_gr_a,
-        "resb": res_gr_b,
-        "tour": a[category].tour,
-        "result": {i + 1: j for i, j in enumerate(result)},
-        "sportsmen1": sp1,
-        "sportsmen2": sp2
+        "resa_l": res_gr_a_l,
+        "resb_l": res_gr_b_l,
+        "resa_r": res_gr_a_r,
+        "resb_r": res_gr_b_r,
+        "result_l": {i + 1: j for i, j in enumerate(result_l)},
+        "result_r": {i + 1: j for i, j in enumerate(result_r)},
+        "sportsmen1_l": sp1_l,
+        "sportsmen2_l": sp2_l,
+        "sportsmen1_r": sp1_r,
+        "sportsmen2_r": sp2_r,
 
     })
+
+
+

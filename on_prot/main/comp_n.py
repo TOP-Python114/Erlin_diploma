@@ -3,17 +3,19 @@ from random import randrange
 
 
 class Sportsmen:
-    def __init__(self, name: str, weight: float, age: int = 18, trainer='самостоятельно'):
+    def __init__(self, name: str, weight: float, age: int = 18,sex='m', grade:str='б/р', trainer='самостоятельно'):
         self.name = name
         self.age = age
         self.weight = weight
+        self.sex=sex
+        self.grade=grade
         self.trainer = trainer
 
     def __str__(self):
         return self.name
 
 
-a = [Sportsmen("sportsmen" + str(i), weight=randrange(120, 150), age=randrange(16, 58), ) for i in range(5)]
+a = [Sportsmen("sportsmen" + str(i), weight=randrange(120, 150), age=randrange(16, 58), ) for i in range(3)]
 
 erlin = Sportsmen('Ерлин Юрий Сергеевич', 35, 120.5, "Самостоятельно")
 

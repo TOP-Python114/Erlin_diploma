@@ -1,45 +1,39 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<h1>Выбери победителя</h1>
-<a href="{% url 'hello' %}"></a>
-
-<form action="" method="post">
-    {% csrf_token %}
-    <input class="button" type="submit" value="{{ sportsmen1 }}" name="winnerisone">
-    <input class="button" type="submit" value="{{ sportsmen2 }}" name="winneristwo">
+{% extends "base_comp.html" %}
+{% block header %}
+    <div class="menu">
+        <a href="{% url '55m' %}" class="floating-button">55м</a>
+        <a href="{% url '60m' %}" class="floating-button">60м</a>
+        <a href="{% url '65m' %}" class="floating-button">65м</a>
+        <a href="{% url '70m' %}" class="floating-button">70м</a>
+        <a href="{% url '75m' %}" class="floating-button">75м</a>
+        <a href="{% url '80m' %}" class="floating-button">80м</a>
+        <a href="{% url '85m' %}" class="floating-button">85м</a>
+        <a href="{% url '90m' %}" class="floating-button">90м</a>
+        <a href="{% url '100m' %}" class="floating-button">100м</a>
+        <a href="{% url '110m' %}" class="floating-button">110м</a>
+        <a href="{% url '+110m' %}" class="floating-button">+110м</a>
     </div>
-</form>
-<h3>Список участников соревнований</h3>
-{{ sps }}
-<hr>
+    <div class="menu">
+        <a href="{% url '50w' %}" class="floating-button">50ж</a>
+        <a href="{% url '55w' %}" class="floating-button">55ж</a>
+        <a href="{% url '60w' %}" class="floating-button">60ж</a>
+        <a href="{% url '65w' %}" class="floating-button">65ж</a>
+        <a href="{% url '70w' %}" class="floating-button">70ж</a>
+        <a href="{% url '75w' %}" class="floating-button">75ж</a>
+        <a href="{% url '80w' %}" class="floating-button">80ж</a>
+        <a href="{% url '+80w' %}" class="floating-button">+80ж</a>
+        <a href="{% url '+80w' %}" class="floating-button">+80ж</a>
+    </div>
+    <h1>{{ title }}</h1>
+    <h1 style="display: {{ alert }}">КАТЕГОРИЯ НЕ ПРЕДСТАВЛЕНА</h1>
+{% endblock header %}
+
+{% block winneronel %}winnerisonel{% endblock winneronel %}
+{% block winnertwol %}winneristwol{% endblock winnertwol %}
+
+{% block winneroner %}winnerisoner{% endblock winneroner %}
+{% block winnertwor %}winneristwor{% endblock winnertwor %}
 
 
-tour
-<hr>
-<h4>Сетка А</h4>
-{% for tour in resa %}
-    {{ tour }}
-    <br>
-{% endfor %}
-<br>
-<h4>Сетка B</h4>
-{% for tour in resb %}
-    {{ tour }}
-    <br>
-{% endfor %}
-{#{{ object.results}}#}
-<br>
-<p>Результаты соревнований: </p>
-{% for i,j in result.items %}
-    {{ i }} Место :{{ j }}
-    <br>
 
 
-{% endfor %}
-</body>
-</html>

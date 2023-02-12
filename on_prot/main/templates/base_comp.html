@@ -1,0 +1,97 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{% static "css/style.css" %}"/>
+    <title>Title</title>
+</head>
+<body>
+{% block header %}
+{% endblock header %}
+<div class="allcompetititon" style="display: {{ no_visible }}">
+    <div class="competition" id="left">
+        <h2>Левая рука</h2>
+        <div class="winner_div">
+            <h3>Выбери победителя</h3>
+            <a href="{% url 'hello' %}"></a>
+
+            <form action="" method="post">
+                {% csrf_token %}
+                <input class="button" type="submit" value="{{ sportsmen1_l }}"
+                       name="{% block winneronel %}{% endblock winneronel %}">
+                <input class="button" type="submit" value="{{ sportsmen2_l }}"
+                       name="{% block winnertwol %}{% endblock winnertwol %}">
+
+            </form>
+        </div>
+        <h3>Список участников соревнований</h3>
+        {{ sps_l }}
+        <hr>
+        <h4>Сетка А</h4>
+        {% for tour in resa_l %}
+            {{ tour }}
+            <br>
+        {% endfor %}
+        <br>
+        <h4>Сетка B</h4>
+        {% for tour in resb_l %}
+            {{ tour }}
+            <br>
+        {% endfor %}
+        {#{{ object.results}}#}
+        <br>
+        <p>Результаты соревнований: </p>
+        {% for i,j in result_l.items %}
+            {{ i }} Место :{{ j }}
+            <br>
+
+
+        {% endfor %}
+
+    </div>
+
+    {% block right %}
+        <div class="competition">
+        <h2>Правая рука</h2>
+        <h3>Выбери победителя</h3>
+
+        <a href="{% url 'hello' %}"></a>
+
+        <form action="" method="post">
+            {% csrf_token %}
+            <input class="button" type="submit" value="{{ sportsmen1_r }}"
+                   name="{% block winneroner %}{% endblock winneroner %}">
+            <input class="button" type="submit" value="{{ sportsmen2_r }}"
+                   name="{% block winnertwor %}{% endblock winnertwor %}">
+
+        </form>
+        <h3>Список участников соревнований</h3>
+        {{ sps_r }}
+        <hr>
+        <h4>Сетка А</h4>
+        {% for tour in resa_r %}
+            {{ tour }}
+            <br>
+        {% endfor %}
+        <br>
+        <h4>Сетка B</h4>
+        {% for tour in resb_r %}
+            {{ tour }}
+            <br>
+        {% endfor %}
+        {#{{ object.results}}#}
+        <br>
+        <p>Результаты соревнований: </p>
+        {% for i,j in result_r.items %}
+            {{ i }} Место :{{ j }}
+            <br>
+
+
+        {% endfor %}
+    {% endblock right %}
+    </div>
+
+
+</body>
+</html>
