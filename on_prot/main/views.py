@@ -5,7 +5,11 @@ from django.shortcuts import render
 from .models import Armwrestler, Competition
 from main.comp_n import Competition, Sportsmen
 
+CATEGORY_NORMALIZER={
+    '60w':"Женщины 60кг",
+    '110m':"Мужчины 110кг"
 
+}
 # Create your views here.
 
 def hello(request):
@@ -98,7 +102,7 @@ def competition_creating(name_of_competition: str):
     return dict_category_competition
 
 
-a = competition_creating("Чемпионат новосибирской области")
+a = competition_creating("Чемпионат новосибирской области по АРМРЕСТЛИНГУ, ")
 
 
 def competition(request, category):
@@ -149,6 +153,7 @@ def competition(request, category):
         "sps_l": list(map(str, a[category+"l"].not_paired_sps)),
         "sps_r": list(map(str, a[category+"r"].not_paired_sps)),
         "title": a["title"],
+        "current_category":CATEGORY_NORMALIZER[category],
         # "gr_a":a[category].group_a[a[category].tour],
         "resa_l": res_gr_a_l,
         "resb_l": res_gr_b_l,

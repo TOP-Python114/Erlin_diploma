@@ -18,9 +18,9 @@
 
             <form action="" method="post">
                 {% csrf_token %}
-                <input class="button" type="submit" value="{{ sportsmen1_l }}"
+                <input class="button shine-button" type="submit" value="{{ sportsmen1_l }}"
                        name="{% block winneronel %}{% endblock winneronel %}">
-                <input class="button" type="submit" value="{{ sportsmen2_l }}"
+                <input class="button shine-button" type="submit" value="{{ sportsmen2_l }}"
                        name="{% block winnertwol %}{% endblock winnertwol %}">
 
             </form>
@@ -60,9 +60,9 @@
 
         <form action="" method="post">
             {% csrf_token %}
-            <input class="button" type="submit" value="{{ sportsmen1_r }}"
+            <input class="button shine-button" type="submit" value="{{ sportsmen1_r }}"
                    name="{% block winneroner %}{% endblock winneroner %}">
-            <input class="button" type="submit" value="{{ sportsmen2_r }}"
+            <input class="button shine-button" type="submit" value="{{ sportsmen2_r }}"
                    name="{% block winnertwor %}{% endblock winnertwor %}">
 
         </form>
@@ -91,7 +91,7 @@
         {% endfor %}
     {% endblock right %}
     </div>
-
+</div>
 
 </body>
 </html>
