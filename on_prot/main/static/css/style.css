@@ -2,6 +2,8 @@ body {
     background: url(https://html5book.ru/wp-content/uploads/2015/07/background39.png);
 }
 
+
+
 h2 {
     margin-left: 40%;
 }
@@ -55,7 +57,7 @@ h2 {
     border-radius: 45px;
     margin: 10px 15px;
     font-family: 'Montserrat', sans-serif;
-    font-size: 11px;
+    font-size: 13px;
     text-transform: uppercase;
     text-align: center;
     letter-spacing: 3px;
@@ -112,4 +114,60 @@ h1 {
 .shine-button:hover:before {
     left: 150px;
     transition: .5s ease-in-out;
+}
+
+.no_active_55m{
+    pointer-events: none;
+    background: blanchedalmond;
+    text-decoration:line-through;
+}
+.no_active_60m{
+    pointer-events: none;
+    background: blanchedalmond;
+    text-decoration:line-through;
+}
+.no_active_65m{
+    pointer-events: none;
+    background: blanchedalmond;
+    text-decoration:line-through;
+}
+.no_active_70m{
+    pointer-events: none;
+    background: blanchedalmond;
+    text-decoration:line-through;
+}
+.no_active_75m{
+    pointer-events: none;
+    background: blanchedalmond;
+    text-decoration:line-through;
+}.no_active_80m{
+    pointer-events: none;
+    background: blanchedalmond;
+    text-decoration:line-through;
+}
+.no_active_85m{
+    pointer-events: none;
+    background: blanchedalmond;
+    text-decoration:line-through;
+}
+.no_active_90m{
+    pointer-events: none;
+    background: blanchedalmond;
+    text-decoration:line-through;
+}
+.no_active_100m{
+    pointer-events: none;
+    background: blanchedalmond;
+    text-decoration:line-through;
+}
+.no_active_110m{
+    pointer-events: none;
+    background: blanchedalmond;
+    text-decoration:line-through;
+}
+
+.no_active_plus110m{
+    pointer-events: none;
+    background: blanchedalmond;
+    text-decoration:line-through;
 }

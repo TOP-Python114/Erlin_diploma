@@ -1,5 +1,18 @@
 from .comp_n import Sportsmen,Competition
 from .models import Armwrestler
+#для удобоваримого отображения категорий
+CATEGORY_NORMALIZER={
+    '60w':"Женщины 60кг",
+    '60m':"Мужчины 60кг",
+
+    '110m':"Мужчины 110кг",
+    '+110m':"Мужчины +110кг"
+
+     #доделать!!!
+}
+
+
+
 def select_category_parcer(category, sex):
     """принимает вес и выводит категорию и пол"""
     mens = [110, 100, 90, 90, 85, 80, 75, 70, 65, 60, 55]
