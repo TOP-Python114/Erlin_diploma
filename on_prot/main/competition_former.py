@@ -2,6 +2,7 @@ from .comp_n import Sportsmen,Competition
 from .models import Armwrestler
 #для удобоваримого отображения категорий
 CATEGORY_NORMALIZER={
+    '50w':"Женщины 50кг",
     '60w':"Женщины 60кг",
     '60m':"Мужчины 60кг",
 
@@ -23,14 +24,14 @@ def select_category_parcer(category, sex):
                 return "+110"
             if int(category) > i:
                 return str(mens[mens.index(i) - 1])
-        return mens[-1]
+        return str(mens[-1])
     elif sex == 'w':
         for i in woman:
             if int(category) > 80:
                 return "+80"
             if int(category) > i:
                 return str(woman[woman.index(i) - 1])
-        return woman[-1]
+        return str(woman[-1])
 
 
 def competition_creating(name_of_competition: str):
@@ -81,10 +82,10 @@ def competition_creating(name_of_competition: str):
                 if select_category_parcer(armwres.weight_category, 'w') == w_category[:-2] and armwres.sex == "w":
                     if w_category not in dict_category_sportsmens:
                         dict_category_sportsmens[w_category] = [
-                            Sportsmen(armwres.name, armwres.weight_category, armwres.age, armwres.sex, armwres.grade)]
+                            Sportsmen(armwres.name, armwres.weight_category, armwres.age,armwres.team, armwres.sex, armwres.grade)]
                     else:
                         dict_category_sportsmens[w_category] += [
-                            Sportsmen(armwres.name, armwres.weight_category, armwres.age, armwres.sex, armwres.grade)]
+                            Sportsmen(armwres.name, armwres.weight_category, armwres.age,armwres.team, armwres.sex, armwres.grade)]
 
         #print(dict_category_sportsmens)
         return dict_category_sportsmens

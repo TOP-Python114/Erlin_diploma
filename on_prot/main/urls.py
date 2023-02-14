@@ -12,7 +12,7 @@ urlpatterns = [
     path('70w/', competition, name="70w", kwargs={'category': '70w'}),
     path('75w/', competition, name="75w", kwargs={'category': '75w'}),
     path('80w/', competition, name="80w", kwargs={'category': '80w'}),
-    path('plus80w/', competition, name="+80w", kwargs={'category': '+80w'}),
+    path('plus80w/', competition, name="plus80w", kwargs={'category': '+80w'}),
     path('55m/', competition, name="55m", kwargs={'category': '55m'}),
     path('60m/', competition, name="60m", kwargs={'category': '60m'}),
     path('65m/', competition, name="65m", kwargs={'category': '65m'}),
@@ -23,7 +23,7 @@ urlpatterns = [
     path('90m/', competition, name="90m", kwargs={'category': '90m'}),
     path('100m/', competition, name="100m", kwargs={'category': '100m'}),
     path('110m/', competition, name="110m", kwargs={'category': '110m'}),
-    path('plus110m/', competition, name="+110m", kwargs={'category': '+110m'}),
+    path('plus110m/', competition, name="plus110m", kwargs={'category': '+110m'}),
 
   #  path('110m/', competition_r, name="110m", kwargs={'category_r': '110rm'}),
 

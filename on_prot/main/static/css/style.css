@@ -74,6 +74,10 @@ h2 {
     color: white;
     transform: translateY(-7px);
 }
+.links{
+  font-family: 'Montserrat', sans-serif;
+    color:red;
+}
 
 p {
     font-family: 'Montserrat', sans-serif;
@@ -115,6 +119,16 @@ h1 {
     left: 150px;
     transition: .5s ease-in-out;
 }
+
+.idbut{
+
+}
+.no_visible{
+    display: none;
+}
+
+
+
 
 .no_active_55m{
     pointer-events: none;

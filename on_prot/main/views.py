@@ -8,16 +8,22 @@ from .competition_former import competition_creating
 # Create your views here.
 
 def hello(request):
-    return render(request, 'index.html')
+    return render(request, 'index.html',
+                  {
+                      "is_categories": is_categories,
+                      "title":a["title"]
+                  }
+                  )
 
 
 # временно
 a = competition_creating("Чемпионат новосибирской области по АРМРЕСТЛИНГУ, ")
+print(a)
+print("гагарин")
+is_categories = sorted(set([x[:-1].replace("+", "plus") for x in a.keys() if x != 'title']))
 
-print("Залупкэ")
-
-is_categories= [x[:-1].replace("+","plus") for x in a.keys() if x!='title']
 print(is_categories)
+
 
 def competition(request, category):
     # не представленные категории
@@ -28,7 +34,8 @@ def competition(request, category):
             'sps_l': "Категория не представлена",
             'no_visible': None,
             'alert': 'block',
-            'is_categories':'попка'
+            'is_categories': is_categories
+
         })
 
     result_l = list(map(str, a[category + "l"].results)) if len(a[category + "l"].results) == len(
@@ -67,8 +74,6 @@ def competition(request, category):
     return render(request, 'competit.html', {
         'no_visible': "flex",
         'alert': None,
-        # "sps_l": list(map(str, a[category+"l"].not_paired_sps)),
-        # "sps_r": list(map(str, a[category+"r"].not_paired_sps)),
         "sps_l": a[category + "l"].not_paired_sps,
         "sps_r": a[category + "r"].not_paired_sps,
         "title": a["title"],
@@ -84,5 +89,6 @@ def competition(request, category):
         "sportsmen2_l": sp2_l,
         "sportsmen1_r": sp1_r,
         "sportsmen2_r": sp2_r,
-        'is_categories': is_categories[0]
+        "is_categories": is_categories,
+        'rr': '555'
     })

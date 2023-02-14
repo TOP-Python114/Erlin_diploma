@@ -1,11 +1,19 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+      <link rel="stylesheet" href="{% static "css/style.css" %}"/>
     <title>Главная страница</title>
 
 </head>
 <body>
-    <a href={% url '110m' %} >Категория мужчины 110</a>
+    <h1> Уважаемые дамы и те кто не красит ногти на ногах, представляем к вниманию: {{ title }} представлены следующие категории</h1>
+    {% for i in is_categories %}
+        <a  href="{% url i %}" class="links">Категория {{ i }}</a>
+
+        <br>
+    {% endfor %}
+
 </body>
 </html>

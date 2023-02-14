@@ -1,43 +1,32 @@
 {% extends "base_comp.html" %}
 {% block header %}
- <script>
-   {#var a={{ in_categories }};#}
-   var a='555';
-     window.onload = function() {
-    alert('Page is loaded');
 
-    $("#55m").text(a)
-
-
-    };
-
-
-    </script>
 
     <div class="menu">
-        <a href="{% url '55m' %}" id="55m" class="floating-button">55м</a>
-        <a href="{% url '60m' %}" class="{{ no_active_60m }} floating-button">60м</a>
-        <a href="{% url '65m' %}" class={{ no_active_65m }} "floating-button">65м</a>
-        <a href="{% url '70m' %}" class={{ no_active_60m }} "floating-button">70м</a>
-        <a href="{% url '75m' %}" class={{ no_active_75m }} "floating-button">75м</a>
-        <a href="{% url '80m' %}" class="{{ no_active_80m }} floating-button">80м</a>
-        <a href="{% url '85m' %}" class="{{ no_active_85m }} floating-button">85м</a>
-        <a href="{% url '90m' %}" class="{{ no_active_90m }} floating-button">90м</a>
-        <a href="{% url '100m' %}" class="{{ no_active_100m }} floating-button">100м</a>
-        <a href="{% url '110m' %}" class="{{ no_active_110m }} floating-button">110м</a>
-        <a href="{% url '+110m' %}" class="{{ no_active_plus110 }} floating-button">+110м</a>
+        <a href="{% url '55m' %}" id="55m" class="idbut floating-button no_visible">55м</a>
+        <a href="{% url '60m' %}" id="60m" class="idbut floating-button no_visible">60м</a>
+        <a href="{% url '65m' %}" id="65m" class="idbut floating-button no_visible">65м</a>
+        <a href="{% url '70m' %}" id="70m" class="idbut floating-button no_visible">70м</a>
+        <a href="{% url '75m' %}" id="75m" class="idbut floating-button no_visible">75м</a>
+        <a href="{% url '80m' %}" id="80m" class="idbut floating-button no_visible">80м</a>
+        <a href="{% url '85m' %}" id="85m" class="idbut floating-button no_visible">85м</a>
+        <a href="{% url '90m' %}" id="90m" class="idbut floating-button no_visible">90м</a>
+        <a href="{% url '100m' %}" id="100m" class="idbut floating-button no_visible">100м</a>
+        <a href="{% url '110m' %}" id="110m" class="idbut floating-button no_visible">110м</a>
+        <a href="{% url 'plus110m' %}" id="plus110m" class="idbut floating-button no_visible">+110м</a>
     </div>
     <div class="menu">
-        <a href="{% url '50w' %}" class="floating-button">50ж</a>
-        <a href="{% url '55w' %}" class="floating-button">55ж</a>
-        <a href="{% url '60w' %}" class="floating-button">60ж</a>
-        <a href="{% url '65w' %}" class="floating-button">65ж</a>
-        <a href="{% url '70w' %}" class="floating-button">70ж</a>
-        <a href="{% url '75w' %}" class="floating-button">75ж</a>
-        <a href="{% url '80w' %}" class="floating-button">80ж</a>
-        <a href="{% url '+80w' %}" class="floating-button">+80ж</a>
-        <a href="{% url '+80w' %}" class="floating-button">+80ж</a>
+        <a href="{% url '50w' %}" id="50w" class="idbut floating-button no_visible">50ж</a>
+        <a href="{% url '55w' %}" id="55w" class="idbut floating-button no_visible">55ж</a>
+        <a href="{% url '60w' %}" id="60w" class="idbut floating-button no_visible">60ж</a>
+        <a href="{% url '65w' %}" id="65w" class="idbut floating-button no_visible">65ж</a>
+        <a href="{% url '70w' %}" id="70w" class="idbut floating-button no_visible">70ж</a>
+        <a href="{% url '75w' %}" id="75w" class="idbut floating-button no_visible">75ж</a>
+        <a href="{% url '80w' %}" id="80w" class="idbut floating-button no_visible">80ж</a>
+        <a href="{% url 'plus80w' %}" id="plus80w" class="idbut floating-button no_visible">+80ж</a>
+
     </div>
+
     <h1>{{ title }} {{ current_category }}</h1>
     <h1 style="display: {{ alert }}">КАТЕГОРИЯ НЕ ПРЕДСТАВЛЕНА</h1>
 {% endblock header %}
@@ -48,6 +37,32 @@
 {% block winneroner %}winnerisoner{% endblock winneroner %}
 {% block winnertwor %}winneristwor{% endblock winnertwor %}
 
+{% block scripts %}
 
+    {# забабахал java скрипт, чтобы фильтровать незадействованые категории#}
+    {{ is_categories }}
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+    <script>
+        var is_categories = [
+            {% for item in is_categories %}
+                '{{ item }}',
+            {% endfor %}
+        ];
+        var itemsy = $(".idbut");
+
+
+        for (let i = 0; i < itemsy.length; i++) {
+            if (is_categories.includes(itemsy[i].id)) {
+                itemsy[i].classList.remove('no_visible')
+
+            }
+        }
+    </script>
+
+
+
+
+{% endblock scripts %}
 
 

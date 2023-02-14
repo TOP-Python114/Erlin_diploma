@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="{% static "css/style.css" %}"/>
     <title>Title</title>
+
 </head>
 <body>
 {% block header %}
@@ -27,9 +28,8 @@
         </div>
         <h3>Список участников соревнований</h3>
         {% for arml in sps_l %}
-            {{ arml.name }}
-            {{ arml.weight }}
-             <br>
+            Спортсмен:{{ arml.name }},    Команда: {{ arml.team }}, Звание {{ arml.grade }}
+            <br>
         {% endfor %}
 
         <hr>
@@ -72,10 +72,9 @@
 
         </form>
         <h3>Список участников соревнований</h3>
-       {% for arml in sps_r %}
-            {{ arml.name }}
-            {{ arml.weight }}
-           <br>
+           {% for arml in sps_l %}
+            Спортсмен:{{ arml.name }},    Команда: {{ arml.team }}, Звание {{ arml.grade }}
+            <br>
         {% endfor %}
         <hr>
         <h4>Сетка А</h4>
@@ -101,6 +100,11 @@
     {% endblock right %}
     </div>
 </div>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+
+
+{% block scripts %}
+{% endblock scripts %}
+
+
 </body>
 </html>

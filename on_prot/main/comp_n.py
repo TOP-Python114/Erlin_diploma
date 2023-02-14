@@ -14,7 +14,7 @@ class Sportsmen:
         self.trainer = trainer
 
     def __str__(self):
-        return self.name
+        return f"{self.name}"
 
 
 a = [Sportsmen("sportsmen" + str(i), weight=randrange(120, 150), age=randrange(16, 58), ) for i in range(3)]
