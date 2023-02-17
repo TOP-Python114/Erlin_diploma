@@ -44,9 +44,10 @@ def competition(request, category):
         a[category + "r"].not_paired_sps) else []
 
     if request.method == 'POST':
-        # if a[category].game_over:
+        # if a[category+'l'].game_over:
         #     print("Игра все!!!!!!!!!!!!!!!!!!!!!!!")
-        #     return render(request, 'competit.html', {"result": {i + 1: j for i, j in enumerate(result)}})
+        #     return render(request, 'competit.html', {"result": {i + 1: j for i, j in enumerate(a[category+"l"].results)}})
+
         if "winnerisonel" in request.POST:
             print(request.POST)
             a[category + "l"].fight(1)
@@ -71,6 +72,7 @@ def competition(request, category):
     sp1_r = a[category + "r"].sportsmen1
     sp2_r = a[category + "r"].sportsmen2
 
+
     return render(request, 'competit.html', {
         'no_visible': "flex",
         'alert': None,
@@ -78,7 +80,6 @@ def competition(request, category):
         "sps_r": a[category + "r"].not_paired_sps,
         "title": a["title"],
         "current_category": CATEGORY_NORMALIZER[category],
-        # "gr_a":a[category].group_a[a[category].tour],
         "resa_l": res_gr_a_l,
         "resb_l": res_gr_b_l,
         "resa_r": res_gr_a_r,
@@ -90,5 +91,8 @@ def competition(request, category):
         "sportsmen1_r": sp1_r,
         "sportsmen2_r": sp2_r,
         "is_categories": is_categories,
-        'rr': '555'
+        'rr': '555',
+        'game_over_left': a[category + "l"].game_over*"None",
+        'game_over_right': a[category + "r"].game_over*"None",
+
     })

@@ -1,5 +1,5 @@
 import datetime
-from random import randrange
+from random import randrange,shuffle
 
 
 class Sportsmen:
@@ -28,6 +28,7 @@ class Competition:
         self.category = category
         self.begin = False
         self.not_paired_sps = sp_s
+        shuffle(sp_s)
         self.sportsmens = self.pairy_list(self.not_paired_sps)
         self.group_a = [list() for _ in range(len(sp_s) + 20)]
         self.group_b = [list() for _ in range(len(sp_s) + 20)]
@@ -360,14 +361,14 @@ class Competition:
                     self.tour += 1
                     self.group = 'a'
 
-    def fight_one(self):
-        self.fight(1)
-        self.chitaem += 1
-        return "Победил спортсмен 1"
-
-    def fight_two(self):
-        self.fight(2)
-        self.chitaem += 1
+    # def fight_one(self):
+    #     self.fight(1)
+    #     self.chitaem += 1
+    #     return "Победил спортсмен 1"
+    #
+    # def fight_two(self):
+    #     self.fight(2)
+    #     self.chitaem += 1
 
 
 if __name__ == "__main__":

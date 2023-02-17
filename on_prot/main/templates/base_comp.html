@@ -11,7 +11,7 @@
 {% block header %}
 {% endblock header %}
 <div class="allcompetititon" style="display: {{ no_visible }}">
-    <div class="competition" id="left">
+    <div class="competition" id="left" style="display: {{ game_over_left }}">
         <h2>Левая рука</h2>
         <div class="winner_div">
             <h3>Выбери победителя</h3>
@@ -91,6 +91,7 @@
         {#{{ object.results}}#}
         <br>
         <p>Результаты соревнований: </p>
+
         {% for i,j in result_r.items %}
             {{ i }} Место :{{ j }}
             <br>
