@@ -38,26 +38,27 @@
             {{ tour }}
             <br>
         {% endfor %}
-        <br>
+        <hr>
         <h4>Сетка B</h4>
         {% for tour in resb_l %}
             {{ tour }}
             <br>
         {% endfor %}
-        {#{{ object.results}}#}
         <br>
-        <p>Результаты соревнований: </p>
+        {% for tour in resfin_l %}
+            {{ tour }}
+            <br>
+        {% endfor %}
+    </div>
+    <div class="competition" style="display: {{ res_left_vis }}">
+        <p>Результаты левой руки: </p>
         {% for i,j in result_l.items %}
             {{ i }} Место :{{ j }}
             <br>
-
-
         {% endfor %}
-
     </div>
 
-    {% block right %}
-        <div class="competition">
+    <div class="competition" style="display: {{ game_over_right }}">
         <h2>Правая рука</h2>
         <h3>Выбери победителя</h3>
 
@@ -72,7 +73,7 @@
 
         </form>
         <h3>Список участников соревнований</h3>
-           {% for arml in sps_l %}
+        {% for arml in sps_l %}
             Спортсмен:{{ arml.name }},    Команда: {{ arml.team }}, Звание {{ arml.grade }}
             <br>
         {% endfor %}
@@ -90,15 +91,15 @@
         {% endfor %}
         {#{{ object.results}}#}
         <br>
-        <p>Результаты соревнований: </p>
+    </div>
 
-        {% for i,j in result_r.items %}
-            {{ i }} Место :{{ j }}
+    <div class="competition" style="display: {{ res_right_vis }}">
+        <p>Результаты правой руки: </p>
+        {% for place,sportsmen in result_r.items %}
+            {{ place }} Место :{{ sportsmen }}
             <br>
-
-
         {% endfor %}
-    {% endblock right %}
+
     </div>
 </div>
 

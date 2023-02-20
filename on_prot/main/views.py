@@ -38,10 +38,7 @@ def competition(request, category):
 
         })
 
-    result_l = list(map(str, a[category + "l"].results)) if len(a[category + "l"].results) == len(
-        a[category + "l"].not_paired_sps) else []
-    result_r = list(map(str, a[category + 'r'].results)) if len(a[category + "r"].results) == len(
-        a[category + "r"].not_paired_sps) else []
+
 
     if request.method == 'POST':
         # if a[category+'l'].game_over:
@@ -62,16 +59,19 @@ def competition(request, category):
 
     res_gr_a_l = a[category + "l"].return_group_a().split('\n')
     res_gr_b_l = a[category + "l"].return_group_b().split('\n')
-
+    res_fin_l = a[category + "l"].return_final().split('\n')
     sp1_l = a[category + "l"].sportsmen1
     sp2_l = a[category + "l"].sportsmen2
 
     res_gr_a_r = a[category + "r"].return_group_a().split('\n')
     res_gr_b_r = a[category + "r"].return_group_b().split('\n')
-
+    res_fin_r = a[category + "r"].return_final().split('\n')
     sp1_r = a[category + "r"].sportsmen1
     sp2_r = a[category + "r"].sportsmen2
-
+    result_l = list(map(str, a[category + "l"].results)) if len(a[category + "l"].results) == len(
+        a[category + "l"].not_paired_sps) else []
+    result_r = list(map(str, a[category + 'r'].results)) if len(a[category + "r"].results) == len(
+        a[category + "r"].not_paired_sps) else []
 
     return render(request, 'competit.html', {
         'no_visible': "flex",
@@ -84,6 +84,8 @@ def competition(request, category):
         "resb_l": res_gr_b_l,
         "resa_r": res_gr_a_r,
         "resb_r": res_gr_b_r,
+        "resfin_l": res_fin_l,
+        "resfin_r": res_fin_r,
         "result_l": {i + 1: j for i, j in enumerate(result_l)},
         "result_r": {i + 1: j for i, j in enumerate(result_r)},
         "sportsmen1_l": sp1_l,
@@ -94,5 +96,7 @@ def competition(request, category):
         'rr': '555',
         'game_over_left': a[category + "l"].game_over*"None",
         'game_over_right': a[category + "r"].game_over*"None",
-
+        #видимость надписи результаты соревнований
+        'res_left_vis': (not a[category + "l"].game_over)*"None" or 'block',
+        'res_right_vis': (not a[category + "r"].game_over)*"None" or 'block',
     })

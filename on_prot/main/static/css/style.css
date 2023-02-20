@@ -3,7 +3,6 @@ body {
 }
 
 
-
 h2 {
     margin-left: 40%;
 }
@@ -35,7 +34,7 @@ h2 {
 
     justify-content: space-between;
 
-    padding: 40px;
+    padding: 10px 40px;
 
 }
 
@@ -51,8 +50,8 @@ h2 {
     text-decoration: none;
     display: inline-block;
     width: 140px;
-    height: 45px;
-    line-height: 45px;
+    height: 20px;
+    line-height: 20px;
     border: 1px solid #fe6637;
     border-radius: 45px;
     margin: 10px 15px;
@@ -74,17 +73,20 @@ h2 {
     color: white;
     transform: translateY(-7px);
 }
-.links{
-  font-family: 'Montserrat', sans-serif;
-    color:red;
+
+.links {
+    font-family: 'Montserrat', sans-serif;
+    color: red;
 }
 
 p {
     font-family: 'Montserrat', sans-serif;
 }
+
 h1 {
     font-family: 'Montserrat', sans-serif;
 }
+
 .shine-button {
     text-decoration: none;
     display: inline-block;
@@ -120,68 +122,11 @@ h1 {
     transition: .5s ease-in-out;
 }
 
-.idbut{
 
-}
-.no_visible{
+.no_visible {
     display: none;
 }
 
 
 
 
-.no_active_55m{
-    pointer-events: none;
-    background: blanchedalmond;
-    text-decoration:line-through;
-}
-.no_active_60m{
-    pointer-events: none;
-    background: blanchedalmond;
-    text-decoration:line-through;
-}
-.no_active_65m{
-    pointer-events: none;
-    background: blanchedalmond;
-    text-decoration:line-through;
-}
-.no_active_70m{
-    pointer-events: none;
-    background: blanchedalmond;
-    text-decoration:line-through;
-}
-.no_active_75m{
-    pointer-events: none;
-    background: blanchedalmond;
-    text-decoration:line-through;
-}.no_active_80m{
-    pointer-events: none;
-    background: blanchedalmond;
-    text-decoration:line-through;
-}
-.no_active_85m{
-    pointer-events: none;
-    background: blanchedalmond;
-    text-decoration:line-through;
-}
-.no_active_90m{
-    pointer-events: none;
-    background: blanchedalmond;
-    text-decoration:line-through;
-}
-.no_active_100m{
-    pointer-events: none;
-    background: blanchedalmond;
-    text-decoration:line-through;
-}
-.no_active_110m{
-    pointer-events: none;
-    background: blanchedalmond;
-    text-decoration:line-through;
-}
-
-.no_active_plus110m{
-    pointer-events: none;
-    background: blanchedalmond;
-    text-decoration:line-through;
-}

@@ -19,7 +19,6 @@ class Sportsmen:
 
 a = [Sportsmen("sportsmen" + str(i), weight=randrange(120, 150), age=randrange(16, 58), ) for i in range(3)]
 
-erlin = Sportsmen('Ерлин Юрий Сергеевич', 35, 120.5, "Самостоятельно")
 
 
 class Competition:
@@ -28,6 +27,7 @@ class Competition:
         self.category = category
         self.begin = False
         self.not_paired_sps = sp_s
+        #жеребьевка
         shuffle(sp_s)
         self.sportsmens = self.pairy_list(self.not_paired_sps)
         self.group_a = [list() for _ in range(len(sp_s) + 20)]
@@ -36,18 +36,21 @@ class Competition:
         self.chitaem = 0
         self.tour = 0
         self.pair = 0
+        #результаты
         self.results = []
+        #текущий финал
         self.final = []
+        # финальная группа, это тоже в общем список списков потому что финалов может быть 2
         self.group_final = []
         self.game_over = False
         self.checker = False
         self.two_losers_in_final = False
 
-    def add_sportsmen(self, new_sportsmen: Sportsmen):
-        if self.begin:
-            return
-        self.not_paired_sps += [new_sportsmen]
-        print(self.not_paired_sps)
+    # def add_sportsmen(self, new_sportsmen: Sportsmen):
+    #     if self.begin:
+    #         return
+    #     self.not_paired_sps += [new_sportsmen]
+    #     print(self.not_paired_sps)
 
     def print_group_a(self):
         print("Группа А:")
@@ -61,6 +64,7 @@ class Competition:
         print(" ")
 
     def return_group_a(self):
+        """ возвращает строкой группу А"""
         res = "Тур: 0 " + " ".join(a.name for a in self.not_paired_sps) + "\n"
         for cou, tour in enumerate(self.group_a):
             if not tour:
@@ -82,6 +86,7 @@ class Competition:
         return res
 
     def return_group_b(self):
+        """ возвращает строкой группу Б"""
         # res = "Тур: 0 " + " ".join(a.name for a in self.not_paired_sps) + "\n"
         res = ""
         for cou, tour in enumerate(self.group_b):
@@ -118,6 +123,18 @@ class Competition:
         for num, final in enumerate(self.group_final):
             print("финал №" + str(num + 1) + " " + str(final[0][0]), str(final[1][0]))
         print(" ")
+    def return_final(self):
+        """ возвращает строкой финальную группу"""
+        res=""
+        for tour,pairs in enumerate(self.group_final):
+            res += f'Финал №{tour + 1}: '
+            for spm in pairs:
+                res+=str(spm[0])
+                res+=", "
+            res+='\n'
+        return res
+
+
 
     def print_results(self):
         for place, sportsmen in enumerate(self.results):
@@ -361,14 +378,6 @@ class Competition:
                     self.tour += 1
                     self.group = 'a'
 
-    # def fight_one(self):
-    #     self.fight(1)
-    #     self.chitaem += 1
-    #     return "Победил спортсмен 1"
-    #
-    # def fight_two(self):
-    #     self.fight(2)
-    #     self.chitaem += 1
 
 
 if __name__ == "__main__":
@@ -404,7 +413,8 @@ if __name__ == "__main__":
     print(comp.return_group_a())
     print(comp.return_group_b())
     comp.print_group_final()
-
+    print("Внизу")
+    print(comp.return_final())
     print("Результаты соревнований: ")
     comp.print_results()
 
