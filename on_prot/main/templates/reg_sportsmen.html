@@ -1,0 +1,27 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<a href="{% url 'hello' %}" class="links">главная</a>
+<br>
+Регистрация спортсмена
+<div>
+        <form action="" method="post">
+            {% csrf_token %}
+            <div>
+                {{ form.as_p }}
+            </div>
+            <div>
+                <input type="submit" name="SubmitDel">
+            </div>
+        </form>
+    </div>
+
+
+
+</body>
+</html>

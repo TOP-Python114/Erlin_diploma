@@ -1,3 +1,5 @@
+import datetime
+
 from .comp_n import Sportsmen,Competition
 from .models import Armwrestler
 #для удобоваримого отображения категорий
@@ -34,7 +36,7 @@ def select_category_parcer(category, sex):
         return str(woman[-1])
 
 
-def competition_creating(name_of_competition: str):
+def competition_creating(name_of_competition: str,date_of_competition:datetime.datetime):
     """
     создание дикта в котором
     ключ - код турнирной сетки "110lm" например это категория 110, рука левая мужчины
@@ -65,7 +67,7 @@ def competition_creating(name_of_competition: str):
     # словарь в котором ключ - категория, а значение объект соревнования
 
     def configure_list_of_sportsmen():
-        """делает дикт категория, список объектов спортсмен данного мероприятия"""
+        """делает дикт:  категория : список объектов: 'спортсмен данного мероприятия'"""
         # часть формирующая мужскую часть соревнования
         for m_category in list_of_categories()[0]:
             for armwres in Armwrestler.objects.all():
@@ -95,4 +97,6 @@ def competition_creating(name_of_competition: str):
         dict_category_competition[cat] = Competition(sps, "left", cat, name_of_competition)
 
     dict_category_competition["title"] = name_of_competition
+    dict_category_competition["date"] = date_of_competition
+
     return dict_category_competition

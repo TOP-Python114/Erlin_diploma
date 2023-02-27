@@ -22,10 +22,11 @@ a = [Sportsmen("sportsmen" + str(i), weight=randrange(120, 150), age=randrange(1
 
 
 class Competition:
-    def __init__(self, sp_s: list, hand: str = 'left', category="65", title='notitle', date=datetime.datetime.now()):
+    def __init__(self, sp_s: list, hand: str = 'left', category="65", title='notitle', date_=datetime.datetime.now()):
         self.hand = hand
         self.category = category
         self.begin = False
+        #self._date=date_
         self.not_paired_sps = sp_s
         #жеребьевка
         shuffle(sp_s)

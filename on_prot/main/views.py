@@ -1,8 +1,11 @@
 # from pprint import pprint
+from datetime import datetime
+from .forms import CompetitionForm, SportsmenRegistrationForm
 from .competition_former import CATEGORY_NORMALIZER
 from django.http import HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .competition_former import competition_creating
+from .models import AllResults, Armwrestler,AllCompetition,SportsmenRegistration
 
 
 # Create your views here.
@@ -11,23 +14,59 @@ def hello(request):
     return render(request, 'index.html',
                   {
                       "is_categories": is_categories,
-                      "title":a["title"]
+                      "title": a["title"]
                   }
                   )
 
 
-# временно
-a = competition_creating("Чемпионат новосибирской области по АРМРЕСТЛИНГУ, ")
-print(a)
-print("гагарин")
-is_categories = sorted(set([x[:-1].replace("+", "plus") for x in a.keys() if x != 'title']))
+def reg_competition(request):
+    if request.method == "GET":
+        return render(request, 'reg_comp.html', {"form": CompetitionForm})
+    elif request.method=='POST':
+        form = CompetitionForm(request.POST)
+        if form.is_valid():
+            comp=AllCompetition(**form.cleaned_data)
+            comp.save()
+    return redirect(request.path)
 
-print(is_categories)
+
+def reg_sportsmen(request):
+    if request.method == "GET":
+        return render(request, 'reg_sportsmen.html', {"form": SportsmenRegistrationForm})
+    elif request.method=='POST':
+
+        form = SportsmenRegistrationForm(request.POST)
+        if form.is_valid():
+            sp_n=SportsmenRegistration(**form.cleaned_data)
+            sp_n.save()
+    return redirect(request.path)
+
+# def comp_constructor(request):
+#     if request.method == "GET":
+#         return render(request, 'competition_constructor.html', {"form": SportsmenRegistrationForm})
+#     elif request.method=='POST':
+#
+#         form = SportsmenRegistrationForm(request.POST)
+#         if form.is_valid():
+#             sp_n=SportsmenRegistration(**form.cleaned_data)
+#             sp_n.save()
+#     return redirect(request.path)
+
+
+# временно
+
+
+
+
+a = competition_creating("Чемпионат новосибирской области по АРМРЕСТЛИНГУ,", date_of_competition=datetime(2022, 5, 17))
+
+is_categories = sorted(set([x[:-1].replace("+", "plus") for x in a.keys() if x != 'title' and x != 'date']))
+
 
 
 def competition(request, category):
     # не представленные категории
-
+    # использвуется только если кто то намеренно наберет в адрестну строку не юзаную категорию
     if category not in [x[:-1] for x in a]:
         print("no_active_" + category)
         return render(request, 'competit.html', {
@@ -38,12 +77,7 @@ def competition(request, category):
 
         })
 
-
-
     if request.method == 'POST':
-        # if a[category+'l'].game_over:
-        #     print("Игра все!!!!!!!!!!!!!!!!!!!!!!!")
-        #     return render(request, 'competit.html', {"result": {i + 1: j for i, j in enumerate(a[category+"l"].results)}})
 
         if "winnerisonel" in request.POST:
             print(request.POST)
@@ -73,6 +107,35 @@ def competition(request, category):
     result_r = list(map(str, a[category + 'r'].results)) if len(a[category + "r"].results) == len(
         a[category + "r"].not_paired_sps) else []
 
+    if a[category + 'l'].game_over:
+        for place_, sp_n in enumerate(a[category + 'l'].results):
+            sp_n_to_save = AllResults(
+                title_competition=a['title'],
+                date=a['date'],
+                # надо изменить объекты, чтобы делать распаковку
+                # sportsmen=Armwrestler(name=sp_n.name,age=sp_n.age,weight_category=sp_n.weight,team=sp_n.team,sex=sp_n.sex,grade=sp_n.grade),
+                sportsmen=sp_n.name,
+                category=sp_n.weight,
+                sex=sp_n.sex,
+                hand="l",
+                place=place_ + 1
+            )
+            sp_n_to_save.save()
+
+    if a[category + 'r'].game_over:
+        for place_, sp_n in enumerate(a[category + 'r'].results):
+            sp_n_to_save = AllResults(
+                title_competition=a['title'],
+                date=a['date'],
+                # sportsmen=Armwrestler(name=sp_n.name, age=sp_n.age, weight_category=sp_n.weight, team=sp_n.team, sex=sp_n.sex, grade=sp_n.grade),
+                sportsmen=sp_n.name,
+                category=sp_n.weight,
+                sex=sp_n.sex,
+                hand="r",
+                place=place_ + 1
+            )
+            sp_n_to_save.save()
+
     return render(request, 'competit.html', {
         'no_visible': "flex",
         'alert': None,
@@ -94,9 +157,9 @@ def competition(request, category):
         "sportsmen2_r": sp2_r,
         "is_categories": is_categories,
         'rr': '555',
-        'game_over_left': a[category + "l"].game_over*"None",
-        'game_over_right': a[category + "r"].game_over*"None",
-        #видимость надписи результаты соревнований
-        'res_left_vis': (not a[category + "l"].game_over)*"None" or 'block',
-        'res_right_vis': (not a[category + "r"].game_over)*"None" or 'block',
+        'game_over_left': a[category + "l"].game_over * "None",
+        'game_over_right': a[category + "r"].game_over * "None",
+        # видимость надписи результаты соревнований
+        'res_left_vis': (not a[category + "l"].game_over) * "None" or 'block',
+        'res_right_vis': (not a[category + "r"].game_over) * "None" or 'block',
     })
