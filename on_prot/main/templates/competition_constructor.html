@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,6 +6,22 @@
     <title>Title</title>
 </head>
 <body>
+<a href="{% url 'hello' %}" class="links">главная</a>
+<br>
+Создание турнира
+<div>
+        <form action="" method="post">
+            {% csrf_token %}
+            <div>
+                {{ form.as_p }}
+            </div>
+            <div>
+                <input type="submit" name="CreatingCompetition">
+            </div>
+        </form>
+    </div>
+
+
 
 </body>
 </html>

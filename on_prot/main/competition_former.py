@@ -36,14 +36,14 @@ def select_category_parcer(category, sex):
         return str(woman[-1])
 
 
-def competition_creating(name_of_competition: str,date_of_competition:datetime.datetime):
+def competition_creating(name_of_competition: str,date_of_competition:datetime.datetime,li=Armwrestler.objects.all()):
     """
     создание дикта в котором
     ключ - код турнирной сетки "110lm" например это категория 110, рука левая мужчины
     значение экземаляр соревнования
     """
 
-    def list_of_categories(li=Armwrestler.objects.all()):
+    def list_of_categories():
         """проходит по всем объектам борцов и выдает списком все использующиеся категории"""
         w_categories = set()
         m_categories = set()

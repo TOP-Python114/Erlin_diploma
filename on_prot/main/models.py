@@ -60,6 +60,7 @@ class AllCompetition(models.Model):
     def __str__(self):
         return f"{self.title} {self.date}"
 
+
 class SportsmenRegistration(models.Model):
     competition=models.ForeignKey(AllCompetition,on_delete=models.CASCADE)
     sportsmen=models.ForeignKey(Armwrestler,on_delete=models.CASCADE)

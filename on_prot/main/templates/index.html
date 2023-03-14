@@ -12,13 +12,15 @@
 <h1> рабочее главное меню</h1>
 <a href="{% url 'rc' %}" class="links">Регистрация турнира</a>
 <br>
+<a href="cmp" class="links">старт турнира</a>
+<br>
 <a href="{% url 'rs' %}" class="links">Регистрация спортсмена</a>
 <br>
-{% for i in is_categories %}
-    <a href="{% url i %}" class="links">Категория {{ i }}</a>
-
-    <br>
-{% endfor %}
+{#{% for i in is_categories %}#}
+{#    <a href="i/" class="links">Категория {{ i }}</a>#}
+{##}
+{#    <br>#}
+{#{% endfor %}#}
 
 </body>
 </html>
