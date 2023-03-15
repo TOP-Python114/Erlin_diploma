@@ -17,7 +17,7 @@ class Sportsmen:
         return f"{self.name}"
 
 
-a = [Sportsmen("sportsmen" + str(i), weight=randrange(120, 150), age=randrange(16, 58), ) for i in range(3)]
+a = [Sportsmen("sportsmen" + str(i), weight=randrange(120, 150), age=randrange(16, 58), ) for i in range(2)]
 
 
 
@@ -46,7 +46,7 @@ class Competition:
         self.game_over = False
         self.checker = False
         self.two_losers_in_final = False
-
+        self.did=0
     # def add_sportsmen(self, new_sportsmen: Sportsmen):
     #     if self.begin:
     #         return
@@ -160,8 +160,15 @@ class Competition:
         """высчитывает имя первого спортсмена"""
         if len(self.not_paired_sps) == 1:
             return self.not_paired_sps[0]
+
+        if len(self.not_paired_sps) == 2 and not self.final:
+            return self.not_paired_sps[0]
+
         if len(self.final) == 2:
             return self.final[0][0]
+
+
+
         # обработка свободного круга
 
         if self.tour > 0 and len(self.group_a[self.tour - 1][self.pair]) == 1:
@@ -184,8 +191,14 @@ class Competition:
             return ""
         if len(self.not_paired_sps) == 1:
             return None
+        if len(self.not_paired_sps)==2 and not self.final:
+            return self.not_paired_sps[1]
+
         if len(self.final) == 2:
             return self.final[1][0]
+
+
+
         # обработка свободного круга
         # if self.tour > 0 and len(self.group_a[self.tour - 1][self.pair]) == 1:
         #     return self.group_b[self.tour][self.pair][1]
@@ -218,12 +231,32 @@ class Competition:
             self.results += [self.not_paired_sps[0]]
             self.game_over = True
             return
+        #если всего два участника
+
+
+        if len(self.not_paired_sps) == 2:
+            if not self.did:
+                if winner == 1:
+                    self.group_a+=[[self.not_paired_sps[0]]]
+                    self.group_b += [[self.not_paired_sps[1]]]
+                    self.final+= [[self.not_paired_sps[0]]]
+                    self.final += [[self.not_paired_sps[1]]]
+                elif winner == 2:
+                    self.group_a += [[self.not_paired_sps[1]]]
+                    self.group_b += [[self.not_paired_sps[0]]]
+                    self.final += [[self.not_paired_sps[1]]]
+                    self.final += [[self.not_paired_sps[0]]]
+                self.did=1
+                self.tour+=1
+                return
 
         if len(self.final) == 2:
             self.group_final += [self.final]
             # финал сформирован
 
             if winner == 1:
+                print(self.final)
+                print("что блять")
                 self.results += self.final[1]
                 self.results += self.final[0]
                 self.game_over = True

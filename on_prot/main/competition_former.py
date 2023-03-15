@@ -36,13 +36,14 @@ def select_category_parcer(category, sex):
         return str(woman[-1])
 
 
-def competition_creating(name_of_competition: str,date_of_competition:datetime.datetime,li=Armwrestler.objects.all()):
+def competition_creating(name_of_competition: str,date_of_competition:datetime.datetime,li):
     """
     создание дикта в котором
     ключ - код турнирной сетки "110lm" например это категория 110, рука левая мужчины
     значение экземаляр соревнования
     """
-
+    print("ЛИ")
+    print(li)
     def list_of_categories():
         """проходит по всем объектам борцов и выдает списком все использующиеся категории"""
         w_categories = set()
@@ -70,7 +71,7 @@ def competition_creating(name_of_competition: str,date_of_competition:datetime.d
         """делает дикт:  категория : список объектов: 'спортсмен данного мероприятия'"""
         # часть формирующая мужскую часть соревнования
         for m_category in list_of_categories()[0]:
-            for armwres in Armwrestler.objects.all():
+            for armwres in li:
                 if select_category_parcer(armwres.weight_category, 'm') == m_category[:-2] and armwres.sex == "m":
                     if m_category not in dict_category_sportsmens:
                         dict_category_sportsmens[m_category] = [
@@ -80,7 +81,7 @@ def competition_creating(name_of_competition: str,date_of_competition:datetime.d
                             Sportsmen(armwres.name, armwres.weight_category, armwres.age, armwres.sex, armwres.grade)]
         # часть формирующая женскую часть соревнования
         for w_category in list_of_categories()[1]:
-            for armwres in Armwrestler.objects.all():
+            for armwres in li:
                 if select_category_parcer(armwres.weight_category, 'w') == w_category[:-2] and armwres.sex == "w":
                     if w_category not in dict_category_sportsmens:
                         dict_category_sportsmens[w_category] = [

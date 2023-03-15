@@ -3,33 +3,32 @@
 
 
     <div class="menu">
-{#        <a href="{% url '55m' %}" id="55m" class="idbut floating-button no_visible">55м</a>#}
-{#        <a href="{% url '60m' %}" id="60m" class="idbut floating-button no_visible">60м</a>#}
-{#        <a href="{% url '65m' %}" id="65m" class="idbut floating-button no_visible">65м</a>#}
-{#        <a href="{% url '70m' %}" id="70m" class="idbut floating-button no_visible">70м</a>#}
-{#        <a href="{% url '75m' %}" id="75m" class="idbut floating-button no_visible">75м</a>#}
-{#        <a href="{% url '75m' %}" id="75m" class="idbut floating-button no_visible">75м</a>#}
-{#        <a href="{% url '80m' %}" id="80m" class="idbut floating-button no_visible">80м</a>#}
-{#        <a href="{% url '85m' %}" id="85m" class="idbut floating-button no_visible">85м</a>#}
-{#        <a href="{% url '90m' %}" id="90m" class="idbut floating-button no_visible">90м</a>#}
-{#        <a href="{% url '100m' %}" id="100m" class="idbut floating-button no_visible">100м</a>#}
-{#        <a href="110m/" id="110m" class="idbut floating-button no_visible">110м</a>#}
-        <a href="../../+110m/" id="plus110m" class="idbut floating-button no_visible">+110м</a>
+        <a href="../../55m" id="55m" class="idbut floating-button no_visible">55м</a>
+        <a href="../../60m" id="60m" class="idbut floating-button no_visible">60м</a>
+        <a href="../../65m" id="65m" class="idbut floating-button no_visible">65м</a>
+        <a href="../../70m" id="70m" class="idbut floating-button no_visible">70м</a>
+        <a href="../../75m" id="75m" class="idbut floating-button no_visible">75м</a>
+        <a href="../../80m" id="80m" class="idbut floating-button no_visible">80м</a>
+        <a href="../../85m" id="85m" class="idbut floating-button no_visible">85м</a>
+        <a href="../../90m" id="90m" class="idbut floating-button no_visible">90м</a>
+        <a href="../../100m" id="100m" class="idbut floating-button no_visible">100м</a>
+        <a href="../../110m" id="110m" class="idbut floating-button no_visible">110м</a>
+        <a href="../../+110m" id="plus110m" class="idbut floating-button no_visible">+110м</a>
     </div>
     <div class="menu">
-        <a href="../../50w/" id="50w" class="idbut floating-button no_visible">50ж</a>
-{#        <a href="{% url '55w' %}" id="55w" class="idbut floating-button no_visible">55ж</a>#}
-{#        <a href="{% url '60w' %}" id="60w" class="idbut floating-button no_visible">60ж</a>#}
-{#        <a href="{% url '65w' %}" id="65w" class="idbut floating-button no_visible">65ж</a>#}
-{#        <a href="{% url '70w' %}" id="70w" class="idbut floating-button no_visible">70ж</a>#}
-{#        <a href="{% url '75w' %}" id="75w" class="idbut floating-button no_visible">75ж</a>#}
-{#        <a href="{% url '80w' %}" id="80w" class="idbut floating-button no_visible">80ж</a>#}
-{#        <a href="{% url 'plus80w' %}" id="plus80w" class="idbut floating-button no_visible">+80ж</a>#}
+        <a href="../../50w" id="50w" class="idbut floating-button no_visible">50ж</a>
+         <a href="../../55w" id="55w" class="idbut floating-button no_visible">55ж</a>
+         <a href="../../60w" id="60w" class="idbut floating-button no_visible">60ж</a>
+         <a href="../../65w" id="65w" class="idbut floating-button no_visible">65ж</a>
+         <a href="../../70w" id="70w" class="idbut floating-button no_visible">70ж</a>
+         <a href="../../75w" id="75w" class="idbut floating-button no_visible">75ж</a>
+         <a href="../../80w" id="80w" class="idbut floating-button no_visible">80ж</a>
+         <a href="../../plus80w" id="plus80w" class="idbut floating-button no_visible">+80ж</a>
 
     </div>
 
     <h1>{{ title }} {{ current_category }}</h1>
-    <h1 style="display: {{ alert }}">КАТЕГОРИЯ НЕ ПРЕДСТАВЛЕНА</h1>
+    <h1 style="display: {{ alert }}">Выберите категорию из представленных</h1>
 {% endblock header %}
 
 {% block winneronel %}winnerisonel{% endblock winneronel %}
@@ -41,7 +40,7 @@
 {% block scripts %}
 
     {# забабахал java скрипт, чтобы фильтровать незадействованые категории#}
-{#    {{ is_categories }}#}
+    {#    {{ is_categories }}#}
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
     <script>
