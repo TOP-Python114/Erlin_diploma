@@ -90,7 +90,12 @@
             <br>
         {% endfor %}
         {#{{ object.results}}#}
+
         <br>
+        {% for tour in resfin_r %}
+            {{ tour }}
+            <br>
+        {% endfor %}
     </div>
 
     <div class="competition" style="display: {{ res_right_vis }}">

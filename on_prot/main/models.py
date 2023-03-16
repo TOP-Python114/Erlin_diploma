@@ -21,44 +21,17 @@ class Armwrestler(models.Model):
 
 
 
-
-
-class Competition(models.Model):
-    """
-    надо убрать
-    """
-    HANDS = [("left", "сетка по левым рукам"), ("r", "сетка по правым рукам")]
-    SEX = [('men', "среди мужчин"), ('women', "среди женщин")]
-    CATEGORIES = [('50', '50'),
-                  ('55', '55'),
-                  ('60', '60'),
-                  ('65', '65'),
-                  ('70', '70'),
-                  ('75', '75'),
-                  ('80', '80'),
-                  ('85', '85'),
-                  ('90', '90'),
-                  ('100', '100'),
-                  ('110', '110'),
-                  ('+110', '+110'),
-                  ('+80', '+80')]
-
-    sex = models.CharField(max_length=5, choices=SEX, default='men')
-    category = models.CharField(max_length=5, choices=CATEGORIES, default="50")
-    hand = models.CharField(max_length=5, choices=HANDS, default='left')
-    title = models.CharField(max_length=100)
-    sportsmens = models.ManyToManyField(Armwrestler)
-
-
-
 class AllCompetition(models.Model):
     """
     модель соревнования
     """
     title = models.CharField(max_length=100)
     date = models.DateField()
+    done = models.BooleanField(default=False)
     def __str__(self):
-        return f"{self.title} {self.date}"
+        return f"{self.title} {self.date} соревнования {not self.done and 'не' or ''}прошли"
+
+
 
 
 class SportsmenRegistration(models.Model):
@@ -71,12 +44,12 @@ class AllResults(models.Model):
     """
     модель результатов соревнований
     """
-    title_competition = models.CharField(max_length=100)
-    date = models.DateField()
-    sportsmen = models.CharField(max_length=100)
-    sex=models.CharField(max_length=4,default='m')
-    category = models.CharField(max_length=4)
+    sportsmen = models.ForeignKey(Armwrestler, on_delete=models.CASCADE)
+    competition = models.ForeignKey(AllCompetition, on_delete=models.CASCADE)
     hand = models.CharField(max_length=5)
     place = models.PositiveIntegerField(validators=[MinValueValidator(1), MaxValueValidator(100)])
+
+
+
     def __str__(self):
-        return f'{self.date} {self.title_competition} рука: "{self.hand}" {self.place}место- {self.sportsmen}'
+        return f' {self.competition} рука: "{self.hand}" {self.place}место- {self.sportsmen}'

@@ -17,7 +17,7 @@ class Sportsmen:
         return f"{self.name}"
 
 
-a = [Sportsmen("sportsmen" + str(i), weight=randrange(120, 150), age=randrange(16, 58), ) for i in range(2)]
+a = [Sportsmen("sportsmen" + str(i), weight=randrange(120, 150), age=randrange(16, 58), ) for i in range(3)]
 
 
 
@@ -31,8 +31,8 @@ class Competition:
         #жеребьевка
         shuffle(sp_s)
         self.sportsmens = self.pairy_list(self.not_paired_sps)
-        self.group_a = [list() for _ in range(len(sp_s) + 20)]
-        self.group_b = [list() for _ in range(len(sp_s) + 20)]
+        self.group_a = [list() for _ in range(len(sp_s) + 3)]
+        self.group_b = [list() for _ in range(len(sp_s) + 3)]
         self.group = "a"
         self.chitaem = 0
         self.tour = 0
@@ -214,11 +214,13 @@ class Competition:
 
     def clear_slots(self):
         """очищает лишние слоты """
-        while self.group_a[-1] == []:
-            self.group_a.pop()
-        while self.group_b[-1] == []:
-            self.group_b.pop()
-
+        try:
+            while self.group_a[-1] == []:
+                self.group_a.pop()
+            while self.group_b[-1] == []:
+                self.group_b.pop()
+        except:
+            pass
     def fight(self, winner):
         """Поединок
             winner== 1- победил спортсмен 1
@@ -237,17 +239,19 @@ class Competition:
         if len(self.not_paired_sps) == 2:
             if not self.did:
                 if winner == 1:
-                    self.group_a+=[[self.not_paired_sps[0]]]
-                    self.group_b += [[self.not_paired_sps[1]]]
+                    # self.group_a+=[[self.not_paired_sps[0]]]
+                    # self.group_b += [[self.not_paired_sps[1]]]
                     self.final+= [[self.not_paired_sps[0]]]
                     self.final += [[self.not_paired_sps[1]]]
+                    self.group_final+=[self.final]
                 elif winner == 2:
-                    self.group_a += [[self.not_paired_sps[1]]]
-                    self.group_b += [[self.not_paired_sps[0]]]
+                    # self.group_a += [[self.not_paired_sps[1]]]
+                    # self.group_b += [[self.not_paired_sps[0]]]
                     self.final += [[self.not_paired_sps[1]]]
                     self.final += [[self.not_paired_sps[0]]]
+                    self.group_final += [self.final]
                 self.did=1
-                self.tour+=1
+                #self.tour+=1
                 return
 
         if len(self.final) == 2:

@@ -1,1 +1,5 @@
-print("gbljh"[:-2])
+
+
+a=True
+
+print(f"соревнования {not a and 'не' or ''}прошли")

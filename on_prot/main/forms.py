@@ -18,11 +18,11 @@ class CompetitionForm(ModelForm):
 
 
 class SportsmenRegistrationForm(forms.Form):
-    competition = forms.ModelChoiceField(queryset=AllCompetition.objects.all(), required=True)
+    competition = forms.ModelChoiceField(queryset=AllCompetition.objects.filter(done=False), required=True)
     sportsmen = forms.ModelChoiceField(queryset=Armwrestler.objects.all(), required=True)
 
 class CreatingCompetitionForm(forms.Form):
-    competition = forms.ModelChoiceField(queryset=AllCompetition.objects.all(), required=True)
+    competition = forms.ModelChoiceField(queryset=AllCompetition.objects.filter(done=False), required=True)
 
 # class Meta:
     #     model=SportsmenRegistration

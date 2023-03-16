@@ -5,7 +5,7 @@ from .competition_former import CATEGORY_NORMALIZER
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from .competition_former import competition_creating
-from .models import AllResults, Armwrestler,AllCompetition,SportsmenRegistration
+from .models import Armwrestler, AllCompetition, SportsmenRegistration, AllResults
 
 
 # Create your views here.
@@ -37,8 +37,9 @@ def reg_sportsmen(request):
 
         form = SportsmenRegistrationForm(request.POST)
         if form.is_valid():
-            sp_n=SportsmenRegistration(**form.cleaned_data)
-            sp_n.save()
+            if not SportsmenRegistration.objects.filter(**form.cleaned_data):
+                sp_n=SportsmenRegistration(**form.cleaned_data)
+                sp_n.save()
     return redirect(request.path)
 
 def competition_constructor(request):
@@ -64,10 +65,8 @@ def competition_constructor(request):
                 global is_categories
                 is_categories = sorted(
                     set([x[:-1].replace("+", "plus") for x in a.keys() if x != 'title' and x != 'date']))
-                category = is_categories[0]
-
-                for i in a["+110ml"].not_paired_sps:
-                    print(i)
+                print(is_categories)
+                print("сверху категории")
     # тут рендерим страничку на основе уже страницы соревнований, но с доступами только к меню
     return render(request, 'competit.html', {
         # 'no_visible': "flex",
@@ -82,7 +81,38 @@ def competition_constructor(request):
 
 #is_categories = sorted(set([x[:-1].replace("+", "plus") for x in a.keys() if x != 'title' and x != 'date']))
 
+def start_is_end(start:dict):
+    """
+    в текущем соревновании все отборолись
+    """
+    print([st for st in start if st not in("title","date")])
+    print("сверху проверочка")
+    for i in [st for st in start if st not in("title","date")]:
+        if not start[i].game_over:
+            return False
+    return True
 
+def save_start(start:dict):
+    """сохранение старта в базу"""
+    if start_is_end(start):
+        for i in [st for st in start if st not in("title","date")]:
+            for place_, sp_n in enumerate(start[i].results):
+                # если сетка левой руки прошла, сохранить ее в общую таблицу протоколов
+
+                #короче сли рукожопый обновит страницу когда соревы прошли ,спортсмены опыть запишутся в итоговый протокол, эта строка это исключает
+                if AllResults.objects.filter(sportsmen=Armwrestler.objects.get(name=sp_n.name)).filter(hand=i[-1]).filter(place=place_ + 1):
+                    return
+
+
+                sp_n_to_save = AllResults(
+                    sportsmen=Armwrestler.objects.get(name=sp_n.name),
+                    competition=AllCompetition.objects.get(title=a['title']),
+                    hand=i[-1],
+                    place=place_ + 1
+                )
+
+
+                sp_n_to_save.save()
 
 def competition(request, category):
     # не представленные категории
@@ -98,83 +128,69 @@ def competition(request, category):
         })
 
     if request.method == 'POST':
-
         if "winnerisonel" in request.POST:
-            print(request.POST)
             a[category + "l"].fight(1)
         elif "winneristwol" in request.POST:
-            print("Победил второй")
             a[category + "l"].fight(2)
         elif "winnerisoner" in request.POST:
             a[category + "r"].fight(1)
         elif "winneristwor" in request.POST:
-            print("Победил второй")
             a[category + "r"].fight(2)
 
-    res_gr_a_l = a[category + "l"].return_group_a().split('\n')
-    res_gr_b_l = a[category + "l"].return_group_b().split('\n')
-    res_fin_l = a[category + "l"].return_final().split('\n')
-    sp1_l = a[category + "l"].sportsmen1
-    sp2_l = a[category + "l"].sportsmen2
 
-    res_gr_a_r = a[category + "r"].return_group_a().split('\n')
-    res_gr_b_r = a[category + "r"].return_group_b().split('\n')
-    res_fin_r = a[category + "r"].return_final().split('\n')
-    sp1_r = a[category + "r"].sportsmen1
-    sp2_r = a[category + "r"].sportsmen2
+
+    #преобразует список объектов по занятым местам в список строк, если сетка завершилась
     result_l = list(map(str, a[category + "l"].results)) if len(a[category + "l"].results) == len(
         a[category + "l"].not_paired_sps) else []
     result_r = list(map(str, a[category + 'r'].results)) if len(a[category + "r"].results) == len(
         a[category + "r"].not_paired_sps) else []
-
-    if a[category + 'l'].game_over:
-        for place_, sp_n in enumerate(a[category + 'l'].results):
-            sp_n_to_save = AllResults(
-                title_competition=a['title'],
-                date=a['date'],
-                # надо изменить объекты, чтобы делать распаковку
-                # sportsmen=Armwrestler(name=sp_n.name,age=sp_n.age,weight_category=sp_n.weight,team=sp_n.team,sex=sp_n.sex,grade=sp_n.grade),
-                sportsmen=sp_n.name,
-                category=sp_n.weight,
-                sex=sp_n.sex,
-                hand="l",
-                place=place_ + 1
-            )
-            sp_n_to_save.save()
-
-    if a[category + 'r'].game_over:
-        for place_, sp_n in enumerate(a[category + 'r'].results):
-            sp_n_to_save = AllResults(
-                title_competition=a['title'],
-                date=a['date'],
-                # sportsmen=Armwrestler(name=sp_n.name, age=sp_n.age, weight_category=sp_n.weight, team=sp_n.team, sex=sp_n.sex, grade=sp_n.grade),
-                sportsmen=sp_n.name,
-                category=sp_n.weight,
-                sex=sp_n.sex,
-                hand="r",
-                place=place_ + 1
-            )
-            sp_n_to_save.save()
-
+    save_start(a)
+    # if a[category + 'l'].game_over:
+    #     for place_, sp_n in enumerate(a[category + 'l'].results):
+    #         # если сетка левой руки прошла, сохранить ее в общую таблицу протоколов
+    #         sp_n_to_save = AllResults(
+    #             sportsmen=Armwrestler.objects.get(name=sp_n.name),
+    #             competition=AllCompetition.objects.get(title=a['title']),
+    #             hand="left",
+    #             place=place_+1
+    #         )
+    #         sp_n_to_save.save()
+    #
+    # if a[category + 'r'].game_over:
+    #     for place_, sp_n in enumerate(a[category + 'r'].results):
+    #         sp_n_to_save = AllResults(
+    #             sportsmen=Armwrestler.objects.get(name=sp_n.name),
+    #             competition=AllCompetition.objects.get(title=a['title']),
+    #             hand="right",
+    #             place=place_ + 1)
+    #         sp_n_to_save.save()
+    """
+    завершение всего старта
+    """
+    if start_is_end(a):
+        cmps=AllCompetition.objects.get(title=a["title"])
+        cmps.done=True
+        cmps.save()
     return render(request, 'competit.html', {
+        "competition_end" :start_is_end(a),
         'no_visible': "flex",
         'alert': None,
         "sps_l": a[category + "l"].not_paired_sps,
         "sps_r": a[category + "r"].not_paired_sps,
         "title": a["title"],
         "current_category": CATEGORY_NORMALIZER[category],
-        "resa_l": res_gr_a_l,
-        "resb_l": res_gr_b_l,
-        "resa_r": res_gr_a_r,
-        "resb_r": res_gr_b_r,
-        "resfin_l": res_fin_l,
-        "resfin_r": res_fin_r,
-        "result_l": {i + 1: j for i, j in enumerate(result_l)},
-        "result_r": {i + 1: j for i, j in enumerate(result_r)},
-        "sportsmen1_l": sp1_l,
-        "sportsmen2_l": sp2_l,
-        "sportsmen1_r": sp1_r,
-        "sportsmen2_r": sp2_r,
+        "resa_l": a[category + "l"].return_group_a().split('\n'), #группа а левая рука в списке
+        "resb_l": a[category + "l"].return_group_b().split('\n'), #группа b левая рука в списке
+        "resa_r": a[category + "r"].return_group_a().split('\n'), #группа а правая рука в списке
+        "resb_r":  a[category + "r"].return_group_b().split('\n'), #группа b правая рука в списке
+        "resfin_l": a[category + "l"].return_final().split('\n'), #финальная группа левая рука
+        "resfin_r": a[category + "r"].return_final().split('\n'), #финальная группа правая рука
+        "result_l": {i + 1: j for i, j in enumerate(result_l)}, #результаты левая
+        "result_r": {i + 1: j for i, j in enumerate(result_r)}, #результаты правая
+        "sportsmen1_l": a[category + "l"].sportsmen1, #текущий спортсмен 1 левой руки
+        "sportsmen2_l": a[category + "l"].sportsmen2, #текущий спортсмен 2 левой руки
+        "sportsmen1_r": a[category + "r"].sportsmen1, #текущий спортсмен 1 правой руки
+        "sportsmen2_r": a[category + "r"].sportsmen2, #текущий спортсмен 2 правой руки
         "is_categories": is_categories,
         'rr': '555',
         'game_over_left': a[category + "l"].game_over * "None",
