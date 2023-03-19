@@ -35,8 +35,7 @@ def protocols(request):
                     if j.sportsmen.sex == 'm':
                         ikategs.append(j)
                 ikategs.sort(key=lambda a: a.sum_place)
-                # print("где косяк")
-                # print(ikategs)
+
 
                 if ikategs:
                     cat_m_reg[i] = ikategs
@@ -51,7 +50,7 @@ def protocols(request):
                     cat_w_reg[i] = ikategs
                     ikategs = []
 
-            # print(cat_req)
+
             req = {"form": FindCompetitionForm,
                    "all_results_m": cat_m_reg,
                    "all_results_w": cat_w_reg,
@@ -101,8 +100,7 @@ def competition_constructor(request):
             if form.is_valid():
 
                 current_comp = SportsmenRegistration.objects.filter(competition=form.cleaned_data["competition"])
-                # print(current_comp)
-                # print("ну тут же работает")
+
                 global a
                 # список спортсменов текущего старта
                 curr_sportsmens = [x.sportsmen for x in current_comp]
@@ -114,8 +112,7 @@ def competition_constructor(request):
                 global is_categories
                 is_categories = sorted(
                     set([x[:-1].replace("+", "plus") for x in a.keys() if x != 'title' and x != 'date']))
-                # print(is_categories)
-                # print("сверху категории")
+
     # тут рендерим страничку на основе уже страницы соревнований, но с доступами только к меню
     return render(request, 'competit.html', {
         # 'no_visible': "flex",
@@ -141,7 +138,7 @@ def sum_place_of_comp(left, right):
     формат выхода [[объект спортсмена,очки по сумме,очки левая, очки правая,место левая,место правая,место сумма]...]
 
     """
-    print("ау че за бред")
+
     res = []
     SCORES = {1: 25, 2: 17, 3: 9, 4: 5, 5: 3, 6: 2}
 
@@ -163,9 +160,7 @@ def sum_place_of_comp(left, right):
     res=sorted(res, key=lambda a: (-a[1], int(a[0].weight)))
     for checker, i in enumerate(res):
         i[6] = checker + 1
-    #
-    # print("првоерка рес")
-    # print(sorted(res, key=lambda a: (a[6])))
+
     return res
 
 
@@ -202,7 +197,7 @@ def competition(request, category):
     # не представленные категории
     # использвуется только если кто то намеренно наберет в адрестну строку не юзаную категорию
     if category not in [x[:-1] for x in a]:
-        print("no_active_" + category)
+
         return render(request, 'competit.html', {
             'sps_l': "Категория не представлена",
             'no_visible': None,

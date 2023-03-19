@@ -54,8 +54,7 @@ def competition_creating(name_of_competition: str,date_of_competition:datetime.d
     ключ - код турнирной сетки "110lm" например это категория 110, рука левая мужчины
     значение экземаляр соревнования
     """
-    print("ЛИ")
-    print(li)
+
     def list_of_categories():
         """проходит по всем объектам борцов и выдает списком все использующиеся категории"""
         w_categories = set()
@@ -69,7 +68,6 @@ def competition_creating(name_of_competition: str,date_of_competition:datetime.d
                 w_categories.add(select_category_parcer(i.weight_category, 'w') + "wl")
                 w_categories.add(select_category_parcer(i.weight_category, 'w') + "wr")
 
-        #print(f" мужские{m_categories} женские {w_categories}")
         return sorted(m_categories), sorted(w_categories)
 
     dict_category_sportsmens = {}
@@ -102,7 +100,7 @@ def competition_creating(name_of_competition: str,date_of_competition:datetime.d
                         dict_category_sportsmens[w_category] += [
                             Sportsmen(armwres.name, armwres.weight_category, armwres.age,armwres.team, armwres.sex, armwres.grade)]
 
-        #print(dict_category_sportsmens)
+
         return dict_category_sportsmens
 
     configure_list_of_sportsmen()

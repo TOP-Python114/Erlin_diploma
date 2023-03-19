@@ -1,3 +1,7 @@
+"""
+МОдуль движка соревнования, построение сетки по системе после двух поражений
+"""
+
 import datetime
 from random import randrange,shuffle
 
@@ -47,11 +51,6 @@ class Competition:
         self.checker = False
         self.two_losers_in_final = False
         self.did=0
-    # def add_sportsmen(self, new_sportsmen: Sportsmen):
-    #     if self.begin:
-    #         return
-    #     self.not_paired_sps += [new_sportsmen]
-    #     print(self.not_paired_sps)
 
     def print_group_a(self):
         print("Группа А:")
