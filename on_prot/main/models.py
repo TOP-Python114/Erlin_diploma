@@ -9,6 +9,7 @@ class Armwrestler(models.Model):
     модель спортсмена рукоборца
     """
     name = models.CharField(max_length=100)
+    # ИСПРАВИТЬ здесь и далее: для моделей, которые получают данные только из пользовательского ввода валидация производится в формах
     age = models.PositiveIntegerField(validators=[MinValueValidator(18), MaxValueValidator(67)])
     weight_category = models.CharField(max_length=4, default='60')
     team = models.CharField(max_length=54, default='Новосибирск')

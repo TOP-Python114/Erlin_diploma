@@ -21,10 +21,6 @@ class Sportsmen:
         return f"{self.name}"
 
 
-a = [Sportsmen("sportsmen" + str(i), weight=randrange(120, 150), age=randrange(16, 58), ) for i in range(3)]
-
-
-
 class Competition:
     def __init__(self, sp_s: list, hand: str = 'left', category="65", title='notitle', date_=datetime.datetime.now()):
         self.hand = hand
@@ -220,6 +216,9 @@ class Competition:
                 self.group_b.pop()
         except:
             pass
+
+    # КОММЕНТАРИЙ: если код метода разрастается на 200 строк, забитых if-ами, то что-то не так с моделью
+    # СДЕЛАТЬ: постройте диаграмму модели и помедитируйте над ней размышляя о том, как бы всё это оптимизировать
     def fight(self, winner):
         """Поединок
             winner== 1- победил спортсмен 1
@@ -416,6 +415,7 @@ class Competition:
 
 
 if __name__ == "__main__":
+    a = [Sportsmen("sportsmen" + str(i), weight=randrange(120, 150), age=randrange(16, 58), ) for i in range(3)]
 
     comp = Competition(a)
 

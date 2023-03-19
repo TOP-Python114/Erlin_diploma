@@ -2,7 +2,9 @@ import datetime
 
 from .comp_n import Sportsmen,Competition
 from .models import Armwrestler
-#для удобоваримого отображения категорий
+
+# для удобоваримого отображения категорий
+# ИСПРАВИТЬ: используйте Enum
 CATEGORY_NORMALIZER={
     '50w':"Женщины 50кг",
     '55w':"Женщины 55кг",
@@ -28,6 +30,7 @@ CATEGORY_NORMALIZER={
 
 
 
+# ИСПРАВИТЬ: документация противоречит сигнатуре и содержанию функции
 def select_category_parcer(category, sex):
     """принимает вес и выводит категорию и пол"""
     mens = [110, 100, 90, 90, 85, 80, 75, 70, 65, 60, 55]
