@@ -31,7 +31,7 @@ def protocols(request):
             cat_w_reg = {}
             ikategs = []
             for i in ["55", "60", "65", "70", "75", "80", "85", "90", "100", "110", "+110", ]:
-                for j in AllResults.objects.filter(weight_cat=i):
+                for j in AllResults.objects.filter(weight_cat=i).filter(competition=data):
                     if j.sportsmen.sex == 'm':
                         ikategs.append(j)
                 ikategs.sort(key=lambda a: a.sum_place)
@@ -41,7 +41,7 @@ def protocols(request):
                     cat_m_reg[i] = ikategs
                     ikategs = []
             for i in ["50", "55", "60", "65", "70", "75", "80", "+80"]:
-                for j in AllResults.objects.filter(weight_cat=i):
+                for j in AllResults.objects.filter(weight_cat=i).filter(competition=data):
                     if j.sportsmen.sex == 'w' :
                         ikategs.append(j)
                 ikategs.sort(key=lambda a: a.sum_place)
