@@ -46,10 +46,16 @@ class AllResults(models.Model):
     """
     sportsmen = models.ForeignKey(Armwrestler, on_delete=models.CASCADE)
     competition = models.ForeignKey(AllCompetition, on_delete=models.CASCADE)
-    hand = models.CharField(max_length=5)
-    place = models.PositiveIntegerField(validators=[MinValueValidator(1), MaxValueValidator(100)])
-
+    points=models.IntegerField(validators=[MinValueValidator(-100), MaxValueValidator(50)],default=0)
+    points_left=models.IntegerField(validators=[MinValueValidator(-100), MaxValueValidator(25)],default=0)
+    points_right = models.IntegerField(validators=[MinValueValidator(-100), MaxValueValidator(25)], default=0)
+    left_place = models.PositiveIntegerField(validators=[MinValueValidator(1), MaxValueValidator(100)],default=100)
+    right_place = models.PositiveIntegerField(validators=[MinValueValidator(1), MaxValueValidator(100)],default=100)
+    sum_place= models.PositiveIntegerField(validators=[MinValueValidator(1), MaxValueValidator(100)],default=100)
+    weight_cat=models.CharField(max_length=4, default="60")
 
 
     def __str__(self):
-        return f' {self.competition} рука: "{self.hand}" {self.place}место- {self.sportsmen}'
+        return f' Сооревнование: {self.competition.title} Спортсмен: {self.sportsmen}, Левая "{self.left_place} ' \
+               f'место" правая "{self.right_place}место"- по сумме:{self.sum_place} ' \
+               f' очки с:{self.points} л:{self.points_left} п: {self.points_right}'

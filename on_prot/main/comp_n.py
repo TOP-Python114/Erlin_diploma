@@ -259,8 +259,6 @@ class Competition:
             # финал сформирован
 
             if winner == 1:
-                print(self.final)
-                print("что блять")
                 self.results += self.final[1]
                 self.results += self.final[0]
                 self.game_over = True

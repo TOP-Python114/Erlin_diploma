@@ -8,13 +8,15 @@
 
 </head>
 <body>
-{#    <h1> Уважаемые дамы и те кто не красит ногти на ногах, представляем к вниманию: {{ title }} представлены следующие категории</h1>#}
+
 <h1> рабочее главное меню</h1>
 <a href="{% url 'rc' %}" class="links">Регистрация турнира</a>
 <br>
 <a href="crt" class="links">старт турнира</a>
 <br>
-<a href="{% url 'rs' %}" class="links">Регистрация спортсмена</a>
+<a href="{% url 'rs' %}" class="links">Регистрация спортсмена на соревнование</a>
+<br>
+<a href="{% url 'pc' %}" class="links">Протоколы</a>
 <br>
 {#{% for i in is_categories %}#}
 {#    <a href="i/" class="links">Категория {{ i }}</a>#}

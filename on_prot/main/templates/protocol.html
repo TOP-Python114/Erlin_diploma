@@ -1,0 +1,160 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{% static "css/style.css" %}"/>
+    <title>Title</title>
+
+
+</head>
+<body>
+<div>
+    <p>Турнир: {{ competition }} </p>
+    {#    <table border="1">#}
+    {#        <tr>#}
+    {#            <th>Место</th>#}
+    {#            <th>Имя спортсмена</th>#}
+    {#            <th>Весовая категория спортсмена</th>#}
+    {#        </tr>#}
+    <form action="" method="post">
+        {% csrf_token %}
+        <div>
+            {{ form.as_p }}
+        </div>
+        s
+        <div>
+            <input type="submit" name="123">
+        </div>
+    </form>
+</div>
+<h1>Мужчины</h1>
+{% for cat,i in all_results_m.items %}
+    <p>{{ cat }}</p>
+    <table class="table">
+        <tr>
+            <th class="td_place">М</th>
+            <th class="td_name">Фамилия, Имя</th>
+            <th class="td_kval">Кв</th>
+            <th class="td_command">Команда</th>
+            <th class="td_place">Л</th>
+            <th class="td_points">Л_оч</th>
+            <th class="td_place">П</th>
+            <th class="td_points">П_оч</th>
+            <th class="td_points">сум</th>
+        </tr>
+    </table>
+    {% for j in i %}
+        <table class="table">
+
+            <tr>
+                <td class="td_place"> {{ j.sum_place }} </td>
+                <td class="td_name"> {{ j.sportsmen.name }} </td>
+                <td class="td_kval"> {{ j.sportsmen.grade }} </td>
+                <td class="td_command"> {{ j.sportsmen.team }} </td>
+                <td class="td_place"> {{ j.left_place }} </td>
+                <td class="td_points"> {{ j.points_left }} </td>
+                <td class="td_place"> {{ j.right_place }} </td>
+                <td class="td_points"> {{ j.points_right }} </td>
+                <td class="td_points"> {{ j.points }} </td>
+            </tr>
+        </table>
+    {% endfor %}
+{% endfor %}
+<h1>Женщины</h1>
+
+{% for cat,i in all_results_w.items %}
+    <p>{{ cat }}</p>
+    <table class="table">
+        <tr>
+            <th class="td_place">М</th>
+            <th class="td_name">Фамилия, Имя</th>
+            <th class="td_kval">Кв</th>
+            <th class="td_command">Команда</th>
+            <th class="td_place">Л</th>
+            <th class="td_points">Л_оч</th>
+            <th class="td_place">П</th>
+            <th class="td_points">П_оч</th>
+            <th class="td_points">сум</th>
+        </tr>
+    </table>
+    {% for j in i %}
+        <table class="table">
+
+            <tr>
+                <td class="td_place"> {{ j.sum_place }} </td>
+                <td class="td_name"> {{ j.sportsmen.name }} </td>
+                <td class="td_kval"> {{ j.sportsmen.grade }} </td>
+                <td class="td_command"> {{ j.sportsmen.team }} </td>
+                <td class="td_place"> {{ j.left_place }} </td>
+                <td class="td_points"> {{ j.points_left }} </td>
+                <td class="td_place"> {{ j.right_place }} </td>
+                <td class="td_points"> {{ j.points_right }} </td>
+                <td class="td_points"> {{ j.points }} </td>
+            </tr>
+        </table>
+    {% endfor %}
+{% endfor %}
+{#        <tr>#}
+{#            {{ i.weight_cat }}#}
+{#            <td>{{ i.sum_place }}</td>#}
+{##}
+{#            <td>{{ i.sportsmen.name }}</td>#}
+{#           <td>{{ i.sportsmen.weight_category }}</td>#}
+{##}
+{#        </tr>#}
+{#        <br>#}
+{#    {% endfor %}#}
+{#    </table>#}
+
+
+<style>
+    .table {
+        width: 50%;
+        #margin-bottom: 2px;
+        border: 1px solid #dddddd;
+        border-collapse: collapse;
+    }
+
+    .table th {
+        font-weight: bold;
+        padding: 5px;
+        background: #efefef;
+        border: 1px solid #dddddd;
+
+    }
+
+    .td_place {
+        width: 20px;
+
+    }
+
+    .td_name {
+        width: 200px;
+
+    }
+
+    .td_kval {
+        width: 50px;
+
+    }
+
+    .td_command {
+        width: 100px;
+
+    }
+
+    .td_points {
+        width: 40px;
+
+    }
+
+
+    .table td {
+    {#width: 30%;#} border: 1px solid #dddddd;
+        padding: 5px;
+    }
+
+</style>
+</body>
+</html>
