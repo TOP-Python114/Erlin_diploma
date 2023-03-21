@@ -237,14 +237,10 @@ class Competition:
         if len(self.not_paired_sps) == 2:
             if not self.did:
                 if winner == 1:
-                    # self.group_a+=[[self.not_paired_sps[0]]]
-                    # self.group_b += [[self.not_paired_sps[1]]]
                     self.final+= [[self.not_paired_sps[0]]]
                     self.final += [[self.not_paired_sps[1]]]
                     self.group_final+=[self.final]
                 elif winner == 2:
-                    # self.group_a += [[self.not_paired_sps[1]]]
-                    # self.group_b += [[self.not_paired_sps[0]]]
                     self.final += [[self.not_paired_sps[1]]]
                     self.final += [[self.not_paired_sps[0]]]
                     self.group_final += [self.final]
@@ -266,10 +262,8 @@ class Competition:
 
             elif winner == 2 and not self.two_losers_in_final:
 
-                # self.g1roup_final+=[self.final[0][::-1]]
                 self.two_losers_in_final = True
 
-                # Финалисты имеют по одному поражению
                 return
 
             elif winner == 2:

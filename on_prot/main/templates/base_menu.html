@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{% static "css/menu.css" %}"/>
+    <link rel="stylesheet" href="{% static "css/fonts.css" %}"/>
+    <link rel="stylesheet" href="{% static "css/style.css" %}"/>
+    <title>{% block title %} {% endblock title %}</title>
+</head>
+
+<body class="{% block bdclass %}{% endblock bdclass %}">
+
+<div>
+    <nav class="page__menu page__custom-settings menu">
+        <ul class="menu__list r-list">
+            <li class="menu__group"><a href="{% url 'hello' %}" class="menu__link r-link text-underlined">Главная
+            </a></li>
+            <li class="menu__group"><a href="{% url 'rc' %}" class="menu__link r-link text-underlined">Регистрация
+                турнира</a></li>
+            <li class="menu__group"><a href="{% url 'cs' %}" class="menu__link r-link text-underlined">Старт турнира</a>
+            </li>
+            <li class="menu__group"><a href="{% url 'rs' %}" class="menu__link r-link text-underlined">Регистрация
+                спортсмена на соревнование</a></li>
+            <li class="menu__group"><a href="{% url 'pc' %}" class="menu__link r-link text-underlined">Протоколы</a>
+            </li>
+        </ul>
+    </nav>
+
+</div>
+<p class="{% block classtitle2 %}{% endblock classtitle2 %}">
+    {% block title2 %}
+    {% endblock title2 %}
+</p>
+<div class="{% block div_class %}{% endblock div_class %}">
+    {% block body %}
+
+
+
+    {% endblock body %}
+</div>
+
+</body>
+</html>

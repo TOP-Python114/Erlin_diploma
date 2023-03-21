@@ -1,27 +1,28 @@
+{% extends "base_menu.html" %}
+{% load static %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<a href="{% url 'hello' %}" class="links">главная</a>
-<br>
-Создание турнира
-<div>
+
+{% block body %}
+    <div class="ll">
         <form action="" method="post">
             {% csrf_token %}
             <div>
-                {{ form.as_p }}
+                {{ form.competition }}
             </div>
             <div>
-                <input type="submit" name="CreatingCompetition">
+                <input type="submit" class="shine-button" name="CreatingCompetition">
             </div>
         </form>
     </div>
+{% endblock body %}
+{% block classtitle2 %}
+{% endblock classtitle2 %}
+{% block bdclass %}bg_con{% endblock bdclass %}
+{% block div_class %}ll{% endblock div_class %}
 
-
+{% block title2 %}
+    Начать соревнования
+{% endblock title2 %}
 
 </body>
 </html>

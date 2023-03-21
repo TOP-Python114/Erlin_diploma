@@ -10,7 +10,7 @@ class Armwrestler(models.Model):
     """
     name = models.CharField(max_length=100)
     # ИСПРАВИТЬ здесь и далее: для моделей, которые получают данные только из пользовательского ввода валидация производится в формах
-    age = models.PositiveIntegerField(validators=[MinValueValidator(18), MaxValueValidator(67)])
+    age = models.PositiveIntegerField()
     weight_category = models.CharField(max_length=4, default='60')
     team = models.CharField(max_length=54, default='Новосибирск')
     sex = models.CharField(max_length=2, default='m')
@@ -30,7 +30,7 @@ class AllCompetition(models.Model):
     date = models.DateField()
     done = models.BooleanField(default=False)
     def __str__(self):
-        return f"{self.title} {self.date} соревнования {not self.done and 'не' or ''}прошли"
+        return f"{self.title} {self.date} соревнования {not self.done and 'не' or ' '}прошли"
 
 
 

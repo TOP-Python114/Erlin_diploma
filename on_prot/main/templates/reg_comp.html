@@ -1,13 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<a href="{% url 'hello' %}" class="links">главная</a>
-Регистрация соревнования
-<br>
+{% extends "base_menu.html" %}
+{% load static %}
+{% block title2 %}
+    Регистрация соревнования
+{% endblock title2 %}
+{% block body %}
 <div>
     <form action="" method="post">
         {% csrf_token %}
@@ -19,7 +15,6 @@
         </div>
     </form>
 </div>
+{% endblock body %}
 
-
-</body>
-</html>
+{% block bdclass %}bg_comp{% endblock bdclass %}

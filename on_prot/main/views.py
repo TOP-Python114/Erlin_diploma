@@ -195,7 +195,7 @@ def save_start(start: dict):
 
 def competition(request, category):
     # не представленные категории
-    # использвуется только если кто то намеренно наберет в адрестну строку не юзаную категорию
+    # использвуется только если кто то намеренно наберет в адресную строку не юзаную категорию
     if category not in [x[:-1] for x in a]:
 
         return render(request, 'competit.html', {
