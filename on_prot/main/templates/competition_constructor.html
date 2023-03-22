@@ -1,16 +1,20 @@
 {% extends "base_menu.html" %}
 {% load static %}
-
+{% block class_menu_main %}li_uncolor{% endblock class_menu_main %}
+{% block class_menu_reg %}li_uncolor{% endblock class_menu_reg %}
+{% block class_menu_start %}li_color{% endblock class_menu_start %}
+{% block class_menu_reg_sp %}li_uncolor{% endblock class_menu_reg_sp %}
+{% block class_menu_protocol %}li_uncolor{% endblock class_menu_protocol %}
 
 {% block body %}
-    <div class="ll">
+    <div>
         <form action="" method="post">
             {% csrf_token %}
             <div>
                 {{ form.competition }}
             </div>
             <div>
-                <input type="submit" class="shine-button" name="CreatingCompetition">
+                <input type="submit" class="gradient-button" name="CreatingCompetition">
             </div>
         </form>
     </div>
@@ -21,8 +25,5 @@
 {% block div_class %}ll{% endblock div_class %}
 
 {% block title2 %}
-    Начать соревнования
+    <h2 class="white_color h224" ></h2>
 {% endblock title2 %}
-
-</body>
-</html>

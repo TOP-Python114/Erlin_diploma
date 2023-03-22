@@ -1,5 +1,5 @@
 from django import forms
-from django.forms import fields, ModelForm
+from django.forms import fields, ModelForm, TextInput
 from django.forms import widgets
 from .models import AllCompetition, SportsmenRegistration, Armwrestler, AllResults
 
@@ -16,8 +16,10 @@ class CompetitionForm(ModelForm):
         model = AllCompetition
         fields = ["title", "date"]
         widgets = {
-            'date': DateInput(),
+            'title':TextInput(attrs={'placeholder': 'Введите название старта','class':'input_c'}),
+            'date': DateInput(attrs={'class':'input_c'}),
         }
+
 
 
 # class ProtocolForm(ModelForm):
@@ -39,17 +41,16 @@ class CompetitionForm(ModelForm):
 
 
 class SportsmenRegistrationForm(forms.Form):
-    competition = forms.ModelChoiceField(queryset=AllCompetition.objects.filter(done=False), required=True)
-
-    sportsmen = forms.ModelChoiceField(queryset=Armwrestler.objects.all(), required=True)
+    competition = forms.ModelChoiceField(queryset=AllCompetition.objects.filter(done=False), required=True,empty_label="Выберите соревнование")
+    sportsmen = forms.ModelChoiceField(queryset=Armwrestler.objects.all(), required=True,empty_label="Выберите спортсмена для регистрации")
 
 
 class CreatingCompetitionForm(forms.Form):
-    competition = forms.ModelChoiceField(queryset=AllCompetition.objects.filter(done=False), required=True)
+    competition = forms.ModelChoiceField(queryset=AllCompetition.objects.filter(done=False), required=True,empty_label="Выберите соревнование")
 
 
 class FindCompetitionForm(forms.Form):
-    competition = forms.ModelChoiceField(queryset=AllCompetition.objects.filter(done=True), required=True)
+    competition = forms.ModelChoiceField(queryset=AllCompetition.objects.filter(done=True), required=True,empty_label="Выберите соревнование")
 
 # class Meta:
 #     model=SportsmenRegistration

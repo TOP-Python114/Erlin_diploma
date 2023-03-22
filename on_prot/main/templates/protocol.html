@@ -1,16 +1,10 @@
+{% extends "base_menu.html" %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="{% static "css/style.css" %}"/>
-    <title>Title</title>
-
-
-</head>
-<body>
+{% block title2 %}
+{% endblock title2 %}
+{% block body %}
 <div>
-    <p>Турнир: {{ competition }} </p>
+    <p class="{{ vis }}">Турнир: {{ competition }} </p>
     <form action="" method="post">
         {% csrf_token %}
         <div>
@@ -18,13 +12,13 @@
         </div>
 
         <div>
-            <input type="submit" name="123">
+            <input type="submit" name="123" class="gradient-button">
         </div>
     </form>
 </div>
-<h1>Мужчины</h1>
+<p style="margin-left: 20%; margin-top: 0" class="white_color {{ vis_m }} h224" >Мужчины</p>
 {% for cat,i in all_results_m.items %}
-    <p>{{ cat }}</p>
+    <p class="white_color mb0 mt0">{{ cat }}</p>
     <table class="table">
         <tr>
             <th class="td_place">М</th>
@@ -55,10 +49,10 @@
         </table>
     {% endfor %}
 {% endfor %}
-<h1>Женщины</h1>
+<p style="margin-left: 20%; margin-top: 0" class=" {{ vis_w }} h224">Женщины</p>
 
 {% for cat,i in all_results_w.items %}
-    <p>{{ cat }}</p>
+    <p class="white_color mb0">{{ cat }}</p>
     <table class="table">
         <tr>
             <th class="td_place">М</th>
@@ -89,66 +83,11 @@
         </table>
     {% endfor %}
 {% endfor %}
-{#        <tr>#}
-{#            {{ i.weight_cat }}#}
-{#            <td>{{ i.sum_place }}</td>#}
-{##}
-{#            <td>{{ i.sportsmen.name }}</td>#}
-{#           <td>{{ i.sportsmen.weight_category }}</td>#}
-{##}
-{#        </tr>#}
-{#        <br>#}
-{#    {% endfor %}#}
-{#    </table>#}
+{% endblock body %}
+{% block bdclass %}bg_prot{% endblock bdclass %}
 
-
-<style>
-    .table {
-        width: 50%;
-        #margin-bottom: 2px;
-        border: 1px solid #dddddd;
-        border-collapse: collapse;
-    }
-
-    .table th {
-        font-weight: bold;
-        padding: 5px;
-        background: #efefef;
-        border: 1px solid #dddddd;
-
-    }
-
-    .td_place {
-        width: 20px;
-
-    }
-
-    .td_name {
-        width: 200px;
-
-    }
-
-    .td_kval {
-        width: 50px;
-
-    }
-
-    .td_command {
-        width: 100px;
-
-    }
-
-    .td_points {
-        width: 40px;
-
-    }
-
-
-    .table td {
-    {#width: 30%;#} border: 1px solid #dddddd;
-        padding: 5px;
-    }
-
-</style>
-</body>
-</html>
+{% block class_menu_main %}li_uncolor{% endblock class_menu_main %}
+{% block class_menu_reg %}li_uncolor{% endblock class_menu_reg %}
+{% block class_menu_start %}li_uncolor{% endblock class_menu_start %}
+{% block class_menu_reg_sp %}li_uncolor{% endblock class_menu_reg_sp %}
+{% block class_menu_protocol %}li_color{% endblock class_menu_protocol %}

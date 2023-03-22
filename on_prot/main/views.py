@@ -22,7 +22,7 @@ def hello(request):
 
 def protocols(request):
     if request.method == "GET":
-        return render(request, 'protocol.html', {"form": FindCompetitionForm})
+        return render(request, 'protocol.html', {"form": FindCompetitionForm,"vis_m":"no_visible","vis_w":"no_visible","vis":"no_visible" })
     if request.method == "POST":
         form = FindCompetitionForm(request.POST)
         if form.is_valid():
@@ -30,9 +30,12 @@ def protocols(request):
             cat_m_reg = {}
             cat_w_reg = {}
             ikategs = []
+            woms=0
+            mens=0
             for i in ["55", "60", "65", "70", "75", "80", "85", "90", "100", "110", "+110", ]:
                 for j in AllResults.objects.filter(weight_cat=i).filter(competition=data):
                     if j.sportsmen.sex == 'm':
+                        mens=1
                         ikategs.append(j)
                 ikategs.sort(key=lambda a: a.sum_place)
 
@@ -43,6 +46,7 @@ def protocols(request):
             for i in ["50", "55", "60", "65", "70", "75", "80", "+80"]:
                 for j in AllResults.objects.filter(weight_cat=i).filter(competition=data):
                     if j.sportsmen.sex == 'w' :
+                        woms=1
                         ikategs.append(j)
                 ikategs.sort(key=lambda a: a.sum_place)
 
@@ -54,7 +58,10 @@ def protocols(request):
             req = {"form": FindCompetitionForm,
                    "all_results_m": cat_m_reg,
                    "all_results_w": cat_w_reg,
-                   "competition": data.title
+                   "competition": data.title,
+                   "vis_m":"visible"*mens or "no_visible",
+                   "vis_w":"visible"*woms or "no_visible",
+                   "vis": "visible"
                    }
 
             return render(request, 'protocol.html', req

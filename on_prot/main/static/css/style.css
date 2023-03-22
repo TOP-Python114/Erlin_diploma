@@ -126,5 +126,98 @@ h1 {
 .no_visible {
     display: none;
 }
+.visible{
+    display: block;
+}
+
+.table {
+    width: 50%;
+    #margin-bottom: 2px;
+    border: 1px solid #dddddd;
+    border-collapse: collapse;
+}
+
+.table th {
+    font-weight: bold;
+    padding: 5px;
+    background: #efefef;
+    border: 1px solid #dddddd;
+
+}
+
+.td_place {
+    width: 20px;
+
+}
+
+.td_name {
+    width: 200px;
+
+}
+
+.td_kval {
+    width: 50px;
+
+}
+
+.td_command {
+    width: 100px;
+
+}
+
+.td_points {
+    width: 40px;
+
+}
 
 
+.table td {
+    background-color: white;
+    #width: 30% ;}
+/*    #*/
+/*}*/
+/*border:*/
+
+/*1*/
+/*px solid #dddddd*/
+
+/*;*/
+/*padding:*/
+
+/*5*/
+/*px*/
+
+/*;*/
+/*}*/
+
+.gradient-button {
+  text-decoration: none;
+  display: inline-block;
+  color: white;
+  padding: 20px 30px;
+  margin: 10px 20px;
+  border-radius: 10px;
+  font-family: 'Montserrat', sans-serif;
+  font-family: 'Montserrat', sans-serif
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  background-image: linear-gradient(to right, #9EEFE1 0%, #4830F0 51%, #9EEFE1 100%);
+  background-size: 200% auto;
+  box-shadow: 0 0 20px rgba(0, 0, 0, .1);
+  transition: .5s;
+}
+.gradient-button:hover {
+  background-position: right center;
+}
+.white_color{
+    color:white;
+}
+
+.li_color{
+
+    background-color:rebeccapurple;
+}
+.li_uncolor{
+
+    background-color: #6c5ce7;
+}

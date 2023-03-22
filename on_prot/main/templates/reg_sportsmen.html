@@ -1,18 +1,24 @@
 {% extends "base_menu.html" %}
 {% load static %}
+{% block class_menu_main %}li_uncolor{% endblock class_menu_main %}
+{% block class_menu_reg %}li_uncolor{% endblock class_menu_reg %}
+{% block class_menu_start %}li_uncolor{% endblock class_menu_start %}
+{% block class_menu_reg_sp %}li_color{% endblock class_menu_reg_sp %}
+{% block class_menu_protocol %}li_uncolor{% endblock class_menu_protocol %}
 {% block title2 %}
-    Регистрация спортсмена
 {% endblock title2 %}
 {% block body %}
-<div>
+    <div>
         <form action="" method="post">
             {% csrf_token %}
             <div>
-                {{ form.as_p }}
+                {{ form.competition }}
+                {{ form.sportsmen }}
             </div>
             <div>
-                <input type="submit" name="SubmitDel">
+                <input type="submit" name="SubmitDel" class="gradient-button" value="Регистрация">
             </div>
+
         </form>
     </div>
 {% endblock body %}

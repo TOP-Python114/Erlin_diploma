@@ -1,17 +1,22 @@
 {% extends "base_menu.html" %}
 {% load static %}
 {% block title2 %}
-    Регистрация соревнования
 {% endblock title2 %}
+{% block class_menu_main %}li_uncolor{% endblock class_menu_main %}
+{% block class_menu_reg %}li_color{% endblock class_menu_reg %}
+{% block class_menu_start %}li_uncolor{% endblock class_menu_start %}
+{% block class_menu_reg_sp %}li_uncolor{% endblock class_menu_reg_sp %}
+{% block class_menu_protocol %}li_uncolor{% endblock class_menu_protocol %}
 {% block body %}
 <div>
     <form action="" method="post">
         {% csrf_token %}
         <div>
-            {{ form.as_p }}
+            {{ form.title }}
+            {{ form.date }}
         </div>
         <div>
-            <input type="submit" name="SubmitDel">
+            <input type="submit" class="gradient-button">
         </div>
     </form>
 </div>
