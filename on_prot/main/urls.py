@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.urls import path
-from .views import hello, competition, reg_competition, reg_sportsmen, competition_constructor, protocols
+from .views import hello, competition, reg_competition, reg_sportsmen, competition_constructor, protocols, new_sportsmen
 
 # from .models import Competition
 
@@ -15,6 +15,7 @@ def update_patterns(urlpatterns=urlpatterns):
         path('protocol/', protocols, name='pc'),
         path('sp_n_comp/',reg_sportsmen,name='rs'),
         path('crt', competition_constructor,name='cs'),
+        path('new_sportsmen_registration', new_sportsmen, name='ns'),
         path('<category>', competition),
         ]
     urlpatterns+=urlpatterns2

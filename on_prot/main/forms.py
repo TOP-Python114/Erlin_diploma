@@ -20,6 +20,20 @@ class CompetitionForm(ModelForm):
             'date': DateInput(attrs={'class':'input_c'}),
         }
 
+class NewSportsmenForm(ModelForm):
+    class Meta:
+        model = Armwrestler
+        fields = ["name", "age","weight_category","team","sex","grade"]
+        widgets = {
+            'name':TextInput(attrs={'placeholder': 'Ф.И.О','class':'input_c'}),
+            'age': TextInput(attrs={'placeholder': 'Возраст','class':'input_c'}),
+            'weight_category': TextInput(attrs={'placeholder': 'Вес','class': 'input_c'}),
+            'team': TextInput(attrs={'placeholder': 'Команда','class': 'input_c'}),
+            'sex': TextInput(attrs={'placeholder': 'пол','class': 'input_c'}),
+            'grade': TextInput(attrs={'placeholder': 'Квалификация','class': 'input_c'}),
+
+        }
+
 
 
 # class ProtocolForm(ModelForm):

@@ -1,7 +1,7 @@
 # from pprint import pprint
 from datetime import datetime
 from .forms import CompetitionForm, SportsmenRegistrationForm, CreatingCompetitionForm, \
-    FindCompetitionForm
+    FindCompetitionForm,NewSportsmenForm
 from .competition_former import CATEGORY_NORMALIZER, select_category_parcer
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
@@ -79,6 +79,18 @@ def reg_competition(request):
             comp = AllCompetition(**form.cleaned_data)
             comp.save()
     return redirect(request.path)
+
+def new_sportsmen(request):
+    if request.method == "GET":
+        return render(request, 'new_sportsmen.html', {"form": NewSportsmenForm})
+    elif request.method == 'POST':
+        form = NewSportsmenForm(request.POST)
+        if form.is_valid():
+            comp = Armwrestler(**form.cleaned_data)
+            comp.save()
+    return redirect(request.path)
+
+
 
 
 def reg_sportsmen(request):
@@ -194,7 +206,8 @@ def save_start(start: dict):
                     left_place=result[4],
                     right_place=result[5],
                     sum_place=result[6],
-                    weight_cat=select_category_parcer(curr_sportsmen.weight_category, curr_sportsmen.sex)
+                    weight_cat=select_category_parcer(curr_sportsmen.weight_category, curr_sportsmen.sex),
+                    weight_actual=curr_sportsmen.weight_category
                 )
 
                 sp_n_to_save.save()

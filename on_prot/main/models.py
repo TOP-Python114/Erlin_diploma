@@ -11,10 +11,10 @@ class Armwrestler(models.Model):
     name = models.CharField(max_length=100)
     # ИСПРАВИТЬ здесь и далее: для моделей, которые получают данные только из пользовательского ввода валидация производится в формах
     age = models.PositiveIntegerField()
-    weight_category = models.CharField(max_length=4, default='60')
-    team = models.CharField(max_length=54, default='Новосибирск')
-    sex = models.CharField(max_length=2, default='m')
-    grade = models.CharField(max_length=4, default='б/р')
+    weight_category = models.CharField(max_length=4)
+    team = models.CharField(max_length=54)
+    sex = models.CharField(max_length=2)
+    grade = models.CharField(max_length=4)
 
     def __str__(self):
         return f"{self.name} {self.weight_category} {self.sex} {self.grade}"
@@ -54,7 +54,7 @@ class AllResults(models.Model):
     right_place = models.PositiveIntegerField(validators=[MinValueValidator(1), MaxValueValidator(100)],default=100)
     sum_place= models.PositiveIntegerField(validators=[MinValueValidator(1), MaxValueValidator(100)],default=100)
     weight_cat=models.CharField(max_length=4, default="60")
-
+    weight_actual=models.CharField(max_length=4, default="60")
 
     def __str__(self):
         return f' Сооревнование: {self.competition.title} Спортсмен: {self.sportsmen}, Левая "{self.left_place} ' \

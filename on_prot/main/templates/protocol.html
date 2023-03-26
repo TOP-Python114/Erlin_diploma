@@ -30,6 +30,7 @@
             <th class="td_place">П</th>
             <th class="td_points">П_оч</th>
             <th class="td_points">сум</th>
+            <th class="td_points">вес</th>
         </tr>
     </table>
     {% for j in i %}
@@ -45,6 +46,7 @@
                 <td class="td_place"> {{ j.right_place }} </td>
                 <td class="td_points"> {{ j.points_right }} </td>
                 <td class="td_points"> {{ j.points }} </td>
+                <td class="td_points"> {{ j.weight_actual}} </td>
             </tr>
         </table>
     {% endfor %}
@@ -64,6 +66,7 @@
             <th class="td_place">П</th>
             <th class="td_points">П_оч</th>
             <th class="td_points">сум</th>
+             <th class="td_points">вес</th>
         </tr>
     </table>
     {% for j in i %}
@@ -79,6 +82,7 @@
                 <td class="td_place"> {{ j.right_place }} </td>
                 <td class="td_points"> {{ j.points_right }} </td>
                 <td class="td_points"> {{ j.points }} </td>
+                <td class="td_points"> {{ j.weight_actual}} </td>
             </tr>
         </table>
     {% endfor %}
@@ -91,3 +95,4 @@
 {% block class_menu_start %}li_uncolor{% endblock class_menu_start %}
 {% block class_menu_reg_sp %}li_uncolor{% endblock class_menu_reg_sp %}
 {% block class_menu_protocol %}li_color{% endblock class_menu_protocol %}
+{% block class_menu_new_sportsmen %}li_uncolor{% endblock class_menu_new_sportsmen %}
