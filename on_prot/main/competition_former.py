@@ -39,16 +39,16 @@ def select_category_parcer(category, sex):
     woman = [80, 75, 70, 65, 60, 55, 50]
     if sex == 'm':
         for i in mens:
-            if int(category) > 110:
+            if float(category) > 110:
                 return "+110"
-            if int(category) > i:
+            if float(category) > i:
                 return str(mens[mens.index(i) - 1])
         return str(mens[-1])
     elif sex == 'w':
         for i in woman:
-            if int(category) > 80:
+            if float(category) > 80:
                 return "+80"
-            if int(category) > i:
+            if float(category) > i:
                 return str(woman[woman.index(i) - 1])
         return str(woman[-1])
 
