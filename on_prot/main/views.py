@@ -1,7 +1,10 @@
 # from pprint import pprint
 from datetime import datetime
+
+from django.contrib.auth.decorators import login_required, user_passes_test
+
 from .forms import CompetitionForm, SportsmenRegistrationForm, CreatingCompetitionForm, \
-    FindCompetitionForm,NewSportsmenForm
+    FindCompetitionForm, NewSportsmenForm
 from .competition_former import CATEGORY_NORMALIZER, select_category_parcer
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
@@ -22,7 +25,8 @@ def hello(request):
 
 def protocols(request):
     if request.method == "GET":
-        return render(request, 'protocol.html', {"form": FindCompetitionForm,"vis_m":"no_visible","vis_w":"no_visible","vis":"no_visible" })
+        return render(request, 'protocol.html',
+                      {"form": FindCompetitionForm, "vis_m": "no_visible", "vis_w": "no_visible", "vis": "no_visible"})
     if request.method == "POST":
         form = FindCompetitionForm(request.POST)
         if form.is_valid():
@@ -30,23 +34,22 @@ def protocols(request):
             cat_m_reg = {}
             cat_w_reg = {}
             ikategs = []
-            woms=0
-            mens=0
+            woms = 0
+            mens = 0
             for i in ["55", "60", "65", "70", "75", "80", "85", "90", "100", "110", "+110", ]:
                 for j in AllResults.objects.filter(weight_cat=i).filter(competition=data):
                     if j.sportsmen.sex == 'm':
-                        mens=1
+                        mens = 1
                         ikategs.append(j)
                 ikategs.sort(key=lambda a: a.sum_place)
-
 
                 if ikategs:
                     cat_m_reg[i] = ikategs
                     ikategs = []
             for i in ["50", "55", "60", "65", "70", "75", "80", "+80"]:
                 for j in AllResults.objects.filter(weight_cat=i).filter(competition=data):
-                    if j.sportsmen.sex == 'w' :
-                        woms=1
+                    if j.sportsmen.sex == 'w':
+                        woms = 1
                         ikategs.append(j)
                 ikategs.sort(key=lambda a: a.sum_place)
 
@@ -54,13 +57,12 @@ def protocols(request):
                     cat_w_reg[i] = ikategs
                     ikategs = []
 
-
             req = {"form": FindCompetitionForm,
                    "all_results_m": cat_m_reg,
                    "all_results_w": cat_w_reg,
                    "competition": data.title,
-                   "vis_m":"visible"*mens or "no_visible",
-                   "vis_w":"visible"*woms or "no_visible",
+                   "vis_m": "visible" * mens or "no_visible",
+                   "vis_w": "visible" * woms or "no_visible",
                    "vis": "visible"
                    }
 
@@ -69,8 +71,11 @@ def protocols(request):
 
                           )
 
-
+# @permission
 def reg_competition(request):
+    if not request.user.is_staff:
+        #redirect('logout')
+        return redirect('login')
     if request.method == "GET":
         return render(request, 'reg_comp.html', {"form": CompetitionForm})
     elif request.method == 'POST':
@@ -79,6 +84,7 @@ def reg_competition(request):
             comp = AllCompetition(**form.cleaned_data)
             comp.save()
     return redirect(request.path)
+
 
 def new_sportsmen(request):
     if request.method == "GET":
@@ -91,9 +97,11 @@ def new_sportsmen(request):
     return redirect(request.path)
 
 
-
-
 def reg_sportsmen(request):
+    if not request.user.is_staff:
+        # redirect('logout')
+        return redirect('login')
+
     if request.method == "GET":
         return render(request, 'reg_sportsmen.html', {"form": SportsmenRegistrationForm})
     elif request.method == 'POST':
@@ -101,7 +109,6 @@ def reg_sportsmen(request):
         form = SportsmenRegistrationForm(request.POST)
         if form.is_valid():
             if not SportsmenRegistration.objects.filter(**form.cleaned_data):
-
                 sp_n = SportsmenRegistration(**form.cleaned_data)
                 sp_n.save()
     return redirect(request.path)
@@ -111,6 +118,12 @@ def competition_constructor(request):
     """
     конструктор соревнования:  по зарегистрированному соревнованию делает старт сохраняет всю инфу о старте в глобальную переменную a
     """
+    if not request.user.is_staff:
+        # redirect('logout')
+        return redirect('login')
+
+
+    global is_categories
     if request.method == "GET":
         return render(request, 'competition_constructor.html', {"form": CreatingCompetitionForm})
     elif request.method == 'POST':
@@ -128,7 +141,7 @@ def competition_constructor(request):
 
                 a = competition_creating(name_of_competition=current_comp[0].competition.title,
                                          date_of_competition=current_comp[0].competition.date, li=curr_sportsmens)
-                global is_categories
+
                 is_categories = sorted(
                     set([x[:-1].replace("+", "plus") for x in a.keys() if x != 'title' and x != 'date']))
 
@@ -176,7 +189,7 @@ def sum_place_of_comp(left, right):
         else:
             res += [[l[1], (l[0] + 1 + r[0] + 1) * (-1), 0, 0, l[0] + 1, r[0] + 1], 0]
     # сортировка по второму признаку учитывает собственный вес Спортсмена, при равенстве очков побеждает более легкий
-    res=sorted(res, key=lambda a: (-a[1], int(a[0].weight)))
+    res = sorted(res, key=lambda a: (-a[1], int(a[0].weight)))
     for checker, i in enumerate(res):
         i[6] = checker + 1
 
@@ -216,6 +229,18 @@ def save_start(start: dict):
 def competition(request, category):
     # не представленные категории
     # использвуется только если кто то намеренно наберет в адресную строку не юзаную категорию
+
+    # Я не знаю почему, но идет обращение к переменной компетишена до его создания и обращения к нему не понимаю в какой момент и поэтому так:
+
+
+
+    try:
+        a
+    except NameError:
+        return redirect('hello')
+
+
+
     if category not in [x[:-1] for x in a]:
 
         return render(request, 'competit.html', {

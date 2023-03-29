@@ -1,20 +1,112 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<div>
-    <form action="" method="post">
-        {% csrf_token %}
-        <div>
-            {{ form.as_p}}
-        </div>
-        <div>
-            <input type="submit" class="gradient-button">
-        </div>
-    </form>
-</div>
-</body>
-</html>
+{% extends "base_menu.html" %}
+{% load static %}
+
+{#<!DOCTYPE html>#}
+{#<html lang="en">#}
+{#<head>#}
+{#    <meta charset="UTF-8">#}
+{#    <link rel="stylesheet" href="{% static "css/style.css" %}"/>#}
+{#    <link rel="stylesheet" href="{% static "css/menu.css" %}"/>#}
+{#    <title>Title</title>#}
+{##}
+{#</head>#}
+{% block body %}
+
+
+
+
+    <div>
+        <form method="POST">
+            {% csrf_token %}
+            <div class="cntr_no_col">
+
+                <div class="reg">
+                    {#            <legend>Регистрация</legend>#}
+                    <h2 style="margin: 0">Регистрация</h2>
+                    <i>{{ form.username.label }}</i>
+                    <br>
+                    {{ form.username }}
+                     {% if form.username.errors %} {{ form.username.errors }} {% endif %}
+
+                    {#                <p class="help_text">{{ form.username.help_text }}</p>#}
+                    <i>{{ form.email.label }}</i>
+
+                    {{ form.email }}
+
+                    <i>{{ form.password1.label }}</i>
+
+                    {{ form.password1 }}
+                    {{ form.password1.errors }}
+                    {% for i in form.password1.help_text %}
+                        <p class="help_text {{ error }} "> * {{ i }}</p>
+                    {% endfor %}
+
+                    <i>{{ form.password2.label }}</i>
+                    <br>
+                    {{ form.password2 }}
+                    {% if form.password2.errors %} {{ form.password2.errors }} {% endif %}
+
+                    <div class="reg_btn_div">
+                        <button class="reg_button" type="submit">Регистрация</button>
+                    </div>
+
+
+                </div>
+                <div class="reg_btn_div">
+                    Уже есть аккаунт? <a class="ml-2" href="{% url 'login' %}">Вход</a>
+                </div>
+            </div>
+        </form>
+
+    </div>
+
+
+    <style>
+        .cntr_no_col {
+        {##} margin: auto;
+            width: max-content;
+        }
+
+        .reg_btn_div {
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        .reg {
+            margin: auto;
+            width: max-content;
+            background-color: #aaaaaa;
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: .5em;
+            box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.2);
+        }
+
+        .help_text {
+            color: red;
+            margin: 0;
+            font-size: 10px;
+        }
+
+        .reg_button {
+            background-color: #fe6637;
+            border-radius: .5em;
+            border: 0;
+            width: 150px;
+            height: 30px;
+
+        }
+
+        .reg_button:hover {
+            background: green;
+            box-shadow: 0 15px 20px rgba(46, 229, 157, .4);
+            color: white;
+        }
+        .errorlist{
+            color:red;
+            margin: 0;
+            padding: 0;
+            list-style-type: none;
+        }
+    </style>
+{% endblock body %}
