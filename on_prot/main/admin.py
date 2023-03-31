@@ -1,4 +1,6 @@
 from django.contrib import admin
+
+
 from .models import Armwrestler, AllCompetition, SportsmenRegistration, AllResults
 
 # Register your models here.
