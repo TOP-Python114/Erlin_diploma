@@ -14,6 +14,10 @@
     list-style: var(--rListListStyle, none) !important;
 }
 
+.logout_button{
+    width:20px;
+    height: 20px;
+}
 .bg_index {
     background: url("/static/img/hands.jpeg") 50% 0 no-repeat fixed;
 }

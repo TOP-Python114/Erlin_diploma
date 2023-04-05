@@ -27,9 +27,13 @@
             </li>
          <li class="{% block class_menu_new_sportsmen %}{% endblock class_menu_new_sportsmen %} menu__group"><a href="{% url 'ns' %}" class="menu__link r-link text-underlined">Новый спортсмен</a>
             </li>
+
+            <li><a href="{% url 'login' %}" ><img height="50px"  width="" style="margin-top: 10px"  src="{% static 'img/in.png' %}"></a></li>
+        <li><a href="{% url 'logout' %}" ><img height="50px"  width="" style="margin-top: 10px"  src="{% static 'img/out.png' %}"></a></li>
         </ul>
     </nav>
-{% if messages %}
+
+    {% if messages %}
         	{% for message in messages %}
           	<div class="white_color {{ message.tags }}">
             	{{ message }}
