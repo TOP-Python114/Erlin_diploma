@@ -27,7 +27,7 @@ def register(request):
         visible='no_visible'
         form = UserRegisterForm()
 
-    return render(request, 'register.html', {'form': form,'error': visible})
+    return render(request, 'users/register.html', {'form': form,'error':visible})
 
 
 @login_required
@@ -52,7 +52,7 @@ def profile(request):
         'p_form': p_form
     }
 
-    return render(request, 'profile.html', context)
+    return render(request, 'users/profile.html', context)
 
 
 

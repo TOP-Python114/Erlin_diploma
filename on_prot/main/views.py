@@ -189,7 +189,7 @@ def sum_place_of_comp(left, right):
         else:
             res += [[l[1], (l[0] + 1 + r[0] + 1) * (-1), 0, 0, l[0] + 1, r[0] + 1], 0]
     # сортировка по второму признаку учитывает собственный вес Спортсмена, при равенстве очков побеждает более легкий
-    res = sorted(res, key=lambda a: (-a[1], int(a[0].weight)))
+    res = sorted(res, key=lambda a: (-a[1], float(a[0].weight)))
     for checker, i in enumerate(res):
         i[6] = checker + 1
 

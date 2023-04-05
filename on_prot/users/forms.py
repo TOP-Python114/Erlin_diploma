@@ -14,23 +14,7 @@ class UserRegisterForm(UserCreationForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['image'].widget.clear_checkbox_label = 'та'
-        self.fields['image'].widget.initial_text = "ша"
-        self.fields['image'].widget.input_text = "буль"
 
-    # email = forms.EmailField()
-    error_messages = {
-        'password_mismatch': "Пароли не совпадают",
-        'username': "уже есть",
-
-    }
-
-    translate_ = {
-        "A user with that username already exists.": "юзер уже есть"
-    }
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
         self.fields['username'].help_text = "150 < симв. Только буквы, цифры и @/./+/-/_."
         self.fields['password1'].help_text = ['Ваш пароль должен быть больше 8 символов', 'Не состоять из одних цифр',
                                               'Волосатая горилла']
