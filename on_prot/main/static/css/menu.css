@@ -1,3 +1,4 @@
+{% load static %}
 .r-link {
     display: var(--rLinkDisplay, inline-flex) !important;
 }
@@ -18,6 +19,27 @@
     width:20px;
     height: 20px;
 }
+
+    a.logout_image {
+        background: url('{% static 'img/out.png' %}'); /* Путь к файлу с исходным рисунком  */
+        background-size: 50px 50px;
+        display: block; /*  Рисунок как блочный элемент */
+        width: 50px; /* Ширина рисунка */
+        height: 50px; /*  Высота рисунка */
+    }
+
+
+    a.logout_image:hover {
+        background: url('{% static 'img/out_hover.png' %}'); /* Путь к файлу с заменяемым рисунком  */
+        background-size: 50px 50px;
+        display: block; /*  Рисунок как блочный элемент */
+        width: 50px; /* Ширина рисунка */
+        height: 50px; /*  Высота рисунка */
+    }
+
+
+
+
 .bg_index {
     background: url("/static/img/hands.jpeg") 50% 0 no-repeat fixed;
 }

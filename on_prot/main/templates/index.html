@@ -7,8 +7,9 @@
 {% block class_menu_reg_sp %}li_uncolor{% endblock class_menu_reg_sp %}
 {% block class_menu_protocol %}li_uncolor{% endblock class_menu_protocol %}
 {% block class_menu_new_sportsmen %}li_uncolor{% endblock class_menu_new_sportsmen %}
-
-
+{% block class_login%}{{  login }}{% endblock class_login %}
+{% block class_logout%}{{  logout }}{% endblock class_logout %}
+{% block class_profile %}{{ profile }}{% endblock class_profile %}
 
 
 {% block title %}Главная страница {% endblock title %}
@@ -16,10 +17,10 @@
 
 {% block body %}
     {#<img src='{% static "img/hands.jpeg" %}' width=100% height=100%>#}
-    <a href="{% url 'register' %}" >Регистрация</a>
-    <a href="{% url 'login' %}" >Логин</a>
-    <a href="{% url 'logout' %}" >Логаут</a>
-    <a href="{% url 'profile' %}" >личный кабинет</a>
+{#    <a href="{% url 'register' %}" >Регистрация</a>#}
+{#    <a href="{% url 'login' %}" >Логин</a>#}
+{#    <a href="{% url 'logout' %}" >Логаут</a>#}
+{#    <a href="{% url 'profile' %}" >личный кабинет</a>#}
 {% endblock body %}
 
 </html>

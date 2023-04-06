@@ -6,10 +6,10 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from .forms import CompetitionForm, SportsmenRegistrationForm, CreatingCompetitionForm, \
     FindCompetitionForm, NewSportsmenForm
 from .competition_former import CATEGORY_NORMALIZER, select_category_parcer
-from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from .competition_former import competition_creating
 from main.models import Armwrestler, AllCompetition, SportsmenRegistration, AllResults
+from django.template import RequestContext, Template
 
 
 # Create your views here.
@@ -17,6 +17,9 @@ from main.models import Armwrestler, AllCompetition, SportsmenRegistration, AllR
 def hello(request):
     return render(request, 'index.html',
                   {
+                      'login': request.user.is_authenticated * 'no_visible' or 'visible',
+                      'logout': request.user.is_authenticated * 'visible' or 'no_visible',
+                      'profile': request.user.is_authenticated * 'visible' or 'no_visible'
                       # "is_categories": is_categories,
                       # "title": a["title"]
                   }
@@ -26,7 +29,13 @@ def hello(request):
 def protocols(request):
     if request.method == "GET":
         return render(request, 'protocol.html',
-                      {"form": FindCompetitionForm, "vis_m": "no_visible", "vis_w": "no_visible", "vis": "no_visible"})
+                      {"form": FindCompetitionForm,
+                       "vis_m": "no_visible",
+                       "vis_w": "no_visible",
+                       "vis": "no_visible",
+                       'login': request.user.is_authenticated * 'no_visible' or 'visible',
+                       'logout': request.user.is_authenticated * 'visible' or 'no_visible'
+                       })
     if request.method == "POST":
         form = FindCompetitionForm(request.POST)
         if form.is_valid():
@@ -63,7 +72,9 @@ def protocols(request):
                    "competition": data.title,
                    "vis_m": "visible" * mens or "no_visible",
                    "vis_w": "visible" * woms or "no_visible",
-                   "vis": "visible"
+                   "vis": "visible",
+                   'login': request.user.is_authenticated * 'no_visible' or 'visible',
+                   'logout': request.user.is_authenticated * 'visible' or 'no_visible'
                    }
 
             return render(request, 'protocol.html', req
@@ -71,13 +82,17 @@ def protocols(request):
 
                           )
 
+
 # @permission
 def reg_competition(request):
     if not request.user.is_staff:
-        #redirect('logout')
+        # redirect('logout')
         return redirect('login')
     if request.method == "GET":
-        return render(request, 'reg_comp.html', {"form": CompetitionForm})
+        return render(request, 'reg_comp.html', {"form": CompetitionForm,
+                                                 'login': request.user.is_authenticated * 'no_visible' or 'visible',
+                                                 'logout': request.user.is_authenticated * 'visible' or 'no_visible'
+                                                 })
     elif request.method == 'POST':
         form = CompetitionForm(request.POST)
         if form.is_valid():
@@ -88,7 +103,11 @@ def reg_competition(request):
 
 def new_sportsmen(request):
     if request.method == "GET":
-        return render(request, 'new_sportsmen.html', {"form": NewSportsmenForm})
+        return render(request, 'new_sportsmen.html', {"form": NewSportsmenForm,
+                                                      'login': request.user.is_authenticated * 'no_visible' or 'visible',
+                                                      'logout': request.user.is_authenticated * 'visible' or 'no_visible',
+                                                      'profile': request.user.is_authenticated * 'visible' or 'no_visible'
+                                                      })
     elif request.method == 'POST':
         form = NewSportsmenForm(request.POST)
         if form.is_valid():
@@ -103,7 +122,11 @@ def reg_sportsmen(request):
         return redirect('login')
 
     if request.method == "GET":
-        return render(request, 'reg_sportsmen.html', {"form": SportsmenRegistrationForm})
+        return render(request, 'reg_sportsmen.html', {"form": SportsmenRegistrationForm,
+                                                      'login': request.user.is_authenticated * 'no_visible' or 'visible',
+                                                      'logout': request.user.is_authenticated * 'visible' or 'no_visible',
+                                                      'profile': request.user.is_authenticated * 'visible' or 'no_visible'
+                                                      })
     elif request.method == 'POST':
 
         form = SportsmenRegistrationForm(request.POST)
@@ -122,10 +145,13 @@ def competition_constructor(request):
         # redirect('logout')
         return redirect('login')
 
-
     global is_categories
     if request.method == "GET":
-        return render(request, 'competition_constructor.html', {"form": CreatingCompetitionForm})
+        return render(request, 'competition_constructor.html', {"form": CreatingCompetitionForm,
+                                                                'login': request.user.is_authenticated * 'no_visible' or 'visible',
+                                                                'logout': request.user.is_authenticated * 'visible' or 'no_visible',
+                                                                'profile': request.user.is_authenticated * 'visible' or 'no_visible'
+                                                                })
     elif request.method == 'POST':
         form = CreatingCompetitionForm(request.POST)
         if "CreatingCompetition" in request.POST:
@@ -151,6 +177,9 @@ def competition_constructor(request):
         'alert': None,
         'no_visible': None,
         "is_categories": is_categories,
+        'login': request.user.is_authenticated * 'no_visible' or 'visible',
+        'logout': request.user.is_authenticated * 'visible' or 'no_visible',
+        'profile': request.user.is_authenticated * 'visible' or 'no_visible'
     })
 
 
@@ -232,17 +261,12 @@ def competition(request, category):
 
     # Я не знаю почему, но идет обращение к переменной компетишена до его создания и обращения к нему не понимаю в какой момент и поэтому так:
 
-
-
     try:
         a
     except NameError:
         return redirect('hello')
 
-
-
     if category not in [x[:-1] for x in a]:
-
         return render(request, 'competit.html', {
             'sps_l': "Категория не представлена",
             'no_visible': None,

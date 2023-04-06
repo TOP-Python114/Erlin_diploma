@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="{% static "css/menu.css" %}"/>
     <link rel="stylesheet" href="{% static "css/fonts.css" %}"/>
     <link rel="stylesheet" href="{% static "css/style.css" %}"/>
-  <link rel="stylesheet" href="{% static "css/forms.css" %}"/>
+    <link rel="stylesheet" href="{% static "css/forms.css" %}"/>
     <title>{% block title %} {% endblock title %}</title>
 </head>
 
@@ -15,31 +15,47 @@
 <div>
     <nav class="page__menu page__custom-settings menu">
         <ul class="menu__list r-list">
-            <li class="{% block class_menu_main %}{% endblock class_menu_main %} menu__group "><a href="{% url 'hello' %}" class="menu__link r-link text-underlined">Главная
+            <li class="{% block class_menu_main %}{% endblock class_menu_main %} menu__group "><a
+                    href="{% url 'hello' %}" class="menu__link r-link text-underlined">Главная
             </a></li>
-            <li class="{% block class_menu_reg %}{% endblock class_menu_reg %} menu__group"><a href="{% url 'rc' %}" class="menu__link r-link text-underlined">Регистрация
+            <li class="{% block class_menu_reg %}{% endblock class_menu_reg %} menu__group"><a href="{% url 'rc' %}"
+                                                                                               class="menu__link r-link text-underlined">Регистрация
                 турнира</a></li>
-            <li class="{% block class_menu_start %}{% endblock class_menu_start %} menu__group"><a href="{% url 'cs' %}" class="menu__link r-link text-underlined">Старт турнира</a>
+            <li class="{% block class_menu_start %}{% endblock class_menu_start %} menu__group"><a href="{% url 'cs' %}"
+                                                                                                   class="menu__link r-link text-underlined">Старт
+                турнира</a>
             </li>
-            <li class="{% block class_menu_reg_sp %}{% endblock class_menu_reg_sp %} menu__group"><a href="{% url 'rs' %}" class="menu__link r-link text-underlined">Регистрация
+            <li class="{% block class_menu_reg_sp %}{% endblock class_menu_reg_sp %} menu__group"><a
+                    href="{% url 'rs' %}" class="menu__link r-link text-underlined">Регистрация
                 спортсмена на соревнование</a></li>
-            <li class="{% block class_menu_protocol %}{% endblock class_menu_protocol %} menu__group"><a href="{% url 'pc' %}" class="menu__link r-link text-underlined">Протоколы</a>
+            <li class="{% block class_menu_protocol %}{% endblock class_menu_protocol %} menu__group"><a
+                    href="{% url 'pc' %}" class="menu__link r-link text-underlined">Протоколы</a>
             </li>
-         <li class="{% block class_menu_new_sportsmen %}{% endblock class_menu_new_sportsmen %} menu__group"><a href="{% url 'ns' %}" class="menu__link r-link text-underlined">Новый спортсмен</a>
+            <li class="{% block class_menu_new_sportsmen %}{% endblock class_menu_new_sportsmen %} menu__group"><a
+                    href="{% url 'ns' %}" class="menu__link r-link text-underlined">Новый спортсмен</a>
             </li>
 
-            <li><a href="{% url 'login' %}" ><img height="50px"  width="" style="margin-top: 10px"  src="{% static 'img/in.png' %}"></a></li>
-        <li><a href="{% url 'logout' %}" ><img height="50px"  width="" style="margin-top: 10px"  src="{% static 'img/out.png' %}"></a></li>
+            <li class="{% block class_login %}no_visible{% endblock class_login %}"><a href="{% url 'login' %}"><img
+                    height="50px" width="" style="margin-top: 10px" src="{% static 'img/in.png' %}"></a></li>
+            {#        <li class="{% block class_logout%}no_visible{% endblock class_logout %}"><a href="{% url 'logout' %}" ><img height="50px"  width="" style="margin-top: 10px"  src="{% static 'img/out.png' %}"></a></li>#}
+
+            <li class="{% block class_logout %}no_visible{% endblock class_logout %}"><a class="logout_image"
+                                                                                         href="{% url 'logout' %}"></a>
+            </li>
+
+           <li class="{% block class_profile %}no_visible{% endblock class_profile %}"><a class="profile_image"
+                                                                                         href="{% url 'profile' %}"></a>
+            </li>
         </ul>
     </nav>
 
     {% if messages %}
-        	{% for message in messages %}
-          	<div class="white_color {{ message.tags }}">
-            	{{ message }}
-          	</div>
-        	{% endfor %}
-{% endif %}
+        {% for message in messages %}
+            <div class="white_color {{ message.tags }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
 
 </div>
 <br>
@@ -57,4 +73,44 @@
 </div>
 
 </body>
+
+<style>
+
+    a.logout_image {
+        background: url('{% static 'img/out.png' %}'); /* Путь к файлу с исходным рисунком  */
+        background-size: 50px 50px;
+        display: block; /*  Рисунок как блочный элемент */
+            width: 50px; /* Ширина рисунка */
+        height: 50px; /*  Высота рисунка */
+    }
+
+
+    a.logout_image:hover {
+        background: url('{% static 'img/out_hover.png' %}'); /* Путь к файлу с заменяемым рисунком  */
+        background-size: 50px 50px;
+        display: block; /*  Рисунок как блочный элемент */
+            width: 50px; /* Ширина рисунка */
+        height: 50px; /*  Высота рисунка */
+    }
+
+     a.profile_image {
+        background: url('{% static 'img/profile.png' %}'); /* Путь к файлу с исходным рисунком  */
+        background-size: 50px 50px;
+        display: block; /*  Рисунок как блочный элемент */
+            width: 50px; /* Ширина рисунка */
+        height: 50px; /*  Высота рисунка */
+    }
+
+
+    a.profile_image:hover {
+        background: url('{% static 'img/profile-hover.png' %}'); /* Путь к файлу с заменяемым рисунком  */
+        background-size: 50px 50px;
+        display: block; /*  Рисунок как блочный элемент */
+            width: 50px; /* Ширина рисунка */
+        height: 50px; /*  Высота рисунка */
+    }
+
+
+
+</style>
 </html>
