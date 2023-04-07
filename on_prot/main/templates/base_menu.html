@@ -13,9 +13,9 @@
 <body class="{% block bdclass %}{% endblock bdclass %}">
 
 <div>
-    <nav class="page__menu page__custom-settings menu">
-        <ul class="menu__list r-list">
-            <li class="{% block class_menu_main %}{% endblock class_menu_main %} menu__group "><a
+    <nav class="page__menu page__custom-settings menu" >
+        <ul class="menu__list r-list" >
+            <li class=" {% block class_menu_main %}{% endblock class_menu_main %} menu__group "><a
                     href="{% url 'hello' %}" class="menu__link r-link text-underlined">Главная
             </a></li>
             <li class="{% block class_menu_reg %}{% endblock class_menu_reg %} menu__group"><a href="{% url 'rc' %}"
@@ -34,20 +34,24 @@
             <li class="{% block class_menu_new_sportsmen %}{% endblock class_menu_new_sportsmen %} menu__group"><a
                     href="{% url 'ns' %}" class="menu__link r-link text-underlined">Новый спортсмен</a>
             </li>
-
-            <li class="{% block class_login %}no_visible{% endblock class_login %}"><a href="{% url 'login' %}"><img
-                    height="50px" width="" style="margin-top: 10px" src="{% static 'img/in.png' %}"></a></li>
-            {#        <li class="{% block class_logout%}no_visible{% endblock class_logout %}"><a href="{% url 'logout' %}" ><img height="50px"  width="" style="margin-top: 10px"  src="{% static 'img/out.png' %}"></a></li>#}
-
-            <li class="{% block class_logout %}no_visible{% endblock class_logout %}"><a class="logout_image"
-                                                                                         href="{% url 'logout' %}"></a>
-            </li>
-
-           <li class="{% block class_profile %}no_visible{% endblock class_profile %}"><a class="profile_image"
-                                                                                         href="{% url 'profile' %}"></a>
-            </li>
         </ul>
     </nav>
+        <div class="auth_block">
+            <div class="auth_btns {% block class_login %}no_visible{% endblock class_login %}"><a class="login_image"
+                                                                                                  href="{% url 'login' %}"></a>
+            </div>
+
+            <div class="auth_btns {% block class_logout %}no_visible{% endblock class_logout %}"><a class="logout_image"
+                                                                                                    href="{% url 'logout' %}"></a>
+            </div>
+
+            <div class="auth_btns {% block class_profile %}no_visible{% endblock class_profile %}"><a
+                    class="profile_image"
+                    href="{% url 'profile' %}"></a>
+            </div>
+        </div>
+
+
 
     {% if messages %}
         {% for message in messages %}
@@ -74,42 +78,8 @@
 
 </body>
 
+
 <style>
-
-    a.logout_image {
-        background: url('{% static 'img/out.png' %}'); /* Путь к файлу с исходным рисунком  */
-        background-size: 50px 50px;
-        display: block; /*  Рисунок как блочный элемент */
-            width: 50px; /* Ширина рисунка */
-        height: 50px; /*  Высота рисунка */
-    }
-
-
-    a.logout_image:hover {
-        background: url('{% static 'img/out_hover.png' %}'); /* Путь к файлу с заменяемым рисунком  */
-        background-size: 50px 50px;
-        display: block; /*  Рисунок как блочный элемент */
-            width: 50px; /* Ширина рисунка */
-        height: 50px; /*  Высота рисунка */
-    }
-
-     a.profile_image {
-        background: url('{% static 'img/profile.png' %}'); /* Путь к файлу с исходным рисунком  */
-        background-size: 50px 50px;
-        display: block; /*  Рисунок как блочный элемент */
-            width: 50px; /* Ширина рисунка */
-        height: 50px; /*  Высота рисунка */
-    }
-
-
-    a.profile_image:hover {
-        background: url('{% static 'img/profile-hover.png' %}'); /* Путь к файлу с заменяемым рисунком  */
-        background-size: 50px 50px;
-        display: block; /*  Рисунок как блочный элемент */
-            width: 50px; /* Ширина рисунка */
-        height: 50px; /*  Высота рисунка */
-    }
-
 
 
 </style>

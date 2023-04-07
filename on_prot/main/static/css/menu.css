@@ -1,4 +1,4 @@
-{% load static %}
+
 .r-link {
     display: var(--rLinkDisplay, inline-flex) !important;
 }
@@ -13,54 +13,100 @@
     margin-top: var(--rListMarginTop, 0) !important;
     margin-bottom: var(--rListMarginBottom, 0) !important;
     list-style: var(--rListListStyle, none) !important;
+
 }
 
-.logout_button{
-    width:20px;
-    height: 20px;
+
+/*Блок кнопок аутентификации*/
+
+a.login_image {
+    background: url(../img/in.png); /* Путь к файлу с исходным рисунком  */
+    background-size: 30px 30px;
+    display: block; /*  Рисунок как блочный элемент */
+    width: 30px; /* Ширина рисунка */
+    height: 30px; /*  Высота рисунка */
 }
 
-    a.logout_image {
-        background: url('{% static 'img/out.png' %}'); /* Путь к файлу с исходным рисунком  */
-        background-size: 50px 50px;
-        display: block; /*  Рисунок как блочный элемент */
-        width: 50px; /* Ширина рисунка */
-        height: 50px; /*  Высота рисунка */
-    }
+
+a.login_image:hover {
+    background: url(../img/in_hover.png); /* Путь к файлу с заменяемым рисунком  */
+    background-size: 30px 30px;
+    display: block; /*  Рисунок как блочный элемент */
+    width: 30px; /* Ширина рисунка */
+    height: 30px; /*  Высота рисунка */
+}
 
 
-    a.logout_image:hover {
-        background: url('{% static 'img/out_hover.png' %}'); /* Путь к файлу с заменяемым рисунком  */
-        background-size: 50px 50px;
-        display: block; /*  Рисунок как блочный элемент */
-        width: 50px; /* Ширина рисунка */
-        height: 50px; /*  Высота рисунка */
-    }
+a.logout_image {
+    background: url(../img/out.png); /* Путь к файлу с исходным рисунком  */
+    background-size: 30px 30px;
+    display: block; /*  Рисунок как блочный элемент */
+    width: 30px; /* Ширина рисунка */
+    height: 30px; /*  Высота рисунка */
+}
 
 
+a.logout_image:hover {
+    background: url(../img/out_hover.png); /* Путь к файлу с заменяемым рисунком  */
+    background-size: 30px 30px;
+    display: block; /*  Рисунок как блочный элемент */
+    width: 30px; /* Ширина рисунка */
+    height: 30px; /*  Высота рисунка */
+}
+
+a.profile_image {
+    background: url(../img/profile.png); /* Путь к файлу с исходным рисунком  */
+    background-size: 30px 30px;
+    display: block; /*  Рисунок как блочный элемент */
+    width: 30px; /* Ширина рисунка */
+    height: 30px; /*  Высота рисунка */
+}
+
+
+a.profile_image:hover {
+    background: url(../img/profile-hover.png); /* Путь к файлу с заменяемым рисунком  */
+    background-size: 30px 30px;
+    display: block; /*  Рисунок как блочный элемент */
+    width: 30px; /* Ширина рисунка */
+    height: 30px; /*  Высота рисунка */
+}
+
+.auth_btns {
+    margin-left: 20px;
+    margin-top: 10px;
+}
+.auth_block{
+    display: flex;
+    justify-content: flex-end;
+    background-color: #6c5ce7;
+    width: max-content;
+    position: absolute;
+    right: 10px;
+    top:0
+}
 
 
 .bg_index {
-    background: url("/static/img/hands.jpeg") 50% 0 no-repeat fixed;
+    background: url(../img/hands.jpeg) 50% 0 no-repeat fixed;
 }
 
 .bg_con {
-    background: url("/static/img/constructor.jpg") 50% 0 no-repeat fixed;
+    background: url(../img/constructor.jpg) 50% 0 no-repeat fixed;
     background-size: 100%;
 }
 
 .bg_comp {
-    background: url("/static/img/voev.jpg") 50% 0 no-repeat fixed;
+    background: url(../img/voev.jpg) 50% 0 no-repeat fixed;
     background-size: 100%;
 }
 
 .bg_reg2 {
-    background: url("/static/img/reg2.jpg") 50% 0 no-repeat fixed;
+    background: url(../img/reg2.jpg) 50% 0 no-repeat fixed;
     background-size: 100%;
 }
 
 .bg_prot {
-    background: url("/static/img/prot.jpg") 50% 0 no-repeat fixed;
+    background: url(../img/prot.jpg) 50% 0 no-repeat fixed;
     background-size: 100%;
 }
 
@@ -225,8 +271,9 @@ select {
     background-position: right .7em top 50%, 0 0;
     background-size: .65em auto, 100%;
 }
+
 .input_reg {
-      display: block;
+    display: block;
     font-size: 16px;
     font-family: sans-serif;
     font-weight: 700;
@@ -248,6 +295,7 @@ select {
     background-position: right .7em top 50%, 0 0;
     background-size: .65em auto, 100%;
 }
+
 .input_c {
     display: block;
     width: 20%;
@@ -271,9 +319,6 @@ select {
     background-position: right .7em top 50%, 0 0;
     background-size: .65em auto, 100%;
 }
-
-
-
 
 
 select::-ms-expand {

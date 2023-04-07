@@ -129,12 +129,46 @@ def reg_sportsmen(request):
                                                       })
     elif request.method == 'POST':
 
+
         form = SportsmenRegistrationForm(request.POST)
         if form.is_valid():
-            if not SportsmenRegistration.objects.filter(**form.cleaned_data):
-                sp_n = SportsmenRegistration(**form.cleaned_data)
+            fc=form.cleaned_data
+
+            if not SportsmenRegistration.objects.filter(competition=fc['competition']).filter(sportsmen=fc['sportsmen']):
+                current_weight=fc['sportsmen'].weight_category
+                new_weight=fc['weight']
+                category_weight_new=select_category_parcer(new_weight,fc['sportsmen'].sex)
+                category_weight_old = select_category_parcer(current_weight, fc['sportsmen'].sex)
+                print("старый")
+                print(category_weight_old)
+                print("новый")
+                print(category_weight_new)
+
+                try:
+                    if category_weight_new>category_weight_old:
+                        print('не влез в категорию')
+                        #return redirect('rs')
+
+                    elif category_weight_old>category_weight_new:
+                        print("месье ваша категория ниже")
+                        #return redirect(request.path)
+
+                #исключение обрабатывает
+                except TypeError:
+
+                    pass
+
+
+                fc['sportsmen'].weight_category=fc['weight']
+                print(fc['sportsmen'].weight_category,"вес после обновления")
+                fc['sportsmen'].save()
+                sp_n = SportsmenRegistration(competition=fc['competition'],sportsmen=fc['sportsmen'])
+
+                print()
                 sp_n.save()
-    return redirect(request.path)
+
+
+        return redirect(request.path)
 
 
 def competition_constructor(request):

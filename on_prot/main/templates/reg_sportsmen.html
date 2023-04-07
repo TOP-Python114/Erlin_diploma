@@ -18,12 +18,31 @@
             <div>
                 {{ form.competition }}
                 {{ form.sportsmen }}
+                {{ form.weight }}
             </div>
             <div>
-                <input type="submit" name="SubmitDel" class="gradient-button" value="Регистрация">
-            </div>
+                {{ cmp_n.title }}
 
+            </div>
+            <div>
+                <input type="submit" name="RegSportsmen" class="gradient-button" value="Показать участников">
+            </div>
         </form>
+
+{##}
+{##}
+{#            <select>#}
+{#                {% for i in sp_ns %}#}
+{#                    <option>{{ i.sportsmen }}</option>#}
+{#                {% endfor %}#}
+{#            </select>#}
+{##}
+{##}
+{#            <input class="input_c"></input>#}
+{#            <button name="Utochn" class="gradient-button">Уточнить вес и зарегистрировать</button>#}
+{#      #}
+
+
     </div>
 {% endblock body %}
 {% block bdclass %}bg_reg2{% endblock bdclass %}
