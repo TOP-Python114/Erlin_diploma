@@ -269,7 +269,7 @@ def save_start(start: dict):
             for result in sum_place_of_comp(start[left_hand], start[right_hand]):
                 # защита от дубликатов
                 filt = AllResults.objects.filter(sportsmen=Armwrestler.objects.get(name=result[0].name),
-                                                 competition=AllCompetition.objects.get(title=start['title']))
+                                                 competition=AllCompetition.objects.get(title=start['title'],date=start['date']))
                 if filt:
                     return
                 curr_sportsmen = Armwrestler.objects.get(name=result[0].name)
