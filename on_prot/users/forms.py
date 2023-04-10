@@ -2,6 +2,8 @@ from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
+
+from main.models import Armwrestler
 from .models import Profile
 
 my_default_errors = {
@@ -29,8 +31,6 @@ class UserRegisterForm(UserCreationForm):
             'placeholder': 'пароль еще раз', 'class': 'input_reg'
         })
 
-
-
     class Meta:
         model = User
         fields = ['username', 'email', 'password1', 'password2']
@@ -52,7 +52,6 @@ class UserRegisterForm(UserCreationForm):
         }
 
 
-
 class UserUpdateForm(forms.ModelForm):
     email = forms.EmailField()
 
@@ -66,6 +65,8 @@ class ProfileUpdateForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.fields['image'].widget.initial_text = "Текущая"
         self.fields['image'].widget.input_text = "Заменить"
+        self.fields['armwrestler'].widget=forms.ModelChoiceField(queryset = Armwrestler.objects.all(), widget=forms.Select(attrs={'placeholder':'Прикрепить борца'}))
+
     class Meta:
         model = Profile
-        fields = ['image']
+        fields = ['image',"armwrestler"]
