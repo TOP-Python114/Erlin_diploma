@@ -11,6 +11,7 @@
 {% block header %}
 {% endblock header %}
 <div class="allcompetititon" style="display: {{ no_visible }}">
+
     <div class="competition" id="left" style="display: {{ game_over_left }}">
         <h2>Левая рука</h2>
         <div class="winner_div">
@@ -27,6 +28,7 @@
             </form>
         </div>
         <h3>Список участников соревнований</h3>
+        <h4>всего {{ quan_of_sps }} уч.</h4>
         {% for arml in sps_l %}
             Спортсмен:{{ arml.name }},    Команда: {{ arml.team }}, Звание {{ arml.grade }}
             <br>
@@ -66,13 +68,17 @@
 
         <form action="" method="post">
             {% csrf_token %}
-            <input class="button shine-button" type="submit" value="{{ sportsmen1_r }}"
-                   name="{% block winneroner %}{% endblock winneroner %}">
-            <input class="button shine-button" type="submit" value="{{ sportsmen2_r }}"
-                   name="{% block winnertwor %}{% endblock winnertwor %}">
-
+            <img src="{{ spm_1_r_image }}">
+            <img src="{{ spm_2_r_image }}">
+            <div class="btns_block">
+                <input class="button shine-button" type="submit" value="{{ sportsmen1_r }}"
+                       name="{% block winneroner %}{% endblock winneroner %}">
+                <input class="button shine-button" type="submit" value="{{ sportsmen2_r }}"
+                       name="{% block winnertwor %}{% endblock winnertwor %}">
+            </div>
         </form>
         <h3>Список участников соревнований</h3>
+        <h4>всего {{ quan_of_sps }} уч.</h4>
         {% for arml in sps_l %}
             Спортсмен:{{ arml.name }},    Команда: {{ arml.team }}, Звание {{ arml.grade }}
             <br>

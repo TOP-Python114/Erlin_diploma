@@ -1,0 +1,52 @@
+@startuml
+
+!theme plain
+top to bottom direction
+skinparam linetype ortho
+
+class main_allcompetition {
+   title: varchar(100)
+   date: date
+   done: bool
+   id: integer
+}
+class main_allresults {
+   competition_id: bigint
+   sportsmen_id: bigint
+   left_place: integer unsigned
+   right_place: integer unsigned
+   sum_place: integer unsigned
+   points: integer
+   points_left: integer
+   points_right: integer
+   weight_cat: varchar(4)
+   weight_actual: varchar(4)
+   id: integer
+}
+class main_armwrestler {
+   name: varchar(100)
+   age: integer unsigned
+   grade: varchar(4)
+   sex: varchar(2)
+   team: varchar(54)
+   weight_category: varchar(4)
+   id: integer
+}
+class main_sportsmenregistration {
+   competition_id: bigint
+   sportsmen_id: bigint
+   id: integer
+}
+class users_profile {
+   image: varchar(100)
+   user_id: integer
+   armwrestler_id: bigint
+   id: integer
+}
+
+main_allresults             -[#595959,plain]-^  main_allcompetition        : "competition_id:id"
+main_allresults             -[#595959,plain]-^  main_armwrestler           : "sportsmen_id:id"
+main_sportsmenregistration  -[#595959,plain]-^  main_allcompetition        : "competition_id:id"
+main_sportsmenregistration  -[#595959,plain]-^  main_armwrestler           : "sportsmen_id:id"
+users_profile               -[#595959,plain]-^  main_armwrestler           : "armwrestler_id:id"
+@enduml

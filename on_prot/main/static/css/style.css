@@ -170,6 +170,9 @@ h1 {
 
 }
 
+.red_back{
+    width: 200px;
+}
 
 .table td {
     background-color: white;

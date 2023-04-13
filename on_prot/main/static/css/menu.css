@@ -30,10 +30,10 @@ a.login_image {
 
 a.login_image:hover {
     background: url(../img/in_hover.png); /* Путь к файлу с заменяемым рисунком  */
-    background-size: 30px 30px;
+    background-size: 40px 40px;
     display: block; /*  Рисунок как блочный элемент */
-    width: 30px; /* Ширина рисунка */
-    height: 30px; /*  Высота рисунка */
+    width: 40px; /* Ширина рисунка */
+    height: 40px; /*  Высота рисунка */
 }
 
 
@@ -48,10 +48,11 @@ a.logout_image {
 
 a.logout_image:hover {
     background: url(../img/out_hover.png); /* Путь к файлу с заменяемым рисунком  */
-    background-size: 30px 30px;
+
+    background-size: 40px 40px;
     display: block; /*  Рисунок как блочный элемент */
-    width: 30px; /* Ширина рисунка */
-    height: 30px; /*  Высота рисунка */
+    width: 40px; /* Ширина рисунка */
+    height: 40px; /*  Высота рисунка */
 }
 
 a.profile_image {
@@ -61,14 +62,28 @@ a.profile_image {
     width: 30px; /* Ширина рисунка */
     height: 30px; /*  Высота рисунка */
 }
+a.fighting_image {
+    background: url(../img/ill.png); /* Путь к файлу с исходным рисунком  */
+    background-size: 40px 40px;
+    display: block; /*  Рисунок как блочный элемент */
+    width: 40px; /* Ширина рисунка */
+    height: 40px; /*  Высота рисунка */
+}
 
+a.fighting_image:hover {
+    background: url(../img/ill_hover.png); /* Путь к файлу с исходным рисунком  */
+    background-size: 50px 50px;
+    display: block; /*  Рисунок как блочный элемент */
+    width: 50px; /* Ширина рисунка */
+    height: 50px; /*  Высота рисунка */
+}
 
 a.profile_image:hover {
     background: url(../img/profile-hover.png); /* Путь к файлу с заменяемым рисунком  */
-    background-size: 30px 30px;
+    background-size: 40px 40px;
     display: block; /*  Рисунок как блочный элемент */
-    width: 30px; /* Ширина рисунка */
-    height: 30px; /*  Высота рисунка */
+    width: 40px; /* Ширина рисунка */
+    height: 40px; /*  Высота рисунка */
 }
 
 .auth_btns {

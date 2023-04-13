@@ -17,6 +17,7 @@ def update_patterns(urlpatterns=urlpatterns):
         path('crt', competition_constructor,name='cs'),
         path('new_sportsmen_registration', new_sportsmen, name='ns'),
         path('<category>', competition),
+        path('65m',competition,name='tempcpt')
         ]
     urlpatterns+=urlpatterns2
 

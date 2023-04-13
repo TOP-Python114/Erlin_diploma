@@ -13,7 +13,7 @@
 {% block class_profile %}{{ profile }}{% endblock class_profile %}
 {% block body %}
 <div>
-    <form action="" method="post">
+    <form action="" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         <div>
             {{ form.name }}
@@ -22,6 +22,7 @@
             {{ form.team }}
             {{ form.sex }}
              {{ form.grade }}
+            {{ form.image }}
         </div>
         <div>
             <input type="submit" class="gradient-button">

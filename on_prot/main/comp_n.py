@@ -3,7 +3,7 @@
 """
 
 import datetime
-from random import randrange,shuffle
+from random import randrange, shuffle
 
 
 class Sportsmen:
@@ -26,9 +26,9 @@ class Competition:
         self.hand = hand
         self.category = category
         self.begin = False
-        #self._date=date_
+        # self._date=date_
         self.not_paired_sps = sp_s
-        #жеребьевка
+        # жеребьевка
         shuffle(sp_s)
         self.sportsmens = self.pairy_list(self.not_paired_sps)
         self.group_a = [list() for _ in range(len(sp_s) + 3)]
@@ -37,16 +37,16 @@ class Competition:
         self.chitaem = 0
         self.tour = 0
         self.pair = 0
-        #результаты
+        # результаты
         self.results = []
-        #текущий финал
+        # текущий финал
         self.final = []
         # финальная группа, это тоже в общем список списков потому что финалов может быть 2
         self.group_final = []
         self.game_over = False
         self.checker = False
         self.two_losers_in_final = False
-        self.did=0
+        self.did = 0
 
     def print_group_a(self):
         print("Группа А:")
@@ -119,18 +119,17 @@ class Competition:
         for num, final in enumerate(self.group_final):
             print("финал №" + str(num + 1) + " " + str(final[0][0]), str(final[1][0]))
         print(" ")
+
     def return_final(self):
         """ возвращает строкой финальную группу"""
-        res=""
-        for tour,pairs in enumerate(self.group_final):
+        res = ""
+        for tour, pairs in enumerate(self.group_final):
             res += f'Финал №{tour + 1}: '
             for spm in pairs:
-                res+=str(spm[0])
-                res+=", "
-            res+='\n'
+                res += str(spm[0])
+                res += ", "
+            res += '\n'
         return res
-
-
 
     def print_results(self):
         for place, sportsmen in enumerate(self.results):
@@ -153,59 +152,90 @@ class Competition:
         if self.game_over:
             return "Показать результаты"
         """высчитывает имя первого спортсмена"""
-        if len(self.not_paired_sps) == 1:
+
+
+
+        # если один участник он же и победитель
+        if len(self.not_paired_sps) <= 2:
             return self.not_paired_sps[0]
 
-        if len(self.not_paired_sps) == 2 and not self.final:
-            return self.not_paired_sps[0]
-
-        if len(self.final) == 2:
-            return self.final[0][0]
-
-
-
-        # обработка свободного круга
-
-        if self.tour > 0 and len(self.group_a[self.tour - 1][self.pair]) == 1:
-            self.fight(1)
-            # return self.group_b[self.tour][self.pair][0]
-
-        if self.tour == 0:
+        if self.tour==0:
             return self.sportsmens[self.pair][0]
-        if self.tour > 0:
-            if self.group == 'a':
-                return self.group_a[self.tour - 1][self.pair][0]
 
-            if self.group == 'b':
-                return self.group_b[self.tour - 1][self.pair][0]
+        elif self.tour>0:
+            if self.group == 'a':
+                #print(self.group_a[self.tour-1][self.pair])
+                return self.group_a[self.tour-1][self.pair][0]
+
+
+
+            #return self.group_a[self.tour][self.pair][0]
+
+        # elif self.group == 'b':
+        #     return self.group_b[self.tour][self.pair][0]
+
+        # if len(self.not_paired_sps) == 1:
+        #     return self.not_paired_sps[0]
+        #
+        # #
+        # if len(self.not_paired_sps) == 2 and not self.final:
+        #     return self.not_paired_sps[0]
+        #
+        # if len(self.final) == 2:
+        #     return self.final[0][0]
+        #
+        # # обработка свободного круга
+        #
+        #
+        # if self.tour > 0 and len(self.group_a[self.tour - 1][self.pair]) == 1:
+        #     self.fight(1)
+        #
+        #     # return self.group_b[self.tour][self.pair][0]
+        #
+        # if self.tour == 0:
+        #     return self.sportsmens[self.pair][0]
+        # if self.tour > 0:
+        #     if self.group == 'a':
+        #         return self.group_a[self.tour - 1][self.pair][0]
+        #
+        #     if self.group == 'b':
+        #         print(self.group_b[self.tour-1])
+        #         return self.group_b[self.tour - 1][self.pair][0]
 
     @property
     def sportsmen2(self):
         """высчитывает имя второго спортсмена"""
         if self.game_over:
             return ""
-        if len(self.not_paired_sps) == 1:
-            return None
-        if len(self.not_paired_sps)==2 and not self.final:
-            return self.not_paired_sps[1]
+        if len(self.not_paired_sps) < 2:
+            return 'нэту'
 
-        if len(self.final) == 2:
-            return self.final[1][0]
-
-
-
-        # обработка свободного круга
-        # if self.tour > 0 and len(self.group_a[self.tour - 1][self.pair]) == 1:
-        #     return self.group_b[self.tour][self.pair][1]
-
-        if self.tour == 0:
+        if self.tour == 0 and len(self.sportsmens[self.pair])==2 :
             return self.sportsmens[self.pair][1]
-        if self.tour > 0:
-            if self.group == 'a':
-                return self.group_a[self.tour - 1][self.pair][1]
+        elif self.tour == 0:
+            return 
 
-            if self.group == 'b':
-                return self.group_b[self.tour - 1][self.pair][1]
+
+        # if len(self.not_paired_sps) == 1:
+        #     return None
+        # if len(self.not_paired_sps) == 2 and not self.final:
+        #     return self.not_paired_sps[1]
+        #
+        # if len(self.final) == 2:
+        #     return self.final[1][0]
+        #
+        # # обработка свободного круга
+        # # if self.tour > 0 and len(self.group_a[self.tour - 1][self.pair]) == 1:
+        # #     return self.group_b[self.tour][self.pair][1]
+        #
+        # if self.tour == 0:
+        #     return self.sportsmens[self.pair][1]
+        # if self.tour > 0:
+        #     if self.group == 'a':
+        #         return self.group_a[self.tour - 1][self.pair][1]
+        #
+        #     if self.group == 'b':
+        #         return self.group_b[self.tour - 1][self.pair][1]
 
     def clear_slots(self):
         """очищает лишние слоты """
@@ -231,21 +261,20 @@ class Competition:
             self.results += [self.not_paired_sps[0]]
             self.game_over = True
             return
-        #если всего два участника
-
+        # если всего два участника
 
         if len(self.not_paired_sps) == 2:
             if not self.did:
                 if winner == 1:
-                    self.final+= [[self.not_paired_sps[0]]]
+                    self.final += [[self.not_paired_sps[0]]]
                     self.final += [[self.not_paired_sps[1]]]
-                    self.group_final+=[self.final]
+                    self.group_final += [self.final]
                 elif winner == 2:
                     self.final += [[self.not_paired_sps[1]]]
                     self.final += [[self.not_paired_sps[0]]]
                     self.group_final += [self.final]
-                self.did=1
-                #self.tour+=1
+                self.did = 1
+                # self.tour+=1
                 return
 
         if len(self.final) == 2:
@@ -405,7 +434,6 @@ class Competition:
                     self.pair = 0
                     self.tour += 1
                     self.group = 'a'
-
 
 
 if __name__ == "__main__":

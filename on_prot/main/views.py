@@ -11,19 +11,26 @@ from .competition_former import competition_creating
 from main.models import Armwrestler, AllCompetition, SportsmenRegistration, AllResults
 from django.template import RequestContext, Template
 
-
 # Create your views here.
 
 def hello(request):
-    return render(request, 'index.html',
-                  {
-                      'login': request.user.is_authenticated * 'no_visible' or 'visible',
-                      'logout': request.user.is_authenticated * 'visible' or 'no_visible',
-                      'profile': request.user.is_authenticated * 'visible' or 'no_visible'
-                      # "is_categories": is_categories,
-                      # "title": a["title"]
-                  }
-                  )
+    res="no_visible"
+    try:
+        a
+        res='visible'
+    except:
+        res = 'no_visible'
+    finally:
+        return render(request, 'index.html',
+                      {
+                          'login': request.user.is_authenticated * 'no_visible' or 'visible',
+                          'logout': request.user.is_authenticated * 'visible' or 'no_visible',
+                          'profile': request.user.is_authenticated * 'visible' or 'no_visible',
+                          'fighting': res
+                          # "is_categories": is_categories,
+                          # "title": a["title"]
+                      }
+                      )
 
 
 def protocols(request):
@@ -109,11 +116,12 @@ def new_sportsmen(request):
                                                       'profile': request.user.is_authenticated * 'visible' or 'no_visible'
                                                       })
     elif request.method == 'POST':
-        form = NewSportsmenForm(request.POST)
+        form = NewSportsmenForm(request.POST,request.FILES)
         if form.is_valid():
             comp = Armwrestler(**form.cleaned_data)
             comp.save()
     return redirect(request.path)
+
 
 
 def reg_sportsmen(request):
@@ -139,10 +147,7 @@ def reg_sportsmen(request):
                 new_weight=fc['weight']
                 category_weight_new=select_category_parcer(new_weight,fc['sportsmen'].sex)
                 category_weight_old = select_category_parcer(current_weight, fc['sportsmen'].sex)
-                print("старый")
-                print(category_weight_old)
-                print("новый")
-                print(category_weight_new)
+
 
                 try:
                     if category_weight_new>category_weight_old:
@@ -289,6 +294,7 @@ def save_start(start: dict):
                 sp_n_to_save.save()
 
 
+@login_required
 def competition(request, category):
     # не представленные категории
     # использвуется только если кто то намеренно наберет в адресную строку не юзаную категорию
@@ -333,7 +339,15 @@ def competition(request, category):
         cmps = AllCompetition.objects.get(title=a["title"])
         cmps.done = True
         cmps.save()
+        SportsmenRegistration.objects.filter(competition=cmps).delete()
+        #удаление регистраций
+
+    if not a[category+"l"].game_over:
+        print(a[category+"l"].sportsmen1)
+
+
     return render(request, 'competit.html', {
+        'quan_of_sps':len(a[category + "l"].not_paired_sps),
         "competition_end": start_is_end(a),
         'no_visible': "flex",
         'alert': None,
@@ -353,6 +367,12 @@ def competition(request, category):
         "sportsmen2_l": a[category + "l"].sportsmen2,  # текущий спортсмен 2 левой руки
         "sportsmen1_r": a[category + "r"].sportsmen1,  # текущий спортсмен 1 правой руки
         "sportsmen2_r": a[category + "r"].sportsmen2,  # текущий спортсмен 2 правой руки
+        # "spm_1_l_image":Armwrestler.objects.get(name=a[category + "l"].sportsmen1), #картинка первого левого
+        # "spm_2_l_image": Armwrestler.objects.get(name=a[category + "l"].sportsmen2),#картинка второго левого
+        # "spm_1_r_image": Armwrestler.objects.get(name=a[category + "r"].sportsmen1),# картинка первого правого
+        # "spm_2_r_image": Armwrestler.objects.get(name=a[category + "r"].sportsmen2),# картинка второго правого
+
+
         "is_categories": is_categories,
         'rr': '555',
         'game_over_left': a[category + "l"].game_over * "None",

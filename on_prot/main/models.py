@@ -1,3 +1,4 @@
+from PIL import Image
 from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
 
@@ -15,10 +16,20 @@ class Armwrestler(models.Model):
     team = models.CharField(max_length=54)
     sex = models.CharField(max_length=2)
     grade = models.CharField(max_length=4)
+    image = models.ImageField(default="default.jpg", upload_to='profile_pics')
+
+    def save(self, *args, **kwargs):
+        super(Armwrestler, self).save(*args, **kwargs)
+
+        img = Image.open(self.image.path)
+
+        if img.height > 300 or img.width > 300:
+            output_size = (300, 300)
+            img.thumbnail(output_size)
+        img.save(self.image.path)
 
     def __str__(self):
         return f"{self.name} {self.weight_category} {self.sex} {self.grade}"
-
 
 
 
@@ -30,7 +41,7 @@ class AllCompetition(models.Model):
     date = models.DateField()
     done = models.BooleanField(default=False)
     def __str__(self):
-        return f"{self.title} {self.date} соревнования {not self.done and 'не' or ' '}прошли"
+        return f"{self.title} {self.date}"  #соревнования {not self.done and 'не' or ' '}прошли"
 
 
 

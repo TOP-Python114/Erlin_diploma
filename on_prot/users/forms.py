@@ -53,20 +53,22 @@ class UserRegisterForm(UserCreationForm):
 
 
 class UserUpdateForm(forms.ModelForm):
-    email = forms.EmailField()
-
+    email = forms.EmailField(widget=forms.EmailInput(attrs={'class':'input_reg'}))
+    username = forms.CharField(widget=forms.TextInput(attrs={'class': 'input_reg'}))
     class Meta:
         model = User
         fields = ['username', 'email']
 
 
 class ProfileUpdateForm(forms.ModelForm):
+    armwrestler = forms.ModelChoiceField(queryset=Armwrestler.objects.all(),widget=forms.Select(attrs={'class': 'red_back input_reg'}))
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['image'].widget.initial_text = "Текущая"
-        self.fields['image'].widget.input_text = "Заменить"
-        self.fields['armwrestler'].widget=forms.ModelChoiceField(queryset = Armwrestler.objects.all(), widget=forms.Select(attrs={'placeholder':'Прикрепить борца'}))
+
+        #self.armwrestler.fields['image'].widget.initial_text = "Текущая"
+        #self.armwrestler.fields['image'].widget.input_text = "Заменить"
 
     class Meta:
         model = Profile
-        fields = ['image',"armwrestler"]
+        fields = ["armwrestler"]
+

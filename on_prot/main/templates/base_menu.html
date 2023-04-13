@@ -37,18 +37,25 @@
         </ul>
     </nav>
         <div class="auth_block">
-            <div class="auth_btns {% block class_login %}no_visible{% endblock class_login %}"><a class="login_image"
+            <div title="Войти" class="auth_btns {% block class_login %}no_visible{% endblock class_login %}"><a class="login_image"
                                                                                                   href="{% url 'login' %}"></a>
             </div>
 
-            <div class="auth_btns {% block class_logout %}no_visible{% endblock class_logout %}"><a class="logout_image"
+            <div title="Выйти" class="auth_btns {% block class_logout %}no_visible{% endblock class_logout %}"><a class="logout_image"
                                                                                                     href="{% url 'logout' %}"></a>
             </div>
 
-            <div class="auth_btns {% block class_profile %}no_visible{% endblock class_profile %}"><a
+            <div title="Личный кабинет" class="auth_btns {% block class_profile %}no_visible{% endblock class_profile %}"><a
                     class="profile_image"
                     href="{% url 'profile' %}"></a>
             </div>
+
+            <div title="Вернуться к текущему соревнованию" class="auth_btns {% block class_fighting %}no_visible{% endblock class_fighting %}"><a
+                    class="fighting_image"
+                    href="{% url 'tempcpt' %}"></a>
+            </div>
+
+
         </div>
 
 
