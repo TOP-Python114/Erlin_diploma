@@ -11,13 +11,14 @@ from .competition_former import competition_creating
 from main.models import Armwrestler, AllCompetition, SportsmenRegistration, AllResults
 from django.template import RequestContext, Template
 
+
 # Create your views here.
 
 def hello(request):
-    res="no_visible"
+    res = "no_visible"
     try:
         a
-        res='visible'
+        res = 'visible'
     except:
         res = 'no_visible'
     finally:
@@ -116,12 +117,11 @@ def new_sportsmen(request):
                                                       'profile': request.user.is_authenticated * 'visible' or 'no_visible'
                                                       })
     elif request.method == 'POST':
-        form = NewSportsmenForm(request.POST,request.FILES)
+        form = NewSportsmenForm(request.POST, request.FILES)
         if form.is_valid():
             comp = Armwrestler(**form.cleaned_data)
             comp.save()
     return redirect(request.path)
-
 
 
 def reg_sportsmen(request):
@@ -137,41 +137,38 @@ def reg_sportsmen(request):
                                                       })
     elif request.method == 'POST':
 
-
         form = SportsmenRegistrationForm(request.POST)
         if form.is_valid():
-            fc=form.cleaned_data
+            fc = form.cleaned_data
 
-            if not SportsmenRegistration.objects.filter(competition=fc['competition']).filter(sportsmen=fc['sportsmen']):
-                current_weight=fc['sportsmen'].weight_category
-                new_weight=fc['weight']
-                category_weight_new=select_category_parcer(new_weight,fc['sportsmen'].sex)
+            if not SportsmenRegistration.objects.filter(competition=fc['competition']).filter(
+                    sportsmen=fc['sportsmen']):
+                current_weight = fc['sportsmen'].weight_category
+                new_weight = fc['weight']
+                category_weight_new = select_category_parcer(new_weight, fc['sportsmen'].sex)
                 category_weight_old = select_category_parcer(current_weight, fc['sportsmen'].sex)
 
-
                 try:
-                    if category_weight_new>category_weight_old:
+                    if category_weight_new > category_weight_old:
                         print('не влез в категорию')
-                        #return redirect('rs')
+                        # return redirect('rs')
 
-                    elif category_weight_old>category_weight_new:
+                    elif category_weight_old > category_weight_new:
                         print("месье ваша категория ниже")
-                        #return redirect(request.path)
+                        # return redirect(request.path)
 
-                #исключение обрабатывает
+                # исключение обрабатывает
                 except TypeError:
 
                     pass
 
-
-                fc['sportsmen'].weight_category=fc['weight']
-                print(fc['sportsmen'].weight_category,"вес после обновления")
+                fc['sportsmen'].weight_category = fc['weight']
+                print(fc['sportsmen'].weight_category, "вес после обновления")
                 fc['sportsmen'].save()
-                sp_n = SportsmenRegistration(competition=fc['competition'],sportsmen=fc['sportsmen'])
+                sp_n = SportsmenRegistration(competition=fc['competition'], sportsmen=fc['sportsmen'])
 
                 print()
                 sp_n.save()
-
 
         return redirect(request.path)
 
@@ -274,7 +271,8 @@ def save_start(start: dict):
             for result in sum_place_of_comp(start[left_hand], start[right_hand]):
                 # защита от дубликатов
                 filt = AllResults.objects.filter(sportsmen=Armwrestler.objects.get(name=result[0].name),
-                                                 competition=AllCompetition.objects.get(title=start['title'],date=start['date']))
+                                                 competition=AllCompetition.objects.get(title=start['title'],
+                                                                                        date=start['date']))
                 if filt:
                     return
                 curr_sportsmen = Armwrestler.objects.get(name=result[0].name)
@@ -340,14 +338,16 @@ def competition(request, category):
         cmps.done = True
         cmps.save()
         SportsmenRegistration.objects.filter(competition=cmps).delete()
-        #удаление регистраций
+        # удаление регистраций
 
-    if not a[category+"l"].game_over:
-        print(a[category+"l"].sportsmen1)
-
-
+    spm1_l = a[category + "l"].sportsmen1
+    spm2_l = a[category + "l"].sportsmen2
+    spm1_r = a[category + "r"].sportsmen1
+    spm2_r = a[category + "r"].sportsmen2
+    print(spm1_r)
+    print(spm2_r)
     return render(request, 'competit.html', {
-        'quan_of_sps':len(a[category + "l"].not_paired_sps),
+        'quan_of_sps': len(a[category + "l"].not_paired_sps),
         "competition_end": start_is_end(a),
         'no_visible': "flex",
         'alert': None,
@@ -363,15 +363,14 @@ def competition(request, category):
         "resfin_r": a[category + "r"].return_final().split('\n'),  # финальная группа правая рука
         "result_l": {i + 1: j for i, j in enumerate(result_l)},  # результаты левая
         "result_r": {i + 1: j for i, j in enumerate(result_r)},  # результаты правая
-        "sportsmen1_l": a[category + "l"].sportsmen1,  # текущий спортсмен 1 левой руки
-        "sportsmen2_l": a[category + "l"].sportsmen2,  # текущий спортсмен 2 левой руки
-        "sportsmen1_r": a[category + "r"].sportsmen1,  # текущий спортсмен 1 правой руки
-        "sportsmen2_r": a[category + "r"].sportsmen2,  # текущий спортсмен 2 правой руки
-        # "spm_1_l_image":Armwrestler.objects.get(name=a[category + "l"].sportsmen1), #картинка первого левого
-        # "spm_2_l_image": Armwrestler.objects.get(name=a[category + "l"].sportsmen2),#картинка второго левого
-        # "spm_1_r_image": Armwrestler.objects.get(name=a[category + "r"].sportsmen1),# картинка первого правого
-        # "spm_2_r_image": Armwrestler.objects.get(name=a[category + "r"].sportsmen2),# картинка второго правого
-
+        "sportsmen1_l": spm1_l,  # текущий спортсмен 1 левой руки
+        "sportsmen2_l": spm2_l,  # текущий спортсмен 2 левой руки
+        "sportsmen1_r": spm1_r,  # текущий спортсмен 1 правой руки
+        "sportsmen2_r": spm2_r,  # текущий спортсмен 2 правой руки
+        "spm_1_l_image": spm1_l and Armwrestler.objects.get(name=spm1_l).image.url or "",  # картинка первого левого
+        "spm_2_l_image": spm2_l and Armwrestler.objects.get(name=spm2_l).image.url or "",  # картинка второго левого
+        "spm_1_r_image": spm1_r and Armwrestler.objects.get(name=spm1_r).image.url or "",  # картинка первого правого
+        "spm_2_r_image": spm2_r and Armwrestler.objects.get(name=spm2_r).image.url or "",  # картинка второго правого
 
         "is_categories": is_categories,
         'rr': '555',
