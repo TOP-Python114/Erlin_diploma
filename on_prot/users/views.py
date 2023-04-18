@@ -37,7 +37,12 @@ def profile(request):
         p_form = ProfileUpdateForm(request.POST,
                                    request.FILES,
                                    instance=request.user.profile)
+
         if u_form.is_valid() and p_form.is_valid():
+            fc = p_form.cleaned_data
+            tmparmler=fc['armwrestler']
+            tmparmler.image=fc['image']
+            tmparmler.save()
             u_form.save()
             p_form.save()
             messages.success(request, f'Ваш профиль успешно обновлен.')

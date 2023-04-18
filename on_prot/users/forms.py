@@ -64,11 +64,10 @@ class ProfileUpdateForm(forms.ModelForm):
     armwrestler = forms.ModelChoiceField(queryset=Armwrestler.objects.all(),widget=forms.Select(attrs={'class': 'red_back input_reg'}))
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-
-        #self.armwrestler.fields['image'].widget.initial_text = "Текущая"
-        #self.armwrestler.fields['image'].widget.input_text = "Заменить"
+        self.fields['image'].widget.initial_text = "Текущая"
+        self.fields['image'].widget.input_text = "Заменить"
 
     class Meta:
         model = Profile
-        fields = ["armwrestler"]
+        fields = ["armwrestler","image"]
 

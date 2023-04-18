@@ -66,8 +66,8 @@
 
         <a href="{% url 'hello' %}"></a>
 
-{#        <form action="" method="post">#}
-{#            {% csrf_token %}#}
+        <form action="" method="post">
+            {% csrf_token %}
 
             <div class="btns_block" style="display: flex ;justify-content: space-between; ">
                 <div class="first_fighter" style="display: flex; flex-direction: column;justify-content: space-between; overflow-y: hidden; overflow-x: hidden">
@@ -86,7 +86,7 @@
 
 
             </div>
-{#        </form>#}
+        </form>
         <h3>Список участников соревнований</h3>
         <h4>всего {{ quan_of_sps }} уч.</h4>
         {% for arml in sps_l %}
